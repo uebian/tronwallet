@@ -72,11 +72,23 @@ void MainWindow::openOptionsDialogWithTab(OptionsDialog::Tab tab)
     auto dlg = new OptionsDialog(this);
     connect(dlg, &OptionsDialog::quitOnReset, this, &MainWindow::quitRequested);
     dlg->setCurrentTab(tab);
+    dlg->setModel(this->optionsModel);
     GUIUtil::ShowModalDialogAndDeleteOnClose(dlg);
 }
 
 void MainWindow::options()
 {
     MainWindow::openOptionsDialogWithTab(OptionsDialog::TAB_MAIN);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    Q_EMIT quitRequested();
+    QMainWindow::closeEvent(event);
+}
+
+void MainWindow::setOptionsModel(OptionsModel *optionsModel)
+{
+    this->optionsModel = optionsModel;
 }
 

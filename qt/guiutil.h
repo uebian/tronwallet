@@ -21,6 +21,8 @@
 #include <chrono>
 #include <utility>
 
+#include <boost/filesystem.hpp>
+
 class PlatformStyle;
 class QValidatedLineEdit;
 class SendCoinsRecipient;
@@ -54,9 +56,24 @@ namespace GUIUtil
     constexpr auto dialog_flags = Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;
 
     /**
+     *  Convert OS specific boost path to QString through UTF-8
+     */
+    QString boostPathToQString(const boost::filesystem::path &path);
+
+    /**
      * Shows a QDialog instance asynchronously, and deletes it on close.
      */
     void ShowModalDialogAndDeleteOnClose(QDialog* dialog);
+
+    template <typename SeparatorType>
+        QStringList SplitSkipEmptyParts(const QString& string, const SeparatorType& separator)
+        {
+        #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+            return string.split(separator, Qt::SkipEmptyParts);
+        #else
+            return string.split(separator, QString::SkipEmptyParts);
+        #endif
+        }
 
 } // namespace GUIUtil
 

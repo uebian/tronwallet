@@ -308,7 +308,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_1_Network">
          <item>
-          <widget class="QLabel" name="FullNodeIpLabel">
+          <widget class="QLabel" name="fullNodeIpLabel">
            <property name="text">
             <string>Full Node &amp;IP:</string>
            </property>
@@ -316,12 +316,12 @@
             <enum>Qt::PlainText</enum>
            </property>
            <property name="buddy">
-            <cstring>FullNodeIp</cstring>
+            <cstring>fullNodeIp</cstring>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QValidatedLineEdit" name="FullNodeIp">
+          <widget class="QValidatedLineEdit" name="fullNodeIp">
            <property name="minimumSize">
             <size>
              <width>140</width>
@@ -348,12 +348,12 @@
             <enum>Qt::PlainText</enum>
            </property>
            <property name="buddy">
-            <cstring>FullNodePort</cstring>
+            <cstring>fullNodePort</cstring>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="FullNodePort">
+          <widget class="QLineEdit" name="fullNodePort">
            <property name="minimumSize">
             <size>
              <width>55</width>
@@ -407,12 +407,12 @@
             <enum>Qt::PlainText</enum>
            </property>
            <property name="buddy">
-            <cstring>proxyIP</cstring>
+            <cstring>proxyIp</cstring>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QValidatedLineEdit" name="proxyIP">
+          <widget class="QValidatedLineEdit" name="proxyIp">
            <property name="minimumSize">
             <size>
              <width>140</width>

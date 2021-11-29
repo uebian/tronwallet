@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -12,19 +12,23 @@ SOURCES += \
     main.cpp \
     qt/bitcoinaddressentryvalidator.cpp \
     qt/guiutil.cpp \
+    qt/optionsmodel.cpp \
     qt/qvalidatedlineedit.cpp \
     qt/mainwindow.cpp \
     qt/optionsdialog.cpp \
-    qt/qvaluecombobox.cpp
+    qt/qvaluecombobox.cpp \
+    tronwalletapplication.cpp
 
 HEADERS += \
     qt/bitcoinaddressentryvalidator.h \
     qt/guiconstants.h \
     qt/guiutil.h \
+    qt/optionsmodel.h \
     qt/qvalidatedlineedit.h \
     qt/mainwindow.h \
     qt/optionsdialog.h \
-    qt/qvaluecombobox.h
+    qt/qvaluecombobox.h \
+    tronwalletapplication.h
 
 FORMS += \
     qt/forms/mainwindow.ui \

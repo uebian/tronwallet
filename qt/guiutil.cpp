@@ -41,6 +41,12 @@
 #include <chrono>
 
 namespace GUIUtil {
+QString boostPathToQString(const boost::filesystem::path &path)
+{
+    return QString::fromStdString(path.string());
+}
+
+
 void ShowModalDialogAndDeleteOnClose(QDialog* dialog)
 {
     dialog->setAttribute(Qt::WA_DeleteOnClose);

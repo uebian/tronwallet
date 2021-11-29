@@ -19,9 +19,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void setOptionsModel(OptionsModel *clientModel = nullptr);
 private:
     void createActions();
     void createMenus();
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void newFile();
@@ -31,6 +35,7 @@ private slots:
 
 
 private:
+    OptionsModel* optionsModel = nullptr;
     Ui::MainWindow *ui;
     QMenu *fileMenu;
     QMenu *toolsMenu;
