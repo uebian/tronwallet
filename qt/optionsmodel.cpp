@@ -149,6 +149,27 @@ struct ProxySetting {
     QString port;
 };
 
+struct FullNodeSetting {
+    QString ip;
+    QString port;
+};
+
+static ProxySetting GetFullNodeSetting(QSettings &settings, const QString &name)
+{
+    static const ProxySetting default_val = {false, DEFAULT_GUI_FULLNODE_HOST, QString("%1").arg(DEFAULT_GUI_FULLNODE_PORT)};
+    // Handle the case that the setting is not set at all
+    if (!settings.contains(name)) {
+        return default_val;
+    }
+    // contains IP at index 0 and port at index 1
+    QStringList ip_port = GUIUtil::SplitSkipEmptyParts(settings.value(name).toString(), ":");
+    if (ip_port.size() == 2) {
+        return {true, ip_port.at(0), ip_port.at(1)};
+    } else { // Invalid: return default
+        return default_val;
+    }
+}
+
 static ProxySetting GetProxySetting(QSettings &settings, const QString &name)
 {
     static const ProxySetting default_val = {false, DEFAULT_GUI_PROXY_HOST, QString("%1").arg(DEFAULT_GUI_PROXY_PORT)};
@@ -163,6 +184,11 @@ static ProxySetting GetProxySetting(QSettings &settings, const QString &name)
     } else { // Invalid: return default
         return default_val;
     }
+}
+
+static void SetFullNodeSetting(QSettings &settings, const QString &name, const ProxySetting &ip_port)
+{
+    settings.setValue(name, QString{ip_port.ip + QLatin1Char(':') + ip_port.port});
 }
 
 static void SetProxySetting(QSettings &settings, const QString &name, const ProxySetting &ip_port)
@@ -188,7 +214,9 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
         case MinimizeToTray:
             return fMinimizeToTray;
         case FullNodeIP:
-             return settings.value("fUseProxy", false);
+             return GetFullNodeSetting(settings,"addrFullNode").ip;
+        case FullNodePort:
+             return GetFullNodeSetting(settings,"addrFullNode").port;
         // default proxy
         case ProxyUse:
             return settings.value("fUseProxy", false);
@@ -196,14 +224,6 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return GetProxySetting(settings, "addrProxy").ip;
         case ProxyPort:
             return GetProxySetting(settings, "addrProxy").port;
-#ifdef ENABLE_WALLET
-        case SpendZeroConfChange:
-            return settings.value("bSpendZeroConfChange");
-        case ExternalSignerPath:
-            return settings.value("external_signer_path");
-        case SubFeeFromAmount:
-            return m_sub_fee_from_amount;
-#endif
         case DisplayUnit:
             return nDisplayUnit;
         case ThirdPartyTxUrls:
@@ -255,7 +275,24 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             fMinimizeOnClose = value.toBool();
             settings.setValue("fMinimizeOnClose", fMinimizeOnClose);
             break;
-
+        case FullNodeIP:{
+            auto ip_port = GetFullNodeSetting(settings, "addrFullNode");
+            if (!ip_port.is_set || ip_port.ip != value.toString()) {
+                ip_port.ip = value.toString();
+                SetFullNodeSetting(settings, "addrFullNode", ip_port);
+                setRestartRequired(true);
+            }
+        }
+        break;
+        case FullNodePort: {
+            auto ip_port = GetFullNodeSetting(settings, "addrFullNode");
+            if (!ip_port.is_set || ip_port.port != value.toString()) {
+                ip_port.port = value.toString();
+                SetFullNodeSetting(settings, "addrFullNode", ip_port);
+                setRestartRequired(true);
+            }
+        }
+        break;
         // default proxy
         case ProxyUse:
             if (settings.value("fUseProxy") != value) {
@@ -281,25 +318,6 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             }
         }
         break;
-
-#ifdef ENABLE_WALLET
-        case SpendZeroConfChange:
-            if (settings.value("bSpendZeroConfChange") != value) {
-                settings.setValue("bSpendZeroConfChange", value);
-                setRestartRequired(true);
-            }
-            break;
-        case ExternalSignerPath:
-            if (settings.value("external_signer_path") != value.toString()) {
-                settings.setValue("external_signer_path", value.toString());
-                setRestartRequired(true);
-            }
-            break;
-        case SubFeeFromAmount:
-            m_sub_fee_from_amount = value.toBool();
-            settings.setValue("SubFeeFromAmount", m_sub_fee_from_amount);
-            break;
-#endif
         case DisplayUnit:
             setDisplayUnit(value);
             break;

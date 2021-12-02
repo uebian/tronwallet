@@ -27,6 +27,7 @@
 static QString GetLangTerritory()
 {
     QSettings settings;
+    qDebug()<<__func__<<"Setting stores in "<<settings.fileName();
     // Get desired locale (e.g. "de_DE")
     // 1) System default language
     QString lang_territory = QLocale::system().name();

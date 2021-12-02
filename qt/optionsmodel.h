@@ -19,6 +19,9 @@ class Node;
 static constexpr uint16_t DEFAULT_GUI_PROXY_PORT = 9050;
 static const char *DEFAULT_GUI_PROXY_HOST = "127.0.0.1";
 
+static constexpr uint16_t DEFAULT_GUI_FULLNODE_PORT = 50051;
+static const char *DEFAULT_GUI_FULLNODE_HOST = "grpc.shasta.trongrid.io";
+
 /**
  * Convert configured prune target MiB to displayed GB. Round up to avoid underestimating max disk usage.
  */
