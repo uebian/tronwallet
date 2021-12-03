@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    crypto/sm3.cpp \
     main.cpp \
     qt/bitcoinaddressentryvalidator.cpp \
     qt/guiutil.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     tronwalletapplication.cpp
 
 HEADERS += \
+    crypto/sm3.h \
     qt/bitcoinaddressentryvalidator.h \
     qt/guiconstants.h \
     qt/guiutil.h \

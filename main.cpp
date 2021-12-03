@@ -23,7 +23,6 @@
     return a.exec();
 }*/
 
-
 int main(int argc, char* argv[]) {
     return GuiMain(argc, argv);
 }
