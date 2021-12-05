@@ -23,6 +23,7 @@
 #include <QTimer>
 #include <QTranslator>
 #include <QWindow>
+#include <QDir>
 
 static QString GetLangTerritory()
 {
@@ -73,6 +74,7 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
         QApplication::installTranslator(&translatorBase);
 
     // Load e.g. bitcoin_de_DE.qm (shortcut "de_DE" needs to be defined in bitcoin.qrc)
+    qDebug()<<QDir(":/translations/").entryList()[0];
     if (translator.load(lang_territory, ":/translations/"))
         QApplication::installTranslator(&translator);
 }

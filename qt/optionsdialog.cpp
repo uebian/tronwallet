@@ -3,6 +3,7 @@
 #include <qt/optionsmodel.h>
 #include <QDataWidgetMapper>
 #include <QtDebug>
+#include <QDir>
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
@@ -12,6 +13,25 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     mapper = new QDataWidgetMapper(this);
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     mapper->setOrientation(Qt::Vertical);
+
+    QDir translations(":translations");
+    for (const QString &langStr : translations.entryList())
+    {
+        QLocale locale(langStr);
+
+        /** check if the locale name consists of 2 parts (language_country) */
+        if(langStr.contains("_"))
+        {
+            /** display language strings as "native language - native country (locale name)", e.g. "Deutsch - Deutschland (de)" */
+            ui->lang->addItem(locale.nativeLanguageName() + QString(" - ") + locale.nativeCountryName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
+        }
+        else
+        {
+            /** display language strings as "native language (locale name)", e.g. "Deutsch (de)" */
+            ui->lang->addItem(locale.nativeLanguageName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
+        }
+    }
+
 }
 
 OptionsDialog::~OptionsDialog()

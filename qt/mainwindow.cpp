@@ -18,17 +18,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::createActions()
 {
-    newAct = new QAction(tr("&New"), this);
+    newAct = new QAction(tr("Create Wallet..."), this);
     newAct->setShortcuts(QKeySequence::New);
-    newAct->setStatusTip(tr("Create a new file"));
+    newAct->setStatusTip(tr("Create a new wallet"));
     connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
-    optionsQtAct = new QAction(tr("&Options"), this);
+    optionsQtAct = new QAction(tr("&Options..."), this);
     optionsQtAct->setShortcuts(QKeySequence::New);
-    optionsQtAct->setStatusTip(tr("About Qt"));
+    optionsQtAct->setStatusTip(tr("Modify configuration options"));
     connect(optionsQtAct, &QAction::triggered, this, &MainWindow::options);
-    aboutQtAct = new QAction(tr("&About Qt"), this);
+    aboutQtAct = new QAction(tr("About &Qt"), this);
     aboutQtAct->setShortcuts(QKeySequence::New);
-    aboutQtAct->setStatusTip(tr("About Qt"));
+    aboutQtAct->setStatusTip(tr("Show information about Qt"));
     connect(aboutQtAct, &QAction::triggered, this, &MainWindow::aboutQt);
 }
 
