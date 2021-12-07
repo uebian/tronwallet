@@ -12,7 +12,10 @@ INCLUDEPATH += tron/proto/
 
 SOURCES += \
     crypto/base58.cpp \
+    crypto/keccak.cpp \
+    crypto/secp256k1wrapper.cpp \
     crypto/sha256.cpp \
+    crypto/sha3.cpp \
     crypto/sm3.cpp \
     main.cpp \
     qt/guiutil.cpp \
@@ -23,6 +26,7 @@ SOURCES += \
     qt/qvaluecombobox.cpp \
     qt/tronaddressentryvalidator.cpp \
     tron/account.cpp \
+    tron/myaccount.cpp \
     tronwalletapplication.cpp \
     tron/proto/api/api.pb.cc \
     tron/proto/api/api.grpc.pb.cc \
@@ -45,7 +49,10 @@ SOURCES += \
 
 HEADERS += \
     crypto/base58.h \
+    crypto/keccak.h \
+    crypto/secp256k1wrapper.h \
     crypto/sha256.h \
+    crypto/sha3.h \
     crypto/sm3.h \
     qt/guiconstants.h \
     qt/guiutil.h \
@@ -56,6 +63,7 @@ HEADERS += \
     qt/qvaluecombobox.h \
     qt/tronaddressentryvalidator.h \
     tron/account.h \
+    tron/myaccount.h \
     tronwalletapplication.h \
     utils.h
 
@@ -69,10 +77,9 @@ QT_QRC_LOCALE = qt/locale.qrc
 TRANSLATIONS += \
     qt/translations/tronwallet_zh_CN.ts
 CONFIG += lrelease
+CONFIG+=link_pkgconfig
+PKGCONFIG+=grpc++ protobuf libsecp256k1
 #CONFIG += embed_translations
-
-LIBS += -lgrpc++ -lgrpc -lprotobuf -lpthread -lgrpc -laddress_sorting -lre2 -lupb -lcares -lz -lgpr -lssl -lcrypto -labsl_raw_hash_set -labsl_hashtablez_sampler -labsl_hash -labsl_city -labsl_low_level_hash -labsl_statusor -labsl_status -labsl_cord -labsl_cordz_info -labsl_cord_internal -labsl_cordz_functions -labsl_exponential_biased -labsl_cordz_handle -labsl_bad_optional_access -labsl_str_format_internal -labsl_synchronization -labsl_graphcycles_internal -labsl_stacktrace -labsl_symbolize -labsl_debugging_internal -labsl_demangle_internal -labsl_malloc_internal -labsl_time -labsl_civil_time -labsl_strings -labsl_strings_internal -lrt -labsl_base -labsl_spinlock_wait -labsl_int128 -labsl_throw_delegate -labsl_time_zone -labsl_bad_variant_access -labsl_raw_logging_internal -labsl_log_severity
-
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

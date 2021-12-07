@@ -37,9 +37,9 @@ std::string Base58Encode(const unsigned char* data,size_t length)
   }
   std::string result;
   for (size_t i = 0; i < (length - 1) && !data[i]; i++)
-    result.push_back(AlphaMap[0]);
+    result.push_back(Base58Map[0]);
   for (size_t i = 0; i < digitslen; i++)
-    result.push_back(AlphaMap[digits[digitslen - 1 - i]]);
+    result.push_back(Base58Map[digits[digitslen - 1 - i]]);
   return result;
 }
 
