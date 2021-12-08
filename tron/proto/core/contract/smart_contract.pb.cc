@@ -75,7 +75,8 @@ constexpr SmartContract::SmartContract(
   , abi_(nullptr)
   , call_value_(int64_t{0})
   , consume_user_resource_percent_(int64_t{0})
-  , origin_energy_limit_(int64_t{0}){}
+  , origin_energy_limit_(int64_t{0})
+  , version_(0){}
 struct SmartContractDefaultTypeInternal {
   constexpr SmartContractDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -219,6 +220,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_core_2fcontract_2fsmart_5fcont
   PROTOBUF_FIELD_OFFSET(::protocol::SmartContract, origin_energy_limit_),
   PROTOBUF_FIELD_OFFSET(::protocol::SmartContract, code_hash_),
   PROTOBUF_FIELD_OFFSET(::protocol::SmartContract, trx_hash_),
+  PROTOBUF_FIELD_OFFSET(::protocol::SmartContract, version_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::CreateSmartContract, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -275,12 +277,12 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 8, -1, sizeof(::protocol::SmartContract_ABI_Entry)},
   { 21, -1, sizeof(::protocol::SmartContract_ABI)},
   { 27, -1, sizeof(::protocol::SmartContract)},
-  { 42, -1, sizeof(::protocol::CreateSmartContract)},
-  { 51, -1, sizeof(::protocol::TriggerSmartContract)},
-  { 62, -1, sizeof(::protocol::ClearABIContract)},
-  { 69, -1, sizeof(::protocol::UpdateSettingContract)},
-  { 77, -1, sizeof(::protocol::UpdateEnergyLimitContract)},
-  { 85, -1, sizeof(::protocol::SmartContractDataWrapper)},
+  { 43, -1, sizeof(::protocol::CreateSmartContract)},
+  { 52, -1, sizeof(::protocol::TriggerSmartContract)},
+  { 63, -1, sizeof(::protocol::ClearABIContract)},
+  { 70, -1, sizeof(::protocol::UpdateSettingContract)},
+  { 78, -1, sizeof(::protocol::UpdateEnergyLimitContract)},
+  { 86, -1, sizeof(::protocol::SmartContractDataWrapper)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -298,56 +300,57 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_core_2fcontract_2fsmart_5fcontract_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\"core/contract/smart_contract.proto\022\010pr"
-  "otocol\032\017core/Tron.proto\"\233\007\n\rSmartContrac"
+  "otocol\032\017core/Tron.proto\"\254\007\n\rSmartContrac"
   "t\022\026\n\016origin_address\030\001 \001(\014\022\030\n\020contract_ad"
   "dress\030\002 \001(\014\022(\n\003abi\030\003 \001(\0132\033.protocol.Smar"
   "tContract.ABI\022\020\n\010bytecode\030\004 \001(\014\022\022\n\ncall_"
   "value\030\005 \001(\003\022%\n\035consume_user_resource_per"
   "cent\030\006 \001(\003\022\014\n\004name\030\007 \001(\t\022\033\n\023origin_energ"
   "y_limit\030\010 \001(\003\022\021\n\tcode_hash\030\t \001(\014\022\020\n\010trx_"
-  "hash\030\n \001(\014\032\220\005\n\003ABI\0221\n\006entrys\030\001 \003(\0132!.pro"
-  "tocol.SmartContract.ABI.Entry\032\325\004\n\005Entry\022"
-  "\021\n\tanonymous\030\001 \001(\010\022\020\n\010constant\030\002 \001(\010\022\014\n\004"
-  "name\030\003 \001(\t\0227\n\006inputs\030\004 \003(\0132\'.protocol.Sm"
-  "artContract.ABI.Entry.Param\0228\n\007outputs\030\005"
-  " \003(\0132\'.protocol.SmartContract.ABI.Entry."
-  "Param\0229\n\004type\030\006 \001(\0162+.protocol.SmartCont"
-  "ract.ABI.Entry.EntryType\022\017\n\007payable\030\007 \001("
-  "\010\022N\n\017stateMutability\030\010 \001(\01625.protocol.Sm"
-  "artContract.ABI.Entry.StateMutabilityTyp"
-  "e\0324\n\005Param\022\017\n\007indexed\030\001 \001(\010\022\014\n\004name\030\002 \001("
-  "\t\022\014\n\004type\030\003 \001(\t\"q\n\tEntryType\022\024\n\020UnknownE"
-  "ntryType\020\000\022\017\n\013Constructor\020\001\022\014\n\010Function\020"
-  "\002\022\t\n\005Event\020\003\022\014\n\010Fallback\020\004\022\013\n\007Receive\020\005\022"
-  "\t\n\005Error\020\006\"a\n\023StateMutabilityType\022\031\n\025Unk"
-  "nownMutabilityType\020\000\022\010\n\004Pure\020\001\022\010\n\004View\020\002"
-  "\022\016\n\nNonpayable\020\003\022\013\n\007Payable\020\004\"\207\001\n\023Create"
-  "SmartContract\022\025\n\rowner_address\030\001 \001(\014\022-\n\014"
-  "new_contract\030\002 \001(\0132\027.protocol.SmartContr"
-  "act\022\030\n\020call_token_value\030\003 \001(\003\022\020\n\010token_i"
-  "d\030\004 \001(\003\"\225\001\n\024TriggerSmartContract\022\025\n\rowne"
-  "r_address\030\001 \001(\014\022\030\n\020contract_address\030\002 \001("
-  "\014\022\022\n\ncall_value\030\003 \001(\003\022\014\n\004data\030\004 \001(\014\022\030\n\020c"
-  "all_token_value\030\005 \001(\003\022\020\n\010token_id\030\006 \001(\003\""
-  "C\n\020ClearABIContract\022\025\n\rowner_address\030\001 \001"
-  "(\014\022\030\n\020contract_address\030\002 \001(\014\"o\n\025UpdateSe"
-  "ttingContract\022\025\n\rowner_address\030\001 \001(\014\022\030\n\020"
-  "contract_address\030\002 \001(\014\022%\n\035consume_user_r"
-  "esource_percent\030\003 \001(\003\"i\n\031UpdateEnergyLim"
-  "itContract\022\025\n\rowner_address\030\001 \001(\014\022\030\n\020con"
-  "tract_address\030\002 \001(\014\022\033\n\023origin_energy_lim"
-  "it\030\003 \001(\003\"`\n\030SmartContractDataWrapper\022/\n\016"
-  "smart_contract\030\001 \001(\0132\027.protocol.SmartCon"
-  "tract\022\023\n\013runtimecode\030\002 \001(\014BE\n\030org.tron.p"
-  "rotos.contractZ)github.com/tronprotocol/"
-  "grpc-gateway/coreb\006proto3"
+  "hash\030\n \001(\014\022\017\n\007version\030\013 \001(\005\032\220\005\n\003ABI\0221\n\006e"
+  "ntrys\030\001 \003(\0132!.protocol.SmartContract.ABI"
+  ".Entry\032\325\004\n\005Entry\022\021\n\tanonymous\030\001 \001(\010\022\020\n\010c"
+  "onstant\030\002 \001(\010\022\014\n\004name\030\003 \001(\t\0227\n\006inputs\030\004 "
+  "\003(\0132\'.protocol.SmartContract.ABI.Entry.P"
+  "aram\0228\n\007outputs\030\005 \003(\0132\'.protocol.SmartCo"
+  "ntract.ABI.Entry.Param\0229\n\004type\030\006 \001(\0162+.p"
+  "rotocol.SmartContract.ABI.Entry.EntryTyp"
+  "e\022\017\n\007payable\030\007 \001(\010\022N\n\017stateMutability\030\010 "
+  "\001(\01625.protocol.SmartContract.ABI.Entry.S"
+  "tateMutabilityType\0324\n\005Param\022\017\n\007indexed\030\001"
+  " \001(\010\022\014\n\004name\030\002 \001(\t\022\014\n\004type\030\003 \001(\t\"q\n\tEntr"
+  "yType\022\024\n\020UnknownEntryType\020\000\022\017\n\013Construct"
+  "or\020\001\022\014\n\010Function\020\002\022\t\n\005Event\020\003\022\014\n\010Fallbac"
+  "k\020\004\022\013\n\007Receive\020\005\022\t\n\005Error\020\006\"a\n\023StateMuta"
+  "bilityType\022\031\n\025UnknownMutabilityType\020\000\022\010\n"
+  "\004Pure\020\001\022\010\n\004View\020\002\022\016\n\nNonpayable\020\003\022\013\n\007Pay"
+  "able\020\004\"\207\001\n\023CreateSmartContract\022\025\n\rowner_"
+  "address\030\001 \001(\014\022-\n\014new_contract\030\002 \001(\0132\027.pr"
+  "otocol.SmartContract\022\030\n\020call_token_value"
+  "\030\003 \001(\003\022\020\n\010token_id\030\004 \001(\003\"\225\001\n\024TriggerSmar"
+  "tContract\022\025\n\rowner_address\030\001 \001(\014\022\030\n\020cont"
+  "ract_address\030\002 \001(\014\022\022\n\ncall_value\030\003 \001(\003\022\014"
+  "\n\004data\030\004 \001(\014\022\030\n\020call_token_value\030\005 \001(\003\022\020"
+  "\n\010token_id\030\006 \001(\003\"C\n\020ClearABIContract\022\025\n\r"
+  "owner_address\030\001 \001(\014\022\030\n\020contract_address\030"
+  "\002 \001(\014\"o\n\025UpdateSettingContract\022\025\n\rowner_"
+  "address\030\001 \001(\014\022\030\n\020contract_address\030\002 \001(\014\022"
+  "%\n\035consume_user_resource_percent\030\003 \001(\003\"i"
+  "\n\031UpdateEnergyLimitContract\022\025\n\rowner_add"
+  "ress\030\001 \001(\014\022\030\n\020contract_address\030\002 \001(\014\022\033\n\023"
+  "origin_energy_limit\030\003 \001(\003\"`\n\030SmartContra"
+  "ctDataWrapper\022/\n\016smart_contract\030\001 \001(\0132\027."
+  "protocol.SmartContract\022\023\n\013runtimecode\030\002 "
+  "\001(\014BE\n\030org.tron.protos.contractZ)github."
+  "com/tronprotocol/grpc-gateway/coreb\006prot"
+  "o3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_core_2fcontract_2fsmart_5fcontract_2eproto_deps[1] = {
   &::descriptor_table_core_2fTron_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_core_2fcontract_2fsmart_5fcontract_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_core_2fcontract_2fsmart_5fcontract_2eproto = {
-  false, false, 1745, descriptor_table_protodef_core_2fcontract_2fsmart_5fcontract_2eproto, "core/contract/smart_contract.proto", 
+  false, false, 1762, descriptor_table_protodef_core_2fcontract_2fsmart_5fcontract_2eproto, "core/contract/smart_contract.proto", 
   &descriptor_table_core_2fcontract_2fsmart_5fcontract_2eproto_once, descriptor_table_core_2fcontract_2fsmart_5fcontract_2eproto_deps, 1, 10,
   schemas, file_default_instances, TableStruct_core_2fcontract_2fsmart_5fcontract_2eproto::offsets,
   file_level_metadata_core_2fcontract_2fsmart_5fcontract_2eproto, file_level_enum_descriptors_core_2fcontract_2fsmart_5fcontract_2eproto, file_level_service_descriptors_core_2fcontract_2fsmart_5fcontract_2eproto,
@@ -1325,8 +1328,8 @@ SmartContract::SmartContract(const SmartContract& from)
     abi_ = nullptr;
   }
   ::memcpy(&call_value_, &from.call_value_,
-    static_cast<size_t>(reinterpret_cast<char*>(&origin_energy_limit_) -
-    reinterpret_cast<char*>(&call_value_)) + sizeof(origin_energy_limit_));
+    static_cast<size_t>(reinterpret_cast<char*>(&version_) -
+    reinterpret_cast<char*>(&call_value_)) + sizeof(version_));
   // @@protoc_insertion_point(copy_constructor:protocol.SmartContract)
 }
 
@@ -1339,8 +1342,8 @@ code_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAl
 trx_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&abi_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&origin_energy_limit_) -
-    reinterpret_cast<char*>(&abi_)) + sizeof(origin_energy_limit_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&version_) -
+    reinterpret_cast<char*>(&abi_)) + sizeof(version_));
 }
 
 SmartContract::~SmartContract() {
@@ -1388,8 +1391,8 @@ void SmartContract::Clear() {
   }
   abi_ = nullptr;
   ::memset(&call_value_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&origin_energy_limit_) -
-      reinterpret_cast<char*>(&call_value_)) + sizeof(origin_energy_limit_));
+      reinterpret_cast<char*>(&version_) -
+      reinterpret_cast<char*>(&call_value_)) + sizeof(version_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1473,6 +1476,13 @@ const char* SmartContract::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
           auto str = _internal_mutable_trx_hash();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 version = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 88)) {
+          version_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1571,6 +1581,12 @@ failure:
         10, this->_internal_trx_hash(), target);
   }
 
+  // int32 version = 11;
+  if (this->_internal_version() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(11, this->_internal_version(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1657,6 +1673,13 @@ size_t SmartContract::ByteSizeLong() const {
         this->_internal_origin_energy_limit());
   }
 
+  // int32 version = 11;
+  if (this->_internal_version() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_version());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -1715,6 +1738,9 @@ void SmartContract::MergeFrom(const SmartContract& from) {
   if (from._internal_origin_energy_limit() != 0) {
     _internal_set_origin_energy_limit(from._internal_origin_energy_limit());
   }
+  if (from._internal_version() != 0) {
+    _internal_set_version(from._internal_version());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1763,8 +1789,8 @@ void SmartContract::InternalSwap(SmartContract* other) {
       &other->trx_hash_, other->GetArenaForAllocation()
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SmartContract, origin_energy_limit_)
-      + sizeof(SmartContract::origin_energy_limit_)
+      PROTOBUF_FIELD_OFFSET(SmartContract, version_)
+      + sizeof(SmartContract::version_)
       - PROTOBUF_FIELD_OFFSET(SmartContract, abi_)>(
           reinterpret_cast<char*>(&abi_),
           reinterpret_cast<char*>(&other->abi_));

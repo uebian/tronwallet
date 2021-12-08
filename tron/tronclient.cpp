@@ -1,17 +1,24 @@
 #include "tronclient.h"
-#include "tron/proto/api/api.grpc.pb.h"
+#include <stdexcept>
 
-TronClient::TronClient()
+TronClient::TronClient(const std::string& target)
 {
-
+    std::cout<<"Connecting to: "<<target<<std::endl;
+    channel=grpc::CreateChannel(target, grpc::InsecureChannelCredentials());
 }
 
-protocol::Block TronClient::GetNowBlock()
+protocol::BlockExtention TronClient::GetNowBlock()
 {
-    protocol::Block block;
-    auto stub=protocol::Wallet::NewStub(channel);
+    protocol::BlockExtention block;
+    auto stub=protocol::WalletSolidity::NewStub(channel);
     protocol::EmptyMessage msg;
     grpc::ClientContext ctx;
-    stub->GetNowBlock(&ctx,msg,&block);
+    auto status=stub->GetNowBlock2(&ctx,msg,&block);
+    if(!status.ok())
+    {
+        throw std::runtime_error(status.error_message());
+    }
     return block;
 }
+
+TronClient* tronClient;

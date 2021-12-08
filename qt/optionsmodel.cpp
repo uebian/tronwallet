@@ -2,10 +2,6 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
-#endif
-
 #include <qt/optionsmodel.h>
 
 #include <qt/guiconstants.h>
@@ -13,7 +9,6 @@
 
 #include <QDebug>
 #include <QLatin1Char>
-#include <QSettings>
 #include <QStringList>
 
 
@@ -143,20 +138,9 @@ int OptionsModel::rowCount(const QModelIndex & parent) const
     return OptionIDRowCount;
 }
 
-struct ProxySetting {
-    bool is_set;
-    QString ip;
-    QString port;
-};
-
-struct FullNodeSetting {
-    QString ip;
-    QString port;
-};
-
-static ProxySetting GetFullNodeSetting(QSettings &settings, const QString &name)
+static FullNodeSetting GetFullNodeSetting(QSettings &settings, const QString &name)
 {
-    static const ProxySetting default_val = {false, DEFAULT_GUI_FULLNODE_HOST, QString("%1").arg(DEFAULT_GUI_FULLNODE_PORT)};
+    static const FullNodeSetting default_val = {DEFAULT_GUI_FULLNODE_HOST, QString("%1").arg(DEFAULT_GUI_FULLNODE_PORT)};
     // Handle the case that the setting is not set at all
     if (!settings.contains(name)) {
         return default_val;
@@ -164,7 +148,7 @@ static ProxySetting GetFullNodeSetting(QSettings &settings, const QString &name)
     // contains IP at index 0 and port at index 1
     QStringList ip_port = GUIUtil::SplitSkipEmptyParts(settings.value(name).toString(), ":");
     if (ip_port.size() == 2) {
-        return {true, ip_port.at(0), ip_port.at(1)};
+        return {ip_port.at(0), ip_port.at(1)};
     } else { // Invalid: return default
         return default_val;
     }
@@ -186,7 +170,7 @@ static ProxySetting GetProxySetting(QSettings &settings, const QString &name)
     }
 }
 
-static void SetFullNodeSetting(QSettings &settings, const QString &name, const ProxySetting &ip_port)
+static void SetFullNodeSetting(QSettings &settings, const QString &name, const FullNodeSetting &ip_port)
 {
     settings.setValue(name, QString{ip_port.ip + QLatin1Char(':') + ip_port.port});
 }
@@ -277,7 +261,7 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             break;
         case FullNodeIP:{
             auto ip_port = GetFullNodeSetting(settings, "addrFullNode");
-            if (!ip_port.is_set || ip_port.ip != value.toString()) {
+            if (ip_port.ip != value.toString()) {
                 ip_port.ip = value.toString();
                 SetFullNodeSetting(settings, "addrFullNode", ip_port);
                 setRestartRequired(true);
@@ -286,7 +270,7 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
         break;
         case FullNodePort: {
             auto ip_port = GetFullNodeSetting(settings, "addrFullNode");
-            if (!ip_port.is_set || ip_port.port != value.toString()) {
+            if (ip_port.port != value.toString()) {
                 ip_port.port = value.toString();
                 SetFullNodeSetting(settings, "addrFullNode", ip_port);
                 setRestartRequired(true);

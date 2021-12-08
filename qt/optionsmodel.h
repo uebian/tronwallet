@@ -9,12 +9,20 @@
 #include <qt/guiconstants.h>
 
 #include <QAbstractListModel>
+#include <QSettings>
 
 #include <assert.h>
 
-namespace interfaces {
-class Node;
-}
+struct ProxySetting {
+    bool is_set;
+    QString ip;
+    QString port;
+};
+
+struct FullNodeSetting {
+    QString ip;
+    QString port;
+};
 
 static constexpr uint16_t DEFAULT_GUI_PROXY_PORT = 9050;
 static const char *DEFAULT_GUI_PROXY_HOST = "127.0.0.1";
@@ -95,11 +103,8 @@ public:
     void setRestartRequired(bool fRequired);
     bool isRestartRequired() const;
 
-    interfaces::Node& node() const { assert(m_node); return *m_node; }
-    void setNode(interfaces::Node& node) { assert(!m_node); m_node = &node; }
 
 private:
-    interfaces::Node* m_node = nullptr;
     /* Qt-only settings */
     bool m_show_tray_icon;
     bool fMinimizeToTray;

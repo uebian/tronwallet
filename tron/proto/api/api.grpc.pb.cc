@@ -68,6 +68,13 @@ static const char* Wallet_method_names[] = {
   "/protocol.Wallet/ExchangeInject",
   "/protocol.Wallet/ExchangeWithdraw",
   "/protocol.Wallet/ExchangeTransaction",
+  "/protocol.Wallet/MarketSellAsset",
+  "/protocol.Wallet/MarketCancelOrder",
+  "/protocol.Wallet/GetMarketOrderById",
+  "/protocol.Wallet/GetMarketOrderByAccount",
+  "/protocol.Wallet/GetMarketPriceByPair",
+  "/protocol.Wallet/GetMarketOrderListByPair",
+  "/protocol.Wallet/GetMarketPairList",
   "/protocol.Wallet/ListNodes",
   "/protocol.Wallet/GetAssetIssueByAccount",
   "/protocol.Wallet/GetAccountNet",
@@ -94,6 +101,7 @@ static const char* Wallet_method_names[] = {
   "/protocol.Wallet/ClearContractABI",
   "/protocol.Wallet/ListWitnesses",
   "/protocol.Wallet/GetDelegatedResource",
+  "/protocol.Wallet/GetDelegatedResourceAccountIndex",
   "/protocol.Wallet/ListProposals",
   "/protocol.Wallet/GetPaginatedProposalList",
   "/protocol.Wallet/GetProposalById",
@@ -149,13 +157,10 @@ static const char* Wallet_method_names[] = {
   "/protocol.Wallet/GetTriggerInputForShieldedTRC20Contract",
   "/protocol.Wallet/CreateCommonTransaction",
   "/protocol.Wallet/GetTransactionInfoByBlockNum",
-  "/protocol.Wallet/MarketSellAsset",
-  "/protocol.Wallet/MarketCancelOrder",
-  "/protocol.Wallet/GetMarketOrderByAccount",
-  "/protocol.Wallet/GetMarketOrderById",
-  "/protocol.Wallet/GetMarketPriceByPair",
-  "/protocol.Wallet/GetMarketOrderListByPair",
-  "/protocol.Wallet/GetMarketPairList",
+  "/protocol.Wallet/GetBurnTrx",
+  "/protocol.Wallet/GetTransactionFromPending",
+  "/protocol.Wallet/GetTransactionListFromPending",
+  "/protocol.Wallet/GetPendingSize",
 };
 
 std::unique_ptr< Wallet::Stub> Wallet::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -211,94 +216,99 @@ Wallet::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, co
   , rpcmethod_ExchangeInject_(Wallet_method_names[43], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ExchangeWithdraw_(Wallet_method_names[44], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ExchangeTransaction_(Wallet_method_names[45], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ListNodes_(Wallet_method_names[46], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetIssueByAccount_(Wallet_method_names[47], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAccountNet_(Wallet_method_names[48], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAccountResource_(Wallet_method_names[49], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetIssueByName_(Wallet_method_names[50], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetIssueListByName_(Wallet_method_names[51], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetIssueById_(Wallet_method_names[52], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetNowBlock_(Wallet_method_names[53], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetNowBlock2_(Wallet_method_names[54], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockByNum_(Wallet_method_names[55], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockByNum2_(Wallet_method_names[56], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionCountByBlockNum_(Wallet_method_names[57], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockById_(Wallet_method_names[58], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockByLimitNext_(Wallet_method_names[59], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockByLimitNext2_(Wallet_method_names[60], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockByLatestNum_(Wallet_method_names[61], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBlockByLatestNum2_(Wallet_method_names[62], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionById_(Wallet_method_names[63], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DeployContract_(Wallet_method_names[64], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetContract_(Wallet_method_names[65], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetContractInfo_(Wallet_method_names[66], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TriggerContract_(Wallet_method_names[67], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TriggerConstantContract_(Wallet_method_names[68], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ClearContractABI_(Wallet_method_names[69], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ListWitnesses_(Wallet_method_names[70], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetDelegatedResource_(Wallet_method_names[71], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ListProposals_(Wallet_method_names[72], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetPaginatedProposalList_(Wallet_method_names[73], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetProposalById_(Wallet_method_names[74], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ListExchanges_(Wallet_method_names[75], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetPaginatedExchangeList_(Wallet_method_names[76], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetExchangeById_(Wallet_method_names[77], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetChainParameters_(Wallet_method_names[78], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetIssueList_(Wallet_method_names[79], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetPaginatedAssetIssueList_(Wallet_method_names[80], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TotalTransaction_(Wallet_method_names[81], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetNextMaintenanceTime_(Wallet_method_names[82], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionSign_(Wallet_method_names[83], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionSign2_(Wallet_method_names[84], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateAddress_(Wallet_method_names[85], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EasyTransferAsset_(Wallet_method_names[86], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EasyTransferAssetByPrivate_(Wallet_method_names[87], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EasyTransfer_(Wallet_method_names[88], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EasyTransferByPrivate_(Wallet_method_names[89], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GenerateAddress_(Wallet_method_names[90], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionInfoById_(Wallet_method_names[91], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AccountPermissionUpdate_(Wallet_method_names[92], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddSign_(Wallet_method_names[93], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionSignWeight_(Wallet_method_names[94], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionApprovedList_(Wallet_method_names[95], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetNodeInfo_(Wallet_method_names[96], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetRewardInfo_(Wallet_method_names[97], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBrokerageInfo_(Wallet_method_names[98], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_UpdateBrokerage_(Wallet_method_names[99], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateShieldedTransaction_(Wallet_method_names[100], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMerkleTreeVoucherInfo_(Wallet_method_names[101], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ScanNoteByIvk_(Wallet_method_names[102], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ScanAndMarkNoteByIvk_(Wallet_method_names[103], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ScanNoteByOvk_(Wallet_method_names[104], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSpendingKey_(Wallet_method_names[105], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetExpandedSpendingKey_(Wallet_method_names[106], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAkFromAsk_(Wallet_method_names[107], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetNkFromNsk_(Wallet_method_names[108], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetIncomingViewingKey_(Wallet_method_names[109], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetDiversifier_(Wallet_method_names[110], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetNewShieldedAddress_(Wallet_method_names[111], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetZenPaymentAddress_(Wallet_method_names[112], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetRcm_(Wallet_method_names[113], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_IsSpend_(Wallet_method_names[114], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateShieldedTransactionWithoutSpendAuthSig_(Wallet_method_names[115], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetShieldTransactionHash_(Wallet_method_names[116], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateSpendAuthSig_(Wallet_method_names[117], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateShieldNullifier_(Wallet_method_names[118], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateShieldedContractParameters_(Wallet_method_names[119], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateShieldedContractParametersWithoutAsk_(Wallet_method_names[120], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ScanShieldedTRC20NotesByIvk_(Wallet_method_names[121], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ScanShieldedTRC20NotesByOvk_(Wallet_method_names[122], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_IsShieldedTRC20ContractNoteSpent_(Wallet_method_names[123], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTriggerInputForShieldedTRC20Contract_(Wallet_method_names[124], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateCommonTransaction_(Wallet_method_names[125], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTransactionInfoByBlockNum_(Wallet_method_names[126], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_MarketSellAsset_(Wallet_method_names[127], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_MarketCancelOrder_(Wallet_method_names[128], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketOrderByAccount_(Wallet_method_names[129], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketOrderById_(Wallet_method_names[130], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketPriceByPair_(Wallet_method_names[131], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketOrderListByPair_(Wallet_method_names[132], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketPairList_(Wallet_method_names[133], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_MarketSellAsset_(Wallet_method_names[46], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_MarketCancelOrder_(Wallet_method_names[47], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketOrderById_(Wallet_method_names[48], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketOrderByAccount_(Wallet_method_names[49], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketPriceByPair_(Wallet_method_names[50], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketOrderListByPair_(Wallet_method_names[51], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketPairList_(Wallet_method_names[52], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListNodes_(Wallet_method_names[53], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetIssueByAccount_(Wallet_method_names[54], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAccountNet_(Wallet_method_names[55], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAccountResource_(Wallet_method_names[56], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetIssueByName_(Wallet_method_names[57], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetIssueListByName_(Wallet_method_names[58], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetIssueById_(Wallet_method_names[59], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetNowBlock_(Wallet_method_names[60], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetNowBlock2_(Wallet_method_names[61], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockByNum_(Wallet_method_names[62], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockByNum2_(Wallet_method_names[63], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionCountByBlockNum_(Wallet_method_names[64], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockById_(Wallet_method_names[65], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockByLimitNext_(Wallet_method_names[66], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockByLimitNext2_(Wallet_method_names[67], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockByLatestNum_(Wallet_method_names[68], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlockByLatestNum2_(Wallet_method_names[69], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionById_(Wallet_method_names[70], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DeployContract_(Wallet_method_names[71], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetContract_(Wallet_method_names[72], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetContractInfo_(Wallet_method_names[73], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TriggerContract_(Wallet_method_names[74], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TriggerConstantContract_(Wallet_method_names[75], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ClearContractABI_(Wallet_method_names[76], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListWitnesses_(Wallet_method_names[77], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetDelegatedResource_(Wallet_method_names[78], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetDelegatedResourceAccountIndex_(Wallet_method_names[79], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListProposals_(Wallet_method_names[80], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetPaginatedProposalList_(Wallet_method_names[81], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetProposalById_(Wallet_method_names[82], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListExchanges_(Wallet_method_names[83], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetPaginatedExchangeList_(Wallet_method_names[84], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetExchangeById_(Wallet_method_names[85], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetChainParameters_(Wallet_method_names[86], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetIssueList_(Wallet_method_names[87], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetPaginatedAssetIssueList_(Wallet_method_names[88], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TotalTransaction_(Wallet_method_names[89], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetNextMaintenanceTime_(Wallet_method_names[90], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionSign_(Wallet_method_names[91], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionSign2_(Wallet_method_names[92], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateAddress_(Wallet_method_names[93], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EasyTransferAsset_(Wallet_method_names[94], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EasyTransferAssetByPrivate_(Wallet_method_names[95], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EasyTransfer_(Wallet_method_names[96], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EasyTransferByPrivate_(Wallet_method_names[97], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GenerateAddress_(Wallet_method_names[98], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionInfoById_(Wallet_method_names[99], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AccountPermissionUpdate_(Wallet_method_names[100], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddSign_(Wallet_method_names[101], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionSignWeight_(Wallet_method_names[102], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionApprovedList_(Wallet_method_names[103], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetNodeInfo_(Wallet_method_names[104], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRewardInfo_(Wallet_method_names[105], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBrokerageInfo_(Wallet_method_names[106], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UpdateBrokerage_(Wallet_method_names[107], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateShieldedTransaction_(Wallet_method_names[108], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMerkleTreeVoucherInfo_(Wallet_method_names[109], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ScanNoteByIvk_(Wallet_method_names[110], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ScanAndMarkNoteByIvk_(Wallet_method_names[111], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ScanNoteByOvk_(Wallet_method_names[112], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSpendingKey_(Wallet_method_names[113], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetExpandedSpendingKey_(Wallet_method_names[114], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAkFromAsk_(Wallet_method_names[115], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetNkFromNsk_(Wallet_method_names[116], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetIncomingViewingKey_(Wallet_method_names[117], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetDiversifier_(Wallet_method_names[118], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetNewShieldedAddress_(Wallet_method_names[119], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetZenPaymentAddress_(Wallet_method_names[120], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRcm_(Wallet_method_names[121], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_IsSpend_(Wallet_method_names[122], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateShieldedTransactionWithoutSpendAuthSig_(Wallet_method_names[123], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetShieldTransactionHash_(Wallet_method_names[124], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateSpendAuthSig_(Wallet_method_names[125], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateShieldNullifier_(Wallet_method_names[126], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateShieldedContractParameters_(Wallet_method_names[127], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateShieldedContractParametersWithoutAsk_(Wallet_method_names[128], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ScanShieldedTRC20NotesByIvk_(Wallet_method_names[129], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ScanShieldedTRC20NotesByOvk_(Wallet_method_names[130], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_IsShieldedTRC20ContractNoteSpent_(Wallet_method_names[131], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTriggerInputForShieldedTRC20Contract_(Wallet_method_names[132], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateCommonTransaction_(Wallet_method_names[133], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionInfoByBlockNum_(Wallet_method_names[134], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBurnTrx_(Wallet_method_names[135], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionFromPending_(Wallet_method_names[136], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTransactionListFromPending_(Wallet_method_names[137], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetPendingSize_(Wallet_method_names[138], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status Wallet::Stub::GetAccount(::grpc::ClientContext* context, const ::protocol::Account& request, ::protocol::Account* response) {
@@ -1359,6 +1369,167 @@ void Wallet::Stub::async::ExchangeTransaction(::grpc::ClientContext* context, co
   return result;
 }
 
+::grpc::Status Wallet::Stub::MarketSellAsset(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract& request, ::protocol::TransactionExtention* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketSellAssetContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_MarketSellAsset_, context, request, response);
+}
+
+void Wallet::Stub::async::MarketSellAsset(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract* request, ::protocol::TransactionExtention* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketSellAssetContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketSellAsset_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::MarketSellAsset(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract* request, ::protocol::TransactionExtention* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketSellAsset_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::PrepareAsyncMarketSellAssetRaw(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::TransactionExtention, ::protocol::MarketSellAssetContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_MarketSellAsset_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::AsyncMarketSellAssetRaw(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncMarketSellAssetRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::MarketCancelOrder(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract& request, ::protocol::TransactionExtention* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketCancelOrderContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_MarketCancelOrder_, context, request, response);
+}
+
+void Wallet::Stub::async::MarketCancelOrder(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract* request, ::protocol::TransactionExtention* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketCancelOrderContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketCancelOrder_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::MarketCancelOrder(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract* request, ::protocol::TransactionExtention* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketCancelOrder_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::PrepareAsyncMarketCancelOrderRaw(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::TransactionExtention, ::protocol::MarketCancelOrderContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_MarketCancelOrder_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::AsyncMarketCancelOrderRaw(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncMarketCancelOrderRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrder* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderById_, context, request, response);
+}
+
+void Wallet::Stub::async::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderById_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderById_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrder>* Wallet::Stub::PrepareAsyncGetMarketOrderByIdRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrder, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderById_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrder>* Wallet::Stub::AsyncGetMarketOrderByIdRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMarketOrderByIdRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrderList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderByAccount_, context, request, response);
+}
+
+void Wallet::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::PrepareAsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderList, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderByAccount_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::AsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMarketOrderByAccountRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::GetMarketPriceByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::protocol::MarketPriceList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketPriceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketPriceByPair_, context, request, response);
+}
+
+void Wallet::Stub::async::GetMarketPriceByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketPriceList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketPriceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPriceByPair_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::GetMarketPriceByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketPriceList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPriceByPair_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketPriceList>* Wallet::Stub::PrepareAsyncGetMarketPriceByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketPriceList, ::protocol::MarketOrderPair, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketPriceByPair_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketPriceList>* Wallet::Stub::AsyncGetMarketPriceByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMarketPriceByPairRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::GetMarketOrderListByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::protocol::MarketOrderList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderListByPair_, context, request, response);
+}
+
+void Wallet::Stub::async::GetMarketOrderListByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketOrderList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderListByPair_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::GetMarketOrderListByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketOrderList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderListByPair_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::PrepareAsyncGetMarketOrderListByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderList, ::protocol::MarketOrderPair, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderListByPair_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::AsyncGetMarketOrderListByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMarketOrderListByPairRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::GetMarketPairList(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::MarketOrderPairList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::MarketOrderPairList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketPairList_, context, request, response);
+}
+
+void Wallet::Stub::async::GetMarketPairList(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::MarketOrderPairList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPairList_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::GetMarketPairList(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPairList_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderPairList>* Wallet::Stub::PrepareAsyncGetMarketPairListRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderPairList, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketPairList_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderPairList>* Wallet::Stub::AsyncGetMarketPairListRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMarketPairListRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status Wallet::Stub::ListNodes(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::NodeList* response) {
   return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::NodeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ListNodes_, context, request, response);
 }
@@ -1953,6 +2124,29 @@ void Wallet::Stub::async::GetDelegatedResource(::grpc::ClientContext* context, c
 ::grpc::ClientAsyncResponseReader< ::protocol::DelegatedResourceList>* Wallet::Stub::AsyncGetDelegatedResourceRaw(::grpc::ClientContext* context, const ::protocol::DelegatedResourceMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetDelegatedResourceRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Wallet::Stub::GetDelegatedResourceAccountIndex(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::DelegatedResourceAccountIndex* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::DelegatedResourceAccountIndex, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetDelegatedResourceAccountIndex_, context, request, response);
+}
+
+void Wallet::Stub::async::GetDelegatedResourceAccountIndex(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::DelegatedResourceAccountIndex* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::DelegatedResourceAccountIndex, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetDelegatedResourceAccountIndex_, context, request, response, std::move(f));
+}
+
+void Wallet::Stub::async::GetDelegatedResourceAccountIndex(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::DelegatedResourceAccountIndex* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetDelegatedResourceAccountIndex_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::DelegatedResourceAccountIndex>* Wallet::Stub::PrepareAsyncGetDelegatedResourceAccountIndexRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::DelegatedResourceAccountIndex, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetDelegatedResourceAccountIndex_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::DelegatedResourceAccountIndex>* Wallet::Stub::AsyncGetDelegatedResourceAccountIndexRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetDelegatedResourceAccountIndexRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -3222,163 +3416,94 @@ void Wallet::Stub::async::GetTransactionInfoByBlockNum(::grpc::ClientContext* co
   return result;
 }
 
-::grpc::Status Wallet::Stub::MarketSellAsset(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract& request, ::protocol::TransactionExtention* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketSellAssetContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_MarketSellAsset_, context, request, response);
+::grpc::Status Wallet::Stub::GetBurnTrx(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::NumberMessage* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBurnTrx_, context, request, response);
 }
 
-void Wallet::Stub::async::MarketSellAsset(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract* request, ::protocol::TransactionExtention* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketSellAssetContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketSellAsset_, context, request, response, std::move(f));
+void Wallet::Stub::async::GetBurnTrx(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBurnTrx_, context, request, response, std::move(f));
 }
 
-void Wallet::Stub::async::MarketSellAsset(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract* request, ::protocol::TransactionExtention* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketSellAsset_, context, request, response, reactor);
+void Wallet::Stub::async::GetBurnTrx(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBurnTrx_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::PrepareAsyncMarketSellAssetRaw(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::TransactionExtention, ::protocol::MarketSellAssetContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_MarketSellAsset_, context, request);
+::grpc::ClientAsyncResponseReader< ::protocol::NumberMessage>* Wallet::Stub::PrepareAsyncGetBurnTrxRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::NumberMessage, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBurnTrx_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::AsyncMarketSellAssetRaw(::grpc::ClientContext* context, const ::protocol::MarketSellAssetContract& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::protocol::NumberMessage>* Wallet::Stub::AsyncGetBurnTrxRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncMarketSellAssetRaw(context, request, cq);
+    this->PrepareAsyncGetBurnTrxRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status Wallet::Stub::MarketCancelOrder(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract& request, ::protocol::TransactionExtention* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketCancelOrderContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_MarketCancelOrder_, context, request, response);
+::grpc::Status Wallet::Stub::GetTransactionFromPending(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::Transaction* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetTransactionFromPending_, context, request, response);
 }
 
-void Wallet::Stub::async::MarketCancelOrder(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract* request, ::protocol::TransactionExtention* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketCancelOrderContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketCancelOrder_, context, request, response, std::move(f));
+void Wallet::Stub::async::GetTransactionFromPending(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::Transaction* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetTransactionFromPending_, context, request, response, std::move(f));
 }
 
-void Wallet::Stub::async::MarketCancelOrder(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract* request, ::protocol::TransactionExtention* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_MarketCancelOrder_, context, request, response, reactor);
+void Wallet::Stub::async::GetTransactionFromPending(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::Transaction* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetTransactionFromPending_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::PrepareAsyncMarketCancelOrderRaw(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::TransactionExtention, ::protocol::MarketCancelOrderContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_MarketCancelOrder_, context, request);
+::grpc::ClientAsyncResponseReader< ::protocol::Transaction>* Wallet::Stub::PrepareAsyncGetTransactionFromPendingRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::Transaction, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetTransactionFromPending_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::TransactionExtention>* Wallet::Stub::AsyncMarketCancelOrderRaw(::grpc::ClientContext* context, const ::protocol::MarketCancelOrderContract& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::protocol::Transaction>* Wallet::Stub::AsyncGetTransactionFromPendingRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncMarketCancelOrderRaw(context, request, cq);
+    this->PrepareAsyncGetTransactionFromPendingRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status Wallet::Stub::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrderList* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderByAccount_, context, request, response);
+::grpc::Status Wallet::Stub::GetTransactionListFromPending(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::TransactionIdList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::TransactionIdList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetTransactionListFromPending_, context, request, response);
 }
 
-void Wallet::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, std::move(f));
+void Wallet::Stub::async::GetTransactionListFromPending(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::TransactionIdList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::TransactionIdList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetTransactionListFromPending_, context, request, response, std::move(f));
 }
 
-void Wallet::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, reactor);
+void Wallet::Stub::async::GetTransactionListFromPending(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::TransactionIdList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetTransactionListFromPending_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::PrepareAsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderList, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderByAccount_, context, request);
+::grpc::ClientAsyncResponseReader< ::protocol::TransactionIdList>* Wallet::Stub::PrepareAsyncGetTransactionListFromPendingRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::TransactionIdList, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetTransactionListFromPending_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::AsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::protocol::TransactionIdList>* Wallet::Stub::AsyncGetTransactionListFromPendingRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncGetMarketOrderByAccountRaw(context, request, cq);
+    this->PrepareAsyncGetTransactionListFromPendingRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status Wallet::Stub::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrder* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderById_, context, request, response);
+::grpc::Status Wallet::Stub::GetPendingSize(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::NumberMessage* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPendingSize_, context, request, response);
 }
 
-void Wallet::Stub::async::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderById_, context, request, response, std::move(f));
+void Wallet::Stub::async::GetPendingSize(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPendingSize_, context, request, response, std::move(f));
 }
 
-void Wallet::Stub::async::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderById_, context, request, response, reactor);
+void Wallet::Stub::async::GetPendingSize(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPendingSize_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrder>* Wallet::Stub::PrepareAsyncGetMarketOrderByIdRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrder, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderById_, context, request);
+::grpc::ClientAsyncResponseReader< ::protocol::NumberMessage>* Wallet::Stub::PrepareAsyncGetPendingSizeRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::NumberMessage, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPendingSize_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrder>* Wallet::Stub::AsyncGetMarketOrderByIdRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::protocol::NumberMessage>* Wallet::Stub::AsyncGetPendingSizeRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncGetMarketOrderByIdRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status Wallet::Stub::GetMarketPriceByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::protocol::MarketPriceList* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketPriceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketPriceByPair_, context, request, response);
-}
-
-void Wallet::Stub::async::GetMarketPriceByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketPriceList* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketPriceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPriceByPair_, context, request, response, std::move(f));
-}
-
-void Wallet::Stub::async::GetMarketPriceByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketPriceList* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPriceByPair_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketPriceList>* Wallet::Stub::PrepareAsyncGetMarketPriceByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketPriceList, ::protocol::MarketOrderPair, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketPriceByPair_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketPriceList>* Wallet::Stub::AsyncGetMarketPriceByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetMarketPriceByPairRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status Wallet::Stub::GetMarketOrderListByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::protocol::MarketOrderList* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderListByPair_, context, request, response);
-}
-
-void Wallet::Stub::async::GetMarketOrderListByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketOrderList* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::MarketOrderPair, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderListByPair_, context, request, response, std::move(f));
-}
-
-void Wallet::Stub::async::GetMarketOrderListByPair(::grpc::ClientContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketOrderList* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderListByPair_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::PrepareAsyncGetMarketOrderListByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderList, ::protocol::MarketOrderPair, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderListByPair_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* Wallet::Stub::AsyncGetMarketOrderListByPairRaw(::grpc::ClientContext* context, const ::protocol::MarketOrderPair& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetMarketOrderListByPairRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status Wallet::Stub::GetMarketPairList(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::MarketOrderPairList* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::MarketOrderPairList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketPairList_, context, request, response);
-}
-
-void Wallet::Stub::async::GetMarketPairList(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::MarketOrderPairList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPairList_, context, request, response, std::move(f));
-}
-
-void Wallet::Stub::async::GetMarketPairList(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketPairList_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderPairList>* Wallet::Stub::PrepareAsyncGetMarketPairListRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderPairList, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketPairList_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderPairList>* Wallet::Stub::AsyncGetMarketPairListRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetMarketPairListRaw(context, request, cq);
+    this->PrepareAsyncGetPendingSizeRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -3847,816 +3972,6 @@ Wallet::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Wallet_method_names[46],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NodeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::NodeList* resp) {
-               return service->ListNodes(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[47],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Account, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Account* req,
-             ::protocol::AssetIssueList* resp) {
-               return service->GetAssetIssueByAccount(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[48],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Account, ::protocol::AccountNetMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Account* req,
-             ::protocol::AccountNetMessage* resp) {
-               return service->GetAccountNet(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[49],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Account, ::protocol::AccountResourceMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Account* req,
-             ::protocol::AccountResourceMessage* resp) {
-               return service->GetAccountResource(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[50],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::AssetIssueContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::AssetIssueContract* resp) {
-               return service->GetAssetIssueByName(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[51],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::AssetIssueList* resp) {
-               return service->GetAssetIssueListByName(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[52],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::AssetIssueContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::AssetIssueContract* resp) {
-               return service->GetAssetIssueById(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[53],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::Block, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::Block* resp) {
-               return service->GetNowBlock(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[54],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::BlockExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::BlockExtention* resp) {
-               return service->GetNowBlock2(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[55],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::Block, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NumberMessage* req,
-             ::protocol::Block* resp) {
-               return service->GetBlockByNum(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[56],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::BlockExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NumberMessage* req,
-             ::protocol::BlockExtention* resp) {
-               return service->GetBlockByNum2(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[57],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NumberMessage* req,
-             ::protocol::NumberMessage* resp) {
-               return service->GetTransactionCountByBlockNum(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[58],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Block, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::Block* resp) {
-               return service->GetBlockById(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[59],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BlockLimit, ::protocol::BlockList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BlockLimit* req,
-             ::protocol::BlockList* resp) {
-               return service->GetBlockByLimitNext(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[60],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BlockLimit, ::protocol::BlockListExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BlockLimit* req,
-             ::protocol::BlockListExtention* resp) {
-               return service->GetBlockByLimitNext2(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[61],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::BlockList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NumberMessage* req,
-             ::protocol::BlockList* resp) {
-               return service->GetBlockByLatestNum(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[62],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::BlockListExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NumberMessage* req,
-             ::protocol::BlockListExtention* resp) {
-               return service->GetBlockByLatestNum2(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[63],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::Transaction* resp) {
-               return service->GetTransactionById(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[64],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::CreateSmartContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::CreateSmartContract* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->DeployContract(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[65],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::SmartContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::SmartContract* resp) {
-               return service->GetContract(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[66],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::SmartContractDataWrapper, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::SmartContractDataWrapper* resp) {
-               return service->GetContractInfo(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[67],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TriggerSmartContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::TriggerSmartContract* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->TriggerContract(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[68],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TriggerSmartContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::TriggerSmartContract* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->TriggerConstantContract(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[69],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::ClearABIContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::ClearABIContract* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->ClearContractABI(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[70],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::WitnessList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::WitnessList* resp) {
-               return service->ListWitnesses(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[71],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::DelegatedResourceMessage, ::protocol::DelegatedResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::DelegatedResourceMessage* req,
-             ::protocol::DelegatedResourceList* resp) {
-               return service->GetDelegatedResource(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[72],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ProposalList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::ProposalList* resp) {
-               return service->ListProposals(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[73],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PaginatedMessage, ::protocol::ProposalList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PaginatedMessage* req,
-             ::protocol::ProposalList* resp) {
-               return service->GetPaginatedProposalList(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[74],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Proposal, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::Proposal* resp) {
-               return service->GetProposalById(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[75],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ExchangeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::ExchangeList* resp) {
-               return service->ListExchanges(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[76],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PaginatedMessage, ::protocol::ExchangeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PaginatedMessage* req,
-             ::protocol::ExchangeList* resp) {
-               return service->GetPaginatedExchangeList(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[77],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Exchange, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::Exchange* resp) {
-               return service->GetExchangeById(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[78],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ChainParameters, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::ChainParameters* resp) {
-               return service->GetChainParameters(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[79],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::AssetIssueList* resp) {
-               return service->GetAssetIssueList(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[80],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PaginatedMessage, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PaginatedMessage* req,
-             ::protocol::AssetIssueList* resp) {
-               return service->GetPaginatedAssetIssueList(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[81],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::NumberMessage* resp) {
-               return service->TotalTransaction(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[82],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::NumberMessage* resp) {
-               return service->GetNextMaintenanceTime(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[83],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TransactionSign, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::TransactionSign* req,
-             ::protocol::Transaction* resp) {
-               return service->GetTransactionSign(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[84],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TransactionSign, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::TransactionSign* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->GetTransactionSign2(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[85],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::BytesMessage* resp) {
-               return service->CreateAddress(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[86],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferAssetMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EasyTransferAssetMessage* req,
-             ::protocol::EasyTransferResponse* resp) {
-               return service->EasyTransferAsset(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[87],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferAssetByPrivateMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EasyTransferAssetByPrivateMessage* req,
-             ::protocol::EasyTransferResponse* resp) {
-               return service->EasyTransferAssetByPrivate(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[88],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EasyTransferMessage* req,
-             ::protocol::EasyTransferResponse* resp) {
-               return service->EasyTransfer(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[89],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferByPrivateMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EasyTransferByPrivateMessage* req,
-             ::protocol::EasyTransferResponse* resp) {
-               return service->EasyTransferByPrivate(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[90],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::AddressPrKeyPairMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::AddressPrKeyPairMessage* resp) {
-               return service->GenerateAddress(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[91],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::TransactionInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::TransactionInfo* resp) {
-               return service->GetTransactionInfoById(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[92],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::AccountPermissionUpdateContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::AccountPermissionUpdateContract* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->AccountPermissionUpdate(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[93],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TransactionSign, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::TransactionSign* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->AddSign(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[94],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::TransactionSignWeight, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Transaction* req,
-             ::protocol::TransactionSignWeight* resp) {
-               return service->GetTransactionSignWeight(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[95],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::TransactionApprovedList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Transaction* req,
-             ::protocol::TransactionApprovedList* resp) {
-               return service->GetTransactionApprovedList(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[96],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NodeInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::NodeInfo* resp) {
-               return service->GetNodeInfo(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[97],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::NumberMessage* resp) {
-               return service->GetRewardInfo(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[98],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::NumberMessage* resp) {
-               return service->GetBrokerageInfo(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[99],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::UpdateBrokerageContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::UpdateBrokerageContract* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->UpdateBrokerage(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[100],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateParameters, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PrivateParameters* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->CreateShieldedTransaction(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[101],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::OutputPointInfo, ::protocol::IncrementalMerkleVoucherInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::OutputPointInfo* req,
-             ::protocol::IncrementalMerkleVoucherInfo* resp) {
-               return service->GetMerkleTreeVoucherInfo(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[102],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IvkDecryptParameters, ::protocol::DecryptNotes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::IvkDecryptParameters* req,
-             ::protocol::DecryptNotes* resp) {
-               return service->ScanNoteByIvk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[103],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IvkDecryptAndMarkParameters, ::protocol::DecryptNotesMarked, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::IvkDecryptAndMarkParameters* req,
-             ::protocol::DecryptNotesMarked* resp) {
-               return service->ScanAndMarkNoteByIvk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[104],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::OvkDecryptParameters, ::protocol::DecryptNotes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::OvkDecryptParameters* req,
-             ::protocol::DecryptNotes* resp) {
-               return service->ScanNoteByOvk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[105],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::BytesMessage* resp) {
-               return service->GetSpendingKey(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[106],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::ExpandedSpendingKeyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::ExpandedSpendingKeyMessage* resp) {
-               return service->GetExpandedSpendingKey(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[107],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::BytesMessage* resp) {
-               return service->GetAkFromAsk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[108],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::BytesMessage* resp) {
-               return service->GetNkFromNsk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[109],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::ViewingKeyMessage, ::protocol::IncomingViewingKeyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::ViewingKeyMessage* req,
-             ::protocol::IncomingViewingKeyMessage* resp) {
-               return service->GetIncomingViewingKey(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[110],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::DiversifierMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::DiversifierMessage* resp) {
-               return service->GetDiversifier(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[111],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ShieldedAddressInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::ShieldedAddressInfo* resp) {
-               return service->GetNewShieldedAddress(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[112],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IncomingViewingKeyDiversifierMessage, ::protocol::PaymentAddressMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::IncomingViewingKeyDiversifierMessage* req,
-             ::protocol::PaymentAddressMessage* resp) {
-               return service->GetZenPaymentAddress(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[113],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::EmptyMessage* req,
-             ::protocol::BytesMessage* resp) {
-               return service->GetRcm(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[114],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NoteParameters, ::protocol::SpendResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NoteParameters* req,
-             ::protocol::SpendResult* resp) {
-               return service->IsSpend(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[115],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateParametersWithoutAsk, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PrivateParametersWithoutAsk* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->CreateShieldedTransactionWithoutSpendAuthSig(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[116],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Transaction* req,
-             ::protocol::BytesMessage* resp) {
-               return service->GetShieldTransactionHash(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[117],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::SpendAuthSigParameters, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::SpendAuthSigParameters* req,
-             ::protocol::BytesMessage* resp) {
-               return service->CreateSpendAuthSig(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[118],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NfParameters, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NfParameters* req,
-             ::protocol::BytesMessage* resp) {
-               return service->CreateShieldNullifier(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[119],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateShieldedTRC20Parameters, ::protocol::ShieldedTRC20Parameters, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PrivateShieldedTRC20Parameters* req,
-             ::protocol::ShieldedTRC20Parameters* resp) {
-               return service->CreateShieldedContractParameters(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[120],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateShieldedTRC20ParametersWithoutAsk, ::protocol::ShieldedTRC20Parameters, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::PrivateShieldedTRC20ParametersWithoutAsk* req,
-             ::protocol::ShieldedTRC20Parameters* resp) {
-               return service->CreateShieldedContractParametersWithoutAsk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[121],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IvkDecryptTRC20Parameters, ::protocol::DecryptNotesTRC20, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::IvkDecryptTRC20Parameters* req,
-             ::protocol::DecryptNotesTRC20* resp) {
-               return service->ScanShieldedTRC20NotesByIvk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[122],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::OvkDecryptTRC20Parameters, ::protocol::DecryptNotesTRC20, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::OvkDecryptTRC20Parameters* req,
-             ::protocol::DecryptNotesTRC20* resp) {
-               return service->ScanShieldedTRC20NotesByOvk(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[123],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NfTRC20Parameters, ::protocol::NullifierResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NfTRC20Parameters* req,
-             ::protocol::NullifierResult* resp) {
-               return service->IsShieldedTRC20ContractNoteSpent(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[124],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::ShieldedTRC20TriggerContractParameters, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::ShieldedTRC20TriggerContractParameters* req,
-             ::protocol::BytesMessage* resp) {
-               return service->GetTriggerInputForShieldedTRC20Contract(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[125],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::Transaction* req,
-             ::protocol::TransactionExtention* resp) {
-               return service->CreateCommonTransaction(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[126],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::TransactionInfoList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::NumberMessage* req,
-             ::protocol::TransactionInfoList* resp) {
-               return service->GetTransactionInfoByBlockNum(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[127],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::MarketSellAssetContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](Wallet::Service* service,
              ::grpc::ServerContext* ctx,
@@ -4665,7 +3980,7 @@ Wallet::Service::Service() {
                return service->MarketSellAsset(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[128],
+      Wallet_method_names[47],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::MarketCancelOrderContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](Wallet::Service* service,
@@ -4675,17 +3990,7 @@ Wallet::Service::Service() {
                return service->MarketCancelOrder(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[129],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](Wallet::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::MarketOrderList* resp) {
-               return service->GetMarketOrderByAccount(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[130],
+      Wallet_method_names[48],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](Wallet::Service* service,
@@ -4695,7 +4000,17 @@ Wallet::Service::Service() {
                return service->GetMarketOrderById(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[131],
+      Wallet_method_names[49],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::MarketOrderList* resp) {
+               return service->GetMarketOrderByAccount(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[50],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::MarketOrderPair, ::protocol::MarketPriceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](Wallet::Service* service,
@@ -4705,7 +4020,7 @@ Wallet::Service::Service() {
                return service->GetMarketPriceByPair(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[132],
+      Wallet_method_names[51],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::MarketOrderPair, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](Wallet::Service* service,
@@ -4715,7 +4030,7 @@ Wallet::Service::Service() {
                return service->GetMarketOrderListByPair(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      Wallet_method_names[133],
+      Wallet_method_names[52],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::MarketOrderPairList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](Wallet::Service* service,
@@ -4723,6 +4038,866 @@ Wallet::Service::Service() {
              const ::protocol::EmptyMessage* req,
              ::protocol::MarketOrderPairList* resp) {
                return service->GetMarketPairList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[53],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NodeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NodeList* resp) {
+               return service->ListNodes(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[54],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Account, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Account* req,
+             ::protocol::AssetIssueList* resp) {
+               return service->GetAssetIssueByAccount(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[55],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Account, ::protocol::AccountNetMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Account* req,
+             ::protocol::AccountNetMessage* resp) {
+               return service->GetAccountNet(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[56],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Account, ::protocol::AccountResourceMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Account* req,
+             ::protocol::AccountResourceMessage* resp) {
+               return service->GetAccountResource(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[57],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::AssetIssueContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::AssetIssueContract* resp) {
+               return service->GetAssetIssueByName(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[58],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::AssetIssueList* resp) {
+               return service->GetAssetIssueListByName(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[59],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::AssetIssueContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::AssetIssueContract* resp) {
+               return service->GetAssetIssueById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[60],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::Block, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::Block* resp) {
+               return service->GetNowBlock(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[61],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::BlockExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::BlockExtention* resp) {
+               return service->GetNowBlock2(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[62],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::Block, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NumberMessage* req,
+             ::protocol::Block* resp) {
+               return service->GetBlockByNum(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[63],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::BlockExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NumberMessage* req,
+             ::protocol::BlockExtention* resp) {
+               return service->GetBlockByNum2(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[64],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NumberMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetTransactionCountByBlockNum(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[65],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Block, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::Block* resp) {
+               return service->GetBlockById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[66],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BlockLimit, ::protocol::BlockList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BlockLimit* req,
+             ::protocol::BlockList* resp) {
+               return service->GetBlockByLimitNext(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[67],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BlockLimit, ::protocol::BlockListExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BlockLimit* req,
+             ::protocol::BlockListExtention* resp) {
+               return service->GetBlockByLimitNext2(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[68],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::BlockList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NumberMessage* req,
+             ::protocol::BlockList* resp) {
+               return service->GetBlockByLatestNum(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[69],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::BlockListExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NumberMessage* req,
+             ::protocol::BlockListExtention* resp) {
+               return service->GetBlockByLatestNum2(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[70],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::Transaction* resp) {
+               return service->GetTransactionById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[71],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::CreateSmartContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::CreateSmartContract* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->DeployContract(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[72],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::SmartContract, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::SmartContract* resp) {
+               return service->GetContract(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[73],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::SmartContractDataWrapper, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::SmartContractDataWrapper* resp) {
+               return service->GetContractInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[74],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TriggerSmartContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::TriggerSmartContract* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->TriggerContract(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[75],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TriggerSmartContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::TriggerSmartContract* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->TriggerConstantContract(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[76],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::ClearABIContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::ClearABIContract* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->ClearContractABI(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[77],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::WitnessList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::WitnessList* resp) {
+               return service->ListWitnesses(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[78],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::DelegatedResourceMessage, ::protocol::DelegatedResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::DelegatedResourceMessage* req,
+             ::protocol::DelegatedResourceList* resp) {
+               return service->GetDelegatedResource(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[79],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::DelegatedResourceAccountIndex, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::DelegatedResourceAccountIndex* resp) {
+               return service->GetDelegatedResourceAccountIndex(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[80],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ProposalList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::ProposalList* resp) {
+               return service->ListProposals(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[81],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PaginatedMessage, ::protocol::ProposalList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PaginatedMessage* req,
+             ::protocol::ProposalList* resp) {
+               return service->GetPaginatedProposalList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[82],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Proposal, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::Proposal* resp) {
+               return service->GetProposalById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[83],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ExchangeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::ExchangeList* resp) {
+               return service->ListExchanges(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[84],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PaginatedMessage, ::protocol::ExchangeList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PaginatedMessage* req,
+             ::protocol::ExchangeList* resp) {
+               return service->GetPaginatedExchangeList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[85],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Exchange, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::Exchange* resp) {
+               return service->GetExchangeById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[86],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ChainParameters, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::ChainParameters* resp) {
+               return service->GetChainParameters(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[87],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::AssetIssueList* resp) {
+               return service->GetAssetIssueList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[88],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PaginatedMessage, ::protocol::AssetIssueList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PaginatedMessage* req,
+             ::protocol::AssetIssueList* resp) {
+               return service->GetPaginatedAssetIssueList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[89],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->TotalTransaction(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[90],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetNextMaintenanceTime(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[91],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TransactionSign, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::TransactionSign* req,
+             ::protocol::Transaction* resp) {
+               return service->GetTransactionSign(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[92],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TransactionSign, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::TransactionSign* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->GetTransactionSign2(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[93],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::BytesMessage* resp) {
+               return service->CreateAddress(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[94],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferAssetMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EasyTransferAssetMessage* req,
+             ::protocol::EasyTransferResponse* resp) {
+               return service->EasyTransferAsset(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[95],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferAssetByPrivateMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EasyTransferAssetByPrivateMessage* req,
+             ::protocol::EasyTransferResponse* resp) {
+               return service->EasyTransferAssetByPrivate(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[96],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EasyTransferMessage* req,
+             ::protocol::EasyTransferResponse* resp) {
+               return service->EasyTransfer(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[97],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EasyTransferByPrivateMessage, ::protocol::EasyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EasyTransferByPrivateMessage* req,
+             ::protocol::EasyTransferResponse* resp) {
+               return service->EasyTransferByPrivate(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[98],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::AddressPrKeyPairMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::AddressPrKeyPairMessage* resp) {
+               return service->GenerateAddress(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[99],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::TransactionInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::TransactionInfo* resp) {
+               return service->GetTransactionInfoById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[100],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::AccountPermissionUpdateContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::AccountPermissionUpdateContract* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->AccountPermissionUpdate(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[101],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::TransactionSign, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::TransactionSign* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->AddSign(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[102],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::TransactionSignWeight, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Transaction* req,
+             ::protocol::TransactionSignWeight* resp) {
+               return service->GetTransactionSignWeight(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[103],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::TransactionApprovedList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Transaction* req,
+             ::protocol::TransactionApprovedList* resp) {
+               return service->GetTransactionApprovedList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[104],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NodeInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NodeInfo* resp) {
+               return service->GetNodeInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[105],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetRewardInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[106],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetBrokerageInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[107],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::UpdateBrokerageContract, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::UpdateBrokerageContract* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->UpdateBrokerage(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[108],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateParameters, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PrivateParameters* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->CreateShieldedTransaction(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[109],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::OutputPointInfo, ::protocol::IncrementalMerkleVoucherInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::OutputPointInfo* req,
+             ::protocol::IncrementalMerkleVoucherInfo* resp) {
+               return service->GetMerkleTreeVoucherInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[110],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IvkDecryptParameters, ::protocol::DecryptNotes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::IvkDecryptParameters* req,
+             ::protocol::DecryptNotes* resp) {
+               return service->ScanNoteByIvk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[111],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IvkDecryptAndMarkParameters, ::protocol::DecryptNotesMarked, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::IvkDecryptAndMarkParameters* req,
+             ::protocol::DecryptNotesMarked* resp) {
+               return service->ScanAndMarkNoteByIvk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[112],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::OvkDecryptParameters, ::protocol::DecryptNotes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::OvkDecryptParameters* req,
+             ::protocol::DecryptNotes* resp) {
+               return service->ScanNoteByOvk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[113],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::BytesMessage* resp) {
+               return service->GetSpendingKey(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[114],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::ExpandedSpendingKeyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::ExpandedSpendingKeyMessage* resp) {
+               return service->GetExpandedSpendingKey(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[115],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::BytesMessage* resp) {
+               return service->GetAkFromAsk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[116],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::BytesMessage* resp) {
+               return service->GetNkFromNsk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[117],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::ViewingKeyMessage, ::protocol::IncomingViewingKeyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::ViewingKeyMessage* req,
+             ::protocol::IncomingViewingKeyMessage* resp) {
+               return service->GetIncomingViewingKey(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[118],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::DiversifierMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::DiversifierMessage* resp) {
+               return service->GetDiversifier(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[119],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::ShieldedAddressInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::ShieldedAddressInfo* resp) {
+               return service->GetNewShieldedAddress(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[120],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IncomingViewingKeyDiversifierMessage, ::protocol::PaymentAddressMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::IncomingViewingKeyDiversifierMessage* req,
+             ::protocol::PaymentAddressMessage* resp) {
+               return service->GetZenPaymentAddress(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[121],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::BytesMessage* resp) {
+               return service->GetRcm(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[122],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NoteParameters, ::protocol::SpendResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NoteParameters* req,
+             ::protocol::SpendResult* resp) {
+               return service->IsSpend(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[123],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateParametersWithoutAsk, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PrivateParametersWithoutAsk* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->CreateShieldedTransactionWithoutSpendAuthSig(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[124],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Transaction* req,
+             ::protocol::BytesMessage* resp) {
+               return service->GetShieldTransactionHash(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[125],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::SpendAuthSigParameters, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::SpendAuthSigParameters* req,
+             ::protocol::BytesMessage* resp) {
+               return service->CreateSpendAuthSig(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[126],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NfParameters, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NfParameters* req,
+             ::protocol::BytesMessage* resp) {
+               return service->CreateShieldNullifier(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[127],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateShieldedTRC20Parameters, ::protocol::ShieldedTRC20Parameters, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PrivateShieldedTRC20Parameters* req,
+             ::protocol::ShieldedTRC20Parameters* resp) {
+               return service->CreateShieldedContractParameters(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[128],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::PrivateShieldedTRC20ParametersWithoutAsk, ::protocol::ShieldedTRC20Parameters, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::PrivateShieldedTRC20ParametersWithoutAsk* req,
+             ::protocol::ShieldedTRC20Parameters* resp) {
+               return service->CreateShieldedContractParametersWithoutAsk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[129],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::IvkDecryptTRC20Parameters, ::protocol::DecryptNotesTRC20, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::IvkDecryptTRC20Parameters* req,
+             ::protocol::DecryptNotesTRC20* resp) {
+               return service->ScanShieldedTRC20NotesByIvk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[130],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::OvkDecryptTRC20Parameters, ::protocol::DecryptNotesTRC20, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::OvkDecryptTRC20Parameters* req,
+             ::protocol::DecryptNotesTRC20* resp) {
+               return service->ScanShieldedTRC20NotesByOvk(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[131],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NfTRC20Parameters, ::protocol::NullifierResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NfTRC20Parameters* req,
+             ::protocol::NullifierResult* resp) {
+               return service->IsShieldedTRC20ContractNoteSpent(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[132],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::ShieldedTRC20TriggerContractParameters, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::ShieldedTRC20TriggerContractParameters* req,
+             ::protocol::BytesMessage* resp) {
+               return service->GetTriggerInputForShieldedTRC20Contract(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[133],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::Transaction, ::protocol::TransactionExtention, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::Transaction* req,
+             ::protocol::TransactionExtention* resp) {
+               return service->CreateCommonTransaction(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[134],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::NumberMessage, ::protocol::TransactionInfoList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::NumberMessage* req,
+             ::protocol::TransactionInfoList* resp) {
+               return service->GetTransactionInfoByBlockNum(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[135],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetBurnTrx(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[136],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::BytesMessage, ::protocol::Transaction, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::Transaction* resp) {
+               return service->GetTransactionFromPending(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[137],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::TransactionIdList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::TransactionIdList* resp) {
+               return service->GetTransactionListFromPending(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Wallet_method_names[138],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Wallet::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Wallet::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetPendingSize(ctx, req, resp);
              }, this)));
 }
 
@@ -5051,6 +5226,55 @@ Wallet::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
+::grpc::Status Wallet::Service::MarketSellAsset(::grpc::ServerContext* context, const ::protocol::MarketSellAssetContract* request, ::protocol::TransactionExtention* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::MarketCancelOrder(::grpc::ServerContext* context, const ::protocol::MarketCancelOrderContract* request, ::protocol::TransactionExtention* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::GetMarketOrderById(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::GetMarketOrderByAccount(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::GetMarketPriceByPair(::grpc::ServerContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketPriceList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::GetMarketOrderListByPair(::grpc::ServerContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketOrderList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::GetMarketPairList(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
 ::grpc::Status Wallet::Service::ListNodes(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::NodeList* response) {
   (void) context;
   (void) request;
@@ -5227,6 +5451,13 @@ Wallet::Service::~Service() {
 }
 
 ::grpc::Status Wallet::Service::GetDelegatedResource(::grpc::ServerContext* context, const ::protocol::DelegatedResourceMessage* request, ::protocol::DelegatedResourceList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Wallet::Service::GetDelegatedResourceAccountIndex(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::DelegatedResourceAccountIndex* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -5618,49 +5849,28 @@ Wallet::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status Wallet::Service::MarketSellAsset(::grpc::ServerContext* context, const ::protocol::MarketSellAssetContract* request, ::protocol::TransactionExtention* response) {
+::grpc::Status Wallet::Service::GetBurnTrx(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status Wallet::Service::MarketCancelOrder(::grpc::ServerContext* context, const ::protocol::MarketCancelOrderContract* request, ::protocol::TransactionExtention* response) {
+::grpc::Status Wallet::Service::GetTransactionFromPending(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::Transaction* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status Wallet::Service::GetMarketOrderByAccount(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response) {
+::grpc::Status Wallet::Service::GetTransactionListFromPending(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::TransactionIdList* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status Wallet::Service::GetMarketOrderById(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status Wallet::Service::GetMarketPriceByPair(::grpc::ServerContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketPriceList* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status Wallet::Service::GetMarketOrderListByPair(::grpc::ServerContext* context, const ::protocol::MarketOrderPair* request, ::protocol::MarketOrderList* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status Wallet::Service::GetMarketPairList(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response) {
+::grpc::Status Wallet::Service::GetPendingSize(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -5701,11 +5911,12 @@ static const char* WalletSolidity_method_names[] = {
   "/protocol.WalletSolidity/GetBrokerageInfo",
   "/protocol.WalletSolidity/TriggerConstantContract",
   "/protocol.WalletSolidity/GetTransactionInfoByBlockNum",
-  "/protocol.WalletSolidity/GetMarketOrderByAccount",
   "/protocol.WalletSolidity/GetMarketOrderById",
+  "/protocol.WalletSolidity/GetMarketOrderByAccount",
   "/protocol.WalletSolidity/GetMarketPriceByPair",
   "/protocol.WalletSolidity/GetMarketOrderListByPair",
   "/protocol.WalletSolidity/GetMarketPairList",
+  "/protocol.WalletSolidity/GetBurnTrx",
 };
 
 std::unique_ptr< WalletSolidity::Stub> WalletSolidity::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -5747,11 +5958,12 @@ WalletSolidity::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& cha
   , rpcmethod_GetBrokerageInfo_(WalletSolidity_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_TriggerConstantContract_(WalletSolidity_method_names[30], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetTransactionInfoByBlockNum_(WalletSolidity_method_names[31], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketOrderByAccount_(WalletSolidity_method_names[32], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMarketOrderById_(WalletSolidity_method_names[33], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketOrderById_(WalletSolidity_method_names[32], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMarketOrderByAccount_(WalletSolidity_method_names[33], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetMarketPriceByPair_(WalletSolidity_method_names[34], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetMarketOrderListByPair_(WalletSolidity_method_names[35], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetMarketPairList_(WalletSolidity_method_names[36], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBurnTrx_(WalletSolidity_method_names[37], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status WalletSolidity::Stub::GetAccount(::grpc::ClientContext* context, const ::protocol::Account& request, ::protocol::Account* response) {
@@ -6490,29 +6702,6 @@ void WalletSolidity::Stub::async::GetTransactionInfoByBlockNum(::grpc::ClientCon
   return result;
 }
 
-::grpc::Status WalletSolidity::Stub::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrderList* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderByAccount_, context, request, response);
-}
-
-void WalletSolidity::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, std::move(f));
-}
-
-void WalletSolidity::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* WalletSolidity::Stub::PrepareAsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderList, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderByAccount_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* WalletSolidity::Stub::AsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetMarketOrderByAccountRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
 ::grpc::Status WalletSolidity::Stub::GetMarketOrderById(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrder* response) {
   return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderById_, context, request, response);
 }
@@ -6532,6 +6721,29 @@ void WalletSolidity::Stub::async::GetMarketOrderById(::grpc::ClientContext* cont
 ::grpc::ClientAsyncResponseReader< ::protocol::MarketOrder>* WalletSolidity::Stub::AsyncGetMarketOrderByIdRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetMarketOrderByIdRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status WalletSolidity::Stub::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::protocol::MarketOrderList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarketOrderByAccount_, context, request, response);
+}
+
+void WalletSolidity::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, std::move(f));
+}
+
+void WalletSolidity::Stub::async::GetMarketOrderByAccount(::grpc::ClientContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarketOrderByAccount_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* WalletSolidity::Stub::PrepareAsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MarketOrderList, ::protocol::BytesMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarketOrderByAccount_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderList>* WalletSolidity::Stub::AsyncGetMarketOrderByAccountRaw(::grpc::ClientContext* context, const ::protocol::BytesMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMarketOrderByAccountRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -6601,6 +6813,29 @@ void WalletSolidity::Stub::async::GetMarketPairList(::grpc::ClientContext* conte
 ::grpc::ClientAsyncResponseReader< ::protocol::MarketOrderPairList>* WalletSolidity::Stub::AsyncGetMarketPairListRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetMarketPairListRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status WalletSolidity::Stub::GetBurnTrx(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::NumberMessage* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBurnTrx_, context, request, response);
+}
+
+void WalletSolidity::Stub::async::GetBurnTrx(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBurnTrx_, context, request, response, std::move(f));
+}
+
+void WalletSolidity::Stub::async::GetBurnTrx(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBurnTrx_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::NumberMessage>* WalletSolidity::Stub::PrepareAsyncGetBurnTrxRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::NumberMessage, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBurnTrx_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::NumberMessage>* WalletSolidity::Stub::AsyncGetBurnTrxRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetBurnTrxRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -6929,22 +7164,22 @@ WalletSolidity::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       WalletSolidity_method_names[32],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< WalletSolidity::Service, ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](WalletSolidity::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::protocol::BytesMessage* req,
-             ::protocol::MarketOrderList* resp) {
-               return service->GetMarketOrderByAccount(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      WalletSolidity_method_names[33],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< WalletSolidity::Service, ::protocol::BytesMessage, ::protocol::MarketOrder, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](WalletSolidity::Service* service,
              ::grpc::ServerContext* ctx,
              const ::protocol::BytesMessage* req,
              ::protocol::MarketOrder* resp) {
                return service->GetMarketOrderById(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      WalletSolidity_method_names[33],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< WalletSolidity::Service, ::protocol::BytesMessage, ::protocol::MarketOrderList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](WalletSolidity::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::BytesMessage* req,
+             ::protocol::MarketOrderList* resp) {
+               return service->GetMarketOrderByAccount(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       WalletSolidity_method_names[34],
@@ -6975,6 +7210,16 @@ WalletSolidity::Service::Service() {
              const ::protocol::EmptyMessage* req,
              ::protocol::MarketOrderPairList* resp) {
                return service->GetMarketPairList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      WalletSolidity_method_names[37],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< WalletSolidity::Service, ::protocol::EmptyMessage, ::protocol::NumberMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](WalletSolidity::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::NumberMessage* resp) {
+               return service->GetBurnTrx(ctx, req, resp);
              }, this)));
 }
 
@@ -7205,14 +7450,14 @@ WalletSolidity::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status WalletSolidity::Service::GetMarketOrderByAccount(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response) {
+::grpc::Status WalletSolidity::Service::GetMarketOrderById(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status WalletSolidity::Service::GetMarketOrderById(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrder* response) {
+::grpc::Status WalletSolidity::Service::GetMarketOrderByAccount(::grpc::ServerContext* context, const ::protocol::BytesMessage* request, ::protocol::MarketOrderList* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -7234,6 +7479,13 @@ WalletSolidity::Service::~Service() {
 }
 
 ::grpc::Status WalletSolidity::Service::GetMarketPairList(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::MarketOrderPairList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status WalletSolidity::Service::GetBurnTrx(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::NumberMessage* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -7608,6 +7860,67 @@ Database::Service::~Service() {
 }
 
 ::grpc::Status Database::Service::GetBlockByNum(::grpc::ServerContext* context, const ::protocol::NumberMessage* request, ::protocol::Block* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+
+static const char* Monitor_method_names[] = {
+  "/protocol.Monitor/GetStatsInfo",
+};
+
+std::unique_ptr< Monitor::Stub> Monitor::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
+  (void)options;
+  std::unique_ptr< Monitor::Stub> stub(new Monitor::Stub(channel, options));
+  return stub;
+}
+
+Monitor::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
+  : channel_(channel), rpcmethod_GetStatsInfo_(Monitor_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  {}
+
+::grpc::Status Monitor::Stub::GetStatsInfo(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::protocol::MetricsInfo* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::protocol::EmptyMessage, ::protocol::MetricsInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetStatsInfo_, context, request, response);
+}
+
+void Monitor::Stub::async::GetStatsInfo(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::MetricsInfo* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::protocol::EmptyMessage, ::protocol::MetricsInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStatsInfo_, context, request, response, std::move(f));
+}
+
+void Monitor::Stub::async::GetStatsInfo(::grpc::ClientContext* context, const ::protocol::EmptyMessage* request, ::protocol::MetricsInfo* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStatsInfo_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MetricsInfo>* Monitor::Stub::PrepareAsyncGetStatsInfoRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::protocol::MetricsInfo, ::protocol::EmptyMessage, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetStatsInfo_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::protocol::MetricsInfo>* Monitor::Stub::AsyncGetStatsInfoRaw(::grpc::ClientContext* context, const ::protocol::EmptyMessage& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetStatsInfoRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+Monitor::Service::Service() {
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Monitor_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Monitor::Service, ::protocol::EmptyMessage, ::protocol::MetricsInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Monitor::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::protocol::EmptyMessage* req,
+             ::protocol::MetricsInfo* resp) {
+               return service->GetStatsInfo(ctx, req, resp);
+             }, this)));
+}
+
+Monitor::Service::~Service() {
+}
+
+::grpc::Status Monitor::Service::GetStatsInfo(::grpc::ServerContext* context, const ::protocol::EmptyMessage* request, ::protocol::MetricsInfo* response) {
   (void) context;
   (void) request;
   (void) response;

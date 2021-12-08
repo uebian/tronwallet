@@ -44,9 +44,9 @@
 #include "core/contract/proposal_contract.pb.h"
 #include "core/contract/storage_contract.pb.h"
 #include "core/contract/exchange_contract.pb.h"
+#include "core/contract/market_contract.pb.h"
 #include "core/contract/smart_contract.pb.h"
 #include "core/contract/shield_contract.pb.h"
-#include "core/contract/market_contract.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_api_2fapi_2eproto
@@ -62,7 +62,7 @@ struct TableStruct_api_2fapi_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[78]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[79]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -280,6 +280,9 @@ extern TransactionApprovedList_ResultDefaultTypeInternal _TransactionApprovedLis
 class TransactionExtention;
 struct TransactionExtentionDefaultTypeInternal;
 extern TransactionExtentionDefaultTypeInternal _TransactionExtention_default_instance_;
+class TransactionIdList;
+struct TransactionIdListDefaultTypeInternal;
+extern TransactionIdListDefaultTypeInternal _TransactionIdList_default_instance_;
 class TransactionInfoList;
 struct TransactionInfoListDefaultTypeInternal;
 extern TransactionInfoListDefaultTypeInternal _TransactionInfoList_default_instance_;
@@ -376,6 +379,7 @@ template<> ::protocol::TimePaginatedMessage* Arena::CreateMaybeMessage<::protoco
 template<> ::protocol::TransactionApprovedList* Arena::CreateMaybeMessage<::protocol::TransactionApprovedList>(Arena*);
 template<> ::protocol::TransactionApprovedList_Result* Arena::CreateMaybeMessage<::protocol::TransactionApprovedList_Result>(Arena*);
 template<> ::protocol::TransactionExtention* Arena::CreateMaybeMessage<::protocol::TransactionExtention>(Arena*);
+template<> ::protocol::TransactionIdList* Arena::CreateMaybeMessage<::protocol::TransactionIdList>(Arena*);
 template<> ::protocol::TransactionInfoList* Arena::CreateMaybeMessage<::protocol::TransactionInfoList>(Arena*);
 template<> ::protocol::TransactionLimit* Arena::CreateMaybeMessage<::protocol::TransactionLimit>(Arena*);
 template<> ::protocol::TransactionList* Arena::CreateMaybeMessage<::protocol::TransactionList>(Arena*);
@@ -1742,6 +1746,160 @@ class TransactionList final :
 };
 // -------------------------------------------------------------------
 
+class TransactionIdList final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.TransactionIdList) */ {
+ public:
+  inline TransactionIdList() : TransactionIdList(nullptr) {}
+  ~TransactionIdList() override;
+  explicit constexpr TransactionIdList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TransactionIdList(const TransactionIdList& from);
+  TransactionIdList(TransactionIdList&& from) noexcept
+    : TransactionIdList() {
+    *this = ::std::move(from);
+  }
+
+  inline TransactionIdList& operator=(const TransactionIdList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransactionIdList& operator=(TransactionIdList&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TransactionIdList& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TransactionIdList* internal_default_instance() {
+    return reinterpret_cast<const TransactionIdList*>(
+               &_TransactionIdList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(TransactionIdList& a, TransactionIdList& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransactionIdList* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransactionIdList* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TransactionIdList* New() const final {
+    return new TransactionIdList();
+  }
+
+  TransactionIdList* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<TransactionIdList>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TransactionIdList& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const TransactionIdList& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransactionIdList* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.TransactionIdList";
+  }
+  protected:
+  explicit TransactionIdList(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTxIdFieldNumber = 1,
+  };
+  // repeated string txId = 1;
+  int txid_size() const;
+  private:
+  int _internal_txid_size() const;
+  public:
+  void clear_txid();
+  const std::string& txid(int index) const;
+  std::string* mutable_txid(int index);
+  void set_txid(int index, const std::string& value);
+  void set_txid(int index, std::string&& value);
+  void set_txid(int index, const char* value);
+  void set_txid(int index, const char* value, size_t size);
+  std::string* add_txid();
+  void add_txid(const std::string& value);
+  void add_txid(std::string&& value);
+  void add_txid(const char* value);
+  void add_txid(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& txid() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_txid();
+  private:
+  const std::string& _internal_txid(int index) const;
+  std::string* _internal_add_txid();
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.TransactionIdList)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> txid_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_api_2fapi_2eproto;
+};
+// -------------------------------------------------------------------
+
 class DelegatedResourceMessage final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.DelegatedResourceMessage) */ {
  public:
@@ -1786,7 +1944,7 @@ class DelegatedResourceMessage final :
                &_DelegatedResourceMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(DelegatedResourceMessage& a, DelegatedResourceMessage& b) {
     a.Swap(&b);
@@ -1946,7 +2104,7 @@ class DelegatedResourceList final :
                &_DelegatedResourceList_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(DelegatedResourceList& a, DelegatedResourceList& b) {
     a.Swap(&b);
@@ -2094,7 +2252,7 @@ class NodeList final :
                &_NodeList_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(NodeList& a, NodeList& b) {
     a.Swap(&b);
@@ -2242,7 +2400,7 @@ class Node final :
                &_Node_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(Node& a, Node& b) {
     a.Swap(&b);
@@ -2390,7 +2548,7 @@ class Address final :
                &_Address_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(Address& a, Address& b) {
     a.Swap(&b);
@@ -2545,7 +2703,7 @@ class EmptyMessage final :
                &_EmptyMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(EmptyMessage& a, EmptyMessage& b) {
     a.Swap(&b);
@@ -2671,7 +2829,7 @@ class NumberMessage final :
                &_NumberMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(NumberMessage& a, NumberMessage& b) {
     a.Swap(&b);
@@ -2810,7 +2968,7 @@ class BytesMessage final :
                &_BytesMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(BytesMessage& a, BytesMessage& b) {
     a.Swap(&b);
@@ -2954,7 +3112,7 @@ class TimeMessage final :
                &_TimeMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(TimeMessage& a, TimeMessage& b) {
     a.Swap(&b);
@@ -3104,7 +3262,7 @@ class BlockLimit final :
                &_BlockLimit_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(BlockLimit& a, BlockLimit& b) {
     a.Swap(&b);
@@ -3254,7 +3412,7 @@ class TransactionLimit final :
                &_TransactionLimit_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   friend void swap(TransactionLimit& a, TransactionLimit& b) {
     a.Swap(&b);
@@ -3409,7 +3567,7 @@ class AccountPaginated final :
                &_AccountPaginated_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(AccountPaginated& a, AccountPaginated& b) {
     a.Swap(&b);
@@ -3579,7 +3737,7 @@ class TimePaginatedMessage final :
                &_TimePaginatedMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   friend void swap(TimePaginatedMessage& a, TimePaginatedMessage& b) {
     a.Swap(&b);
@@ -3799,7 +3957,7 @@ class AccountNetMessage final :
                &_AccountNetMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   friend void swap(AccountNetMessage& a, AccountNetMessage& b) {
     a.Swap(&b);
@@ -4090,7 +4248,7 @@ class AccountResourceMessage final :
                &_AccountResourceMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    27;
 
   friend void swap(AccountResourceMessage& a, AccountResourceMessage& b) {
     a.Swap(&b);
@@ -4430,7 +4588,7 @@ class PaginatedMessage final :
                &_PaginatedMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    28;
 
   friend void swap(PaginatedMessage& a, PaginatedMessage& b) {
     a.Swap(&b);
@@ -4580,7 +4738,7 @@ class EasyTransferMessage final :
                &_EasyTransferMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    29;
 
   friend void swap(EasyTransferMessage& a, EasyTransferMessage& b) {
     a.Swap(&b);
@@ -4751,7 +4909,7 @@ class EasyTransferAssetMessage final :
                &_EasyTransferAssetMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    30;
 
   friend void swap(EasyTransferAssetMessage& a, EasyTransferAssetMessage& b) {
     a.Swap(&b);
@@ -4938,7 +5096,7 @@ class EasyTransferByPrivateMessage final :
                &_EasyTransferByPrivateMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    31;
 
   friend void swap(EasyTransferByPrivateMessage& a, EasyTransferByPrivateMessage& b) {
     a.Swap(&b);
@@ -5109,7 +5267,7 @@ class EasyTransferAssetByPrivateMessage final :
                &_EasyTransferAssetByPrivateMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    32;
 
   friend void swap(EasyTransferAssetByPrivateMessage& a, EasyTransferAssetByPrivateMessage& b) {
     a.Swap(&b);
@@ -5296,7 +5454,7 @@ class EasyTransferResponse final :
                &_EasyTransferResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   friend void swap(EasyTransferResponse& a, EasyTransferResponse& b) {
     a.Swap(&b);
@@ -5480,7 +5638,7 @@ class AddressPrKeyPairMessage final :
                &_AddressPrKeyPairMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   friend void swap(AddressPrKeyPairMessage& a, AddressPrKeyPairMessage& b) {
     a.Swap(&b);
@@ -5640,7 +5798,7 @@ class TransactionExtention final :
                &_TransactionExtention_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   friend void swap(TransactionExtention& a, TransactionExtention& b) {
     a.Swap(&b);
@@ -5712,6 +5870,8 @@ class TransactionExtention final :
 
   enum : int {
     kConstantResultFieldNumber = 3,
+    kLogsFieldNumber = 6,
+    kInternalTransactionsFieldNumber = 7,
     kTxidFieldNumber = 2,
     kTransactionFieldNumber = 1,
     kResultFieldNumber = 4,
@@ -5740,6 +5900,42 @@ class TransactionExtention final :
   const std::string& _internal_constant_result(int index) const;
   std::string* _internal_add_constant_result();
   public:
+
+  // repeated .protocol.TransactionInfo.Log logs = 6;
+  int logs_size() const;
+  private:
+  int _internal_logs_size() const;
+  public:
+  void clear_logs();
+  ::protocol::TransactionInfo_Log* mutable_logs(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::TransactionInfo_Log >*
+      mutable_logs();
+  private:
+  const ::protocol::TransactionInfo_Log& _internal_logs(int index) const;
+  ::protocol::TransactionInfo_Log* _internal_add_logs();
+  public:
+  const ::protocol::TransactionInfo_Log& logs(int index) const;
+  ::protocol::TransactionInfo_Log* add_logs();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::TransactionInfo_Log >&
+      logs() const;
+
+  // repeated .protocol.InternalTransaction internal_transactions = 7;
+  int internal_transactions_size() const;
+  private:
+  int _internal_internal_transactions_size() const;
+  public:
+  void clear_internal_transactions();
+  ::protocol::InternalTransaction* mutable_internal_transactions(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::InternalTransaction >*
+      mutable_internal_transactions();
+  private:
+  const ::protocol::InternalTransaction& _internal_internal_transactions(int index) const;
+  ::protocol::InternalTransaction* _internal_add_internal_transactions();
+  public:
+  const ::protocol::InternalTransaction& internal_transactions(int index) const;
+  ::protocol::InternalTransaction* add_internal_transactions();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::InternalTransaction >&
+      internal_transactions() const;
 
   // bytes txid = 2;
   void clear_txid();
@@ -5808,6 +6004,8 @@ class TransactionExtention final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> constant_result_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::TransactionInfo_Log > logs_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::InternalTransaction > internal_transactions_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr txid_;
   ::protocol::Transaction* transaction_;
   ::protocol::Return* result_;
@@ -5861,7 +6059,7 @@ class BlockExtention final :
                &_BlockExtention_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    36;
 
   friend void swap(BlockExtention& a, BlockExtention& b) {
     a.Swap(&b);
@@ -6045,7 +6243,7 @@ class BlockListExtention final :
                &_BlockListExtention_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    37;
 
   friend void swap(BlockListExtention& a, BlockListExtention& b) {
     a.Swap(&b);
@@ -6193,7 +6391,7 @@ class TransactionListExtention final :
                &_TransactionListExtention_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    38;
 
   friend void swap(TransactionListExtention& a, TransactionListExtention& b) {
     a.Swap(&b);
@@ -6341,7 +6539,7 @@ class BlockIncrementalMerkleTree final :
                &_BlockIncrementalMerkleTree_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    39;
 
   friend void swap(BlockIncrementalMerkleTree& a, BlockIncrementalMerkleTree& b) {
     a.Swap(&b);
@@ -6500,7 +6698,7 @@ class TransactionSignWeight_Result final :
                &_TransactionSignWeight_Result_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    40;
 
   friend void swap(TransactionSignWeight_Result& a, TransactionSignWeight_Result& b) {
     a.Swap(&b);
@@ -6693,7 +6891,7 @@ class TransactionSignWeight final :
                &_TransactionSignWeight_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    41;
 
   friend void swap(TransactionSignWeight& a, TransactionSignWeight& b) {
     a.Swap(&b);
@@ -6920,7 +7118,7 @@ class TransactionApprovedList_Result final :
                &_TransactionApprovedList_Result_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    42;
 
   friend void swap(TransactionApprovedList_Result& a, TransactionApprovedList_Result& b) {
     a.Swap(&b);
@@ -7109,7 +7307,7 @@ class TransactionApprovedList final :
                &_TransactionApprovedList_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    43;
 
   friend void swap(TransactionApprovedList& a, TransactionApprovedList& b) {
     a.Swap(&b);
@@ -7305,7 +7503,7 @@ class IvkDecryptParameters final :
                &_IvkDecryptParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    44;
 
   friend void swap(IvkDecryptParameters& a, IvkDecryptParameters& b) {
     a.Swap(&b);
@@ -7471,7 +7669,7 @@ class IvkDecryptAndMarkParameters final :
                &_IvkDecryptAndMarkParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    45;
 
   friend void swap(IvkDecryptAndMarkParameters& a, IvkDecryptAndMarkParameters& b) {
     a.Swap(&b);
@@ -7669,7 +7867,7 @@ class OvkDecryptParameters final :
                &_OvkDecryptParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    46;
 
   friend void swap(OvkDecryptParameters& a, OvkDecryptParameters& b) {
     a.Swap(&b);
@@ -7835,7 +8033,7 @@ class DecryptNotes_NoteTx final :
                &_DecryptNotes_NoteTx_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    47;
 
   friend void swap(DecryptNotes_NoteTx& a, DecryptNotes_NoteTx& b) {
     a.Swap(&b);
@@ -8010,7 +8208,7 @@ class DecryptNotes final :
                &_DecryptNotes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    47;
+    48;
 
   friend void swap(DecryptNotes& a, DecryptNotes& b) {
     a.Swap(&b);
@@ -8160,7 +8358,7 @@ class DecryptNotesMarked_NoteTx final :
                &_DecryptNotesMarked_NoteTx_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    49;
 
   friend void swap(DecryptNotesMarked_NoteTx& a, DecryptNotesMarked_NoteTx& b) {
     a.Swap(&b);
@@ -8346,7 +8544,7 @@ class DecryptNotesMarked final :
                &_DecryptNotesMarked_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    49;
+    50;
 
   friend void swap(DecryptNotesMarked& a, DecryptNotesMarked& b) {
     a.Swap(&b);
@@ -8496,7 +8694,7 @@ class Note final :
                &_Note_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    50;
+    51;
 
   friend void swap(Note& a, Note& b) {
     a.Swap(&b);
@@ -8683,7 +8881,7 @@ class SpendNote final :
                &_SpendNote_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    51;
+    52;
 
   friend void swap(SpendNote& a, SpendNote& b) {
     a.Swap(&b);
@@ -8883,7 +9081,7 @@ class ReceiveNote final :
                &_ReceiveNote_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    52;
+    53;
 
   friend void swap(ReceiveNote& a, ReceiveNote& b) {
     a.Swap(&b);
@@ -9031,7 +9229,7 @@ class PrivateParameters final :
                &_PrivateParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    53;
+    54;
 
   friend void swap(PrivateParameters& a, PrivateParameters& b) {
     a.Swap(&b);
@@ -9312,7 +9510,7 @@ class PrivateParametersWithoutAsk final :
                &_PrivateParametersWithoutAsk_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    54;
+    55;
 
   friend void swap(PrivateParametersWithoutAsk& a, PrivateParametersWithoutAsk& b) {
     a.Swap(&b);
@@ -9593,7 +9791,7 @@ class SpendAuthSigParameters final :
                &_SpendAuthSigParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    55;
+    56;
 
   friend void swap(SpendAuthSigParameters& a, SpendAuthSigParameters& b) {
     a.Swap(&b);
@@ -9769,7 +9967,7 @@ class NfParameters final :
                &_NfParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    56;
+    57;
 
   friend void swap(NfParameters& a, NfParameters& b) {
     a.Swap(&b);
@@ -9969,7 +10167,7 @@ class ExpandedSpendingKeyMessage final :
                &_ExpandedSpendingKeyMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    57;
+    58;
 
   friend void swap(ExpandedSpendingKeyMessage& a, ExpandedSpendingKeyMessage& b) {
     a.Swap(&b);
@@ -10145,7 +10343,7 @@ class ViewingKeyMessage final :
                &_ViewingKeyMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    58;
+    59;
 
   friend void swap(ViewingKeyMessage& a, ViewingKeyMessage& b) {
     a.Swap(&b);
@@ -10305,7 +10503,7 @@ class IncomingViewingKeyMessage final :
                &_IncomingViewingKeyMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    59;
+    60;
 
   friend void swap(IncomingViewingKeyMessage& a, IncomingViewingKeyMessage& b) {
     a.Swap(&b);
@@ -10449,7 +10647,7 @@ class DiversifierMessage final :
                &_DiversifierMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    60;
+    61;
 
   friend void swap(DiversifierMessage& a, DiversifierMessage& b) {
     a.Swap(&b);
@@ -10593,7 +10791,7 @@ class IncomingViewingKeyDiversifierMessage final :
                &_IncomingViewingKeyDiversifierMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    61;
+    62;
 
   friend void swap(IncomingViewingKeyDiversifierMessage& a, IncomingViewingKeyDiversifierMessage& b) {
     a.Swap(&b);
@@ -10761,7 +10959,7 @@ class PaymentAddressMessage final :
                &_PaymentAddressMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    62;
+    63;
 
   friend void swap(PaymentAddressMessage& a, PaymentAddressMessage& b) {
     a.Swap(&b);
@@ -10941,7 +11139,7 @@ class ShieldedAddressInfo final :
                &_ShieldedAddressInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    63;
+    64;
 
   friend void swap(ShieldedAddressInfo& a, ShieldedAddressInfo& b) {
     a.Swap(&b);
@@ -11229,7 +11427,7 @@ class NoteParameters final :
                &_NoteParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    64;
+    65;
 
   friend void swap(NoteParameters& a, NoteParameters& b) {
     a.Swap(&b);
@@ -11436,7 +11634,7 @@ class SpendResult final :
                &_SpendResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    65;
+    66;
 
   friend void swap(SpendResult& a, SpendResult& b) {
     a.Swap(&b);
@@ -11591,7 +11789,7 @@ class TransactionInfoList final :
                &_TransactionInfoList_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    66;
+    67;
 
   friend void swap(TransactionInfoList& a, TransactionInfoList& b) {
     a.Swap(&b);
@@ -11739,7 +11937,7 @@ class SpendNoteTRC20 final :
                &_SpendNoteTRC20_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    67;
+    68;
 
   friend void swap(SpendNoteTRC20& a, SpendNoteTRC20& b) {
     a.Swap(&b);
@@ -11946,7 +12144,7 @@ class PrivateShieldedTRC20Parameters final :
                &_PrivateShieldedTRC20Parameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    68;
+    69;
 
   friend void swap(PrivateShieldedTRC20Parameters& a, PrivateShieldedTRC20Parameters& b) {
     a.Swap(&b);
@@ -12226,7 +12424,7 @@ class PrivateShieldedTRC20ParametersWithoutAsk final :
                &_PrivateShieldedTRC20ParametersWithoutAsk_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    69;
+    70;
 
   friend void swap(PrivateShieldedTRC20ParametersWithoutAsk& a, PrivateShieldedTRC20ParametersWithoutAsk& b) {
     a.Swap(&b);
@@ -12506,7 +12704,7 @@ class ShieldedTRC20Parameters final :
                &_ShieldedTRC20Parameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    70;
+    71;
 
   friend void swap(ShieldedTRC20Parameters& a, ShieldedTRC20Parameters& b) {
     a.Swap(&b);
@@ -12738,7 +12936,7 @@ class IvkDecryptTRC20Parameters final :
                &_IvkDecryptTRC20Parameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    71;
+    72;
 
   friend void swap(IvkDecryptTRC20Parameters& a, IvkDecryptTRC20Parameters& b) {
     a.Swap(&b);
@@ -12978,7 +13176,7 @@ class OvkDecryptTRC20Parameters final :
                &_OvkDecryptTRC20Parameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    72;
+    73;
 
   friend void swap(OvkDecryptTRC20Parameters& a, OvkDecryptTRC20Parameters& b) {
     a.Swap(&b);
@@ -13186,7 +13384,7 @@ class DecryptNotesTRC20_NoteTx final :
                &_DecryptNotesTRC20_NoteTx_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    73;
+    74;
 
   friend void swap(DecryptNotesTRC20_NoteTx& a, DecryptNotesTRC20_NoteTx& b) {
     a.Swap(&b);
@@ -13415,7 +13613,7 @@ class DecryptNotesTRC20 final :
                &_DecryptNotesTRC20_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    74;
+    75;
 
   friend void swap(DecryptNotesTRC20& a, DecryptNotesTRC20& b) {
     a.Swap(&b);
@@ -13565,7 +13763,7 @@ class NfTRC20Parameters final :
                &_NfTRC20Parameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    75;
+    76;
 
   friend void swap(NfTRC20Parameters& a, NfTRC20Parameters& b) {
     a.Swap(&b);
@@ -13772,7 +13970,7 @@ class NullifierResult final :
                &_NullifierResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    76;
+    77;
 
   friend void swap(NullifierResult& a, NullifierResult& b) {
     a.Swap(&b);
@@ -13911,7 +14109,7 @@ class ShieldedTRC20TriggerContractParameters final :
                &_ShieldedTRC20TriggerContractParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    77;
+    78;
 
   friend void swap(ShieldedTRC20TriggerContractParameters& a, ShieldedTRC20TriggerContractParameters& b) {
     a.Swap(&b);
@@ -14476,6 +14674,85 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Transaction 
 TransactionList::transaction() const {
   // @@protoc_insertion_point(field_list:protocol.TransactionList.transaction)
   return transaction_;
+}
+
+// -------------------------------------------------------------------
+
+// TransactionIdList
+
+// repeated string txId = 1;
+inline int TransactionIdList::_internal_txid_size() const {
+  return txid_.size();
+}
+inline int TransactionIdList::txid_size() const {
+  return _internal_txid_size();
+}
+inline void TransactionIdList::clear_txid() {
+  txid_.Clear();
+}
+inline std::string* TransactionIdList::add_txid() {
+  std::string* _s = _internal_add_txid();
+  // @@protoc_insertion_point(field_add_mutable:protocol.TransactionIdList.txId)
+  return _s;
+}
+inline const std::string& TransactionIdList::_internal_txid(int index) const {
+  return txid_.Get(index);
+}
+inline const std::string& TransactionIdList::txid(int index) const {
+  // @@protoc_insertion_point(field_get:protocol.TransactionIdList.txId)
+  return _internal_txid(index);
+}
+inline std::string* TransactionIdList::mutable_txid(int index) {
+  // @@protoc_insertion_point(field_mutable:protocol.TransactionIdList.txId)
+  return txid_.Mutable(index);
+}
+inline void TransactionIdList::set_txid(int index, const std::string& value) {
+  txid_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:protocol.TransactionIdList.txId)
+}
+inline void TransactionIdList::set_txid(int index, std::string&& value) {
+  txid_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:protocol.TransactionIdList.txId)
+}
+inline void TransactionIdList::set_txid(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  txid_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:protocol.TransactionIdList.txId)
+}
+inline void TransactionIdList::set_txid(int index, const char* value, size_t size) {
+  txid_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:protocol.TransactionIdList.txId)
+}
+inline std::string* TransactionIdList::_internal_add_txid() {
+  return txid_.Add();
+}
+inline void TransactionIdList::add_txid(const std::string& value) {
+  txid_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:protocol.TransactionIdList.txId)
+}
+inline void TransactionIdList::add_txid(std::string&& value) {
+  txid_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:protocol.TransactionIdList.txId)
+}
+inline void TransactionIdList::add_txid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  txid_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:protocol.TransactionIdList.txId)
+}
+inline void TransactionIdList::add_txid(const char* value, size_t size) {
+  txid_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:protocol.TransactionIdList.txId)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TransactionIdList::txid() const {
+  // @@protoc_insertion_point(field_list:protocol.TransactionIdList.txId)
+  return txid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TransactionIdList::mutable_txid() {
+  // @@protoc_insertion_point(field_mutable_list:protocol.TransactionIdList.txId)
+  return &txid_;
 }
 
 // -------------------------------------------------------------------
@@ -17116,6 +17393,80 @@ inline void TransactionExtention::_internal_set_energy_used(::PROTOBUF_NAMESPACE
 inline void TransactionExtention::set_energy_used(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_energy_used(value);
   // @@protoc_insertion_point(field_set:protocol.TransactionExtention.energy_used)
+}
+
+// repeated .protocol.TransactionInfo.Log logs = 6;
+inline int TransactionExtention::_internal_logs_size() const {
+  return logs_.size();
+}
+inline int TransactionExtention::logs_size() const {
+  return _internal_logs_size();
+}
+inline ::protocol::TransactionInfo_Log* TransactionExtention::mutable_logs(int index) {
+  // @@protoc_insertion_point(field_mutable:protocol.TransactionExtention.logs)
+  return logs_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::TransactionInfo_Log >*
+TransactionExtention::mutable_logs() {
+  // @@protoc_insertion_point(field_mutable_list:protocol.TransactionExtention.logs)
+  return &logs_;
+}
+inline const ::protocol::TransactionInfo_Log& TransactionExtention::_internal_logs(int index) const {
+  return logs_.Get(index);
+}
+inline const ::protocol::TransactionInfo_Log& TransactionExtention::logs(int index) const {
+  // @@protoc_insertion_point(field_get:protocol.TransactionExtention.logs)
+  return _internal_logs(index);
+}
+inline ::protocol::TransactionInfo_Log* TransactionExtention::_internal_add_logs() {
+  return logs_.Add();
+}
+inline ::protocol::TransactionInfo_Log* TransactionExtention::add_logs() {
+  ::protocol::TransactionInfo_Log* _add = _internal_add_logs();
+  // @@protoc_insertion_point(field_add:protocol.TransactionExtention.logs)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::TransactionInfo_Log >&
+TransactionExtention::logs() const {
+  // @@protoc_insertion_point(field_list:protocol.TransactionExtention.logs)
+  return logs_;
+}
+
+// repeated .protocol.InternalTransaction internal_transactions = 7;
+inline int TransactionExtention::_internal_internal_transactions_size() const {
+  return internal_transactions_.size();
+}
+inline int TransactionExtention::internal_transactions_size() const {
+  return _internal_internal_transactions_size();
+}
+inline ::protocol::InternalTransaction* TransactionExtention::mutable_internal_transactions(int index) {
+  // @@protoc_insertion_point(field_mutable:protocol.TransactionExtention.internal_transactions)
+  return internal_transactions_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::InternalTransaction >*
+TransactionExtention::mutable_internal_transactions() {
+  // @@protoc_insertion_point(field_mutable_list:protocol.TransactionExtention.internal_transactions)
+  return &internal_transactions_;
+}
+inline const ::protocol::InternalTransaction& TransactionExtention::_internal_internal_transactions(int index) const {
+  return internal_transactions_.Get(index);
+}
+inline const ::protocol::InternalTransaction& TransactionExtention::internal_transactions(int index) const {
+  // @@protoc_insertion_point(field_get:protocol.TransactionExtention.internal_transactions)
+  return _internal_internal_transactions(index);
+}
+inline ::protocol::InternalTransaction* TransactionExtention::_internal_add_internal_transactions() {
+  return internal_transactions_.Add();
+}
+inline ::protocol::InternalTransaction* TransactionExtention::add_internal_transactions() {
+  ::protocol::InternalTransaction* _add = _internal_add_internal_transactions();
+  // @@protoc_insertion_point(field_add:protocol.TransactionExtention.internal_transactions)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::InternalTransaction >&
+TransactionExtention::internal_transactions() const {
+  // @@protoc_insertion_point(field_list:protocol.TransactionExtention.internal_transactions)
+  return internal_transactions_;
 }
 
 // -------------------------------------------------------------------
@@ -24952,6 +25303,8 @@ inline void ShieldedTRC20TriggerContractParameters::set_allocated_transparent_to
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -926,6 +926,7 @@ class SmartContract final :
     kCallValueFieldNumber = 5,
     kConsumeUserResourcePercentFieldNumber = 6,
     kOriginEnergyLimitFieldNumber = 8,
+    kVersionFieldNumber = 11,
   };
   // bytes origin_address = 1;
   void clear_origin_address();
@@ -1056,6 +1057,15 @@ class SmartContract final :
   void _internal_set_origin_energy_limit(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
+  // int32 version = 11;
+  void clear_version();
+  ::PROTOBUF_NAMESPACE_ID::int32 version() const;
+  void set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_version() const;
+  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:protocol.SmartContract)
  private:
   class _Internal;
@@ -1073,6 +1083,7 @@ class SmartContract final :
   ::PROTOBUF_NAMESPACE_ID::int64 call_value_;
   ::PROTOBUF_NAMESPACE_ID::int64 consume_user_resource_percent_;
   ::PROTOBUF_NAMESPACE_ID::int64 origin_energy_limit_;
+  ::PROTOBUF_NAMESPACE_ID::int32 version_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_core_2fcontract_2fsmart_5fcontract_2eproto;
 };
@@ -2962,6 +2973,26 @@ inline void SmartContract::set_allocated_trx_hash(std::string* trx_hash) {
   trx_hash_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), trx_hash,
       GetArenaForAllocation());
   // @@protoc_insertion_point(field_set_allocated:protocol.SmartContract.trx_hash)
+}
+
+// int32 version = 11;
+inline void SmartContract::clear_version() {
+  version_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 SmartContract::_internal_version() const {
+  return version_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 SmartContract::version() const {
+  // @@protoc_insertion_point(field_get:protocol.SmartContract.version)
+  return _internal_version();
+}
+inline void SmartContract::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  version_ = value;
+}
+inline void SmartContract::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_version(value);
+  // @@protoc_insertion_point(field_set:protocol.SmartContract.version)
 }
 
 // -------------------------------------------------------------------

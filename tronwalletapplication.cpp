@@ -25,6 +25,9 @@
 #include <QWindow>
 #include <QDir>
 
+#include "tron/tronclient.h"
+#include "qt/optionsmodel.h"
+
 static QString GetLangTerritory()
 {
     QSettings settings;
@@ -121,6 +124,14 @@ WId TronWalletApplication::getMainWinId() const
     return window->winId();
 }
 
+void initClient()
+{
+    QSettings settings;
+    QString defaultTarget=(QString)DEFAULT_GUI_FULLNODE_HOST+":"+QString("%1").arg(DEFAULT_GUI_FULLNODE_PORT);
+    tronClient=new TronClient(settings.value("addrFullNode",defaultTarget).toString().toStdString());
+    std::cout<<tronClient->GetNowBlock().block_header().raw_data().timestamp()<<std::endl;
+}
+
 int GuiMain(int argc, char* argv[])
 {
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -134,13 +145,13 @@ int GuiMain(int argc, char* argv[])
     QApplication::setOrganizationDomain(QAPP_ORG_DOMAIN);
     QApplication::setApplicationName(QAPP_APP_NAME_DEFAULT);
 
-    /// 4. Initialization of translations, so that intro dialog is in user's language
+    /// 2. Initialization of translations, so that intro dialog is in user's language
     // Now that QSettings are accessible, initialize translations
     QTranslator qtTranslatorBase, qtTranslator, translatorBase, translator;
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
-    /// 5. Now that settings and translations are available, ask user for data directory
-    // Gracefully exit if the user cancels
+    /// 3. Initialization of gRPC Client
+    initClient();
 
     // Allow for separate UI settings for testnets
     QApplication::setApplicationName(QAPP_APP_NAME_DEFAULT);

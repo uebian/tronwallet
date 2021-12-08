@@ -3,15 +3,18 @@
 
 #include <memory>
 #include <grpcpp/grpcpp.h>
-#include "tron/proto/core/Tron.pb.h"
+#include <string>
+#include "tron/proto/api/api.grpc.pb.h"
 
 class TronClient
 {
 public:
-    TronClient();
-    protocol::Block GetNowBlock();
+    TronClient(const std::string& target);
+    protocol::BlockExtention GetNowBlock();
 private:
     std::shared_ptr<grpc::Channel> channel;
 };
+
+extern TronClient* tronClient;
 
 #endif // TRONCLIENT_H

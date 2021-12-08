@@ -117,6 +117,18 @@ struct TransactionListDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT TransactionListDefaultTypeInternal _TransactionList_default_instance_;
+constexpr TransactionIdList::TransactionIdList(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : txid_(){}
+struct TransactionIdListDefaultTypeInternal {
+  constexpr TransactionIdListDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~TransactionIdListDefaultTypeInternal() {}
+  union {
+    TransactionIdList _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT TransactionIdListDefaultTypeInternal _TransactionIdList_default_instance_;
 constexpr DelegatedResourceMessage::DelegatedResourceMessage(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : fromaddress_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -473,6 +485,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AddressPrKeyPairMessageDefaultT
 constexpr TransactionExtention::TransactionExtention(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : constant_result_()
+  , logs_()
+  , internal_transactions_()
   , txid_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , transaction_(nullptr)
   , result_(nullptr)
@@ -1126,7 +1140,7 @@ struct ShieldedTRC20TriggerContractParametersDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ShieldedTRC20TriggerContractParametersDefaultTypeInternal _ShieldedTRC20TriggerContractParameters_default_instance_;
 }  // namespace protocol
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_api_2fapi_2eproto[78];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_api_2fapi_2eproto[79];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_api_2fapi_2eproto[3];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_api_2fapi_2eproto = nullptr;
 
@@ -1182,6 +1196,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_api_2fapi_2eproto::offsets[] P
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::protocol::TransactionList, transaction_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::TransactionIdList, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::protocol::TransactionIdList, txid_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::DelegatedResourceMessage, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1405,6 +1425,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_api_2fapi_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::protocol::TransactionExtention, constant_result_),
   PROTOBUF_FIELD_OFFSET(::protocol::TransactionExtention, result_),
   PROTOBUF_FIELD_OFFSET(::protocol::TransactionExtention, energy_used_),
+  PROTOBUF_FIELD_OFFSET(::protocol::TransactionExtention, logs_),
+  PROTOBUF_FIELD_OFFSET(::protocol::TransactionExtention, internal_transactions_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::BlockExtention, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1794,76 +1816,77 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 33, -1, sizeof(::protocol::AssetIssueList)},
   { 39, -1, sizeof(::protocol::BlockList)},
   { 45, -1, sizeof(::protocol::TransactionList)},
-  { 51, -1, sizeof(::protocol::DelegatedResourceMessage)},
-  { 58, -1, sizeof(::protocol::DelegatedResourceList)},
-  { 64, -1, sizeof(::protocol::NodeList)},
-  { 70, -1, sizeof(::protocol::Node)},
-  { 76, -1, sizeof(::protocol::Address)},
-  { 83, -1, sizeof(::protocol::EmptyMessage)},
-  { 88, -1, sizeof(::protocol::NumberMessage)},
-  { 94, -1, sizeof(::protocol::BytesMessage)},
-  { 100, -1, sizeof(::protocol::TimeMessage)},
-  { 107, -1, sizeof(::protocol::BlockLimit)},
-  { 114, -1, sizeof(::protocol::TransactionLimit)},
-  { 121, -1, sizeof(::protocol::AccountPaginated)},
-  { 129, -1, sizeof(::protocol::TimePaginatedMessage)},
-  { 137, 144, sizeof(::protocol::AccountNetMessage_AssetNetUsedEntry_DoNotUse)},
-  { 146, 153, sizeof(::protocol::AccountNetMessage_AssetNetLimitEntry_DoNotUse)},
-  { 155, -1, sizeof(::protocol::AccountNetMessage)},
-  { 168, 175, sizeof(::protocol::AccountResourceMessage_AssetNetUsedEntry_DoNotUse)},
-  { 177, 184, sizeof(::protocol::AccountResourceMessage_AssetNetLimitEntry_DoNotUse)},
-  { 186, -1, sizeof(::protocol::AccountResourceMessage)},
-  { 208, -1, sizeof(::protocol::PaginatedMessage)},
-  { 215, -1, sizeof(::protocol::EasyTransferMessage)},
-  { 223, -1, sizeof(::protocol::EasyTransferAssetMessage)},
-  { 232, -1, sizeof(::protocol::EasyTransferByPrivateMessage)},
-  { 240, -1, sizeof(::protocol::EasyTransferAssetByPrivateMessage)},
-  { 249, -1, sizeof(::protocol::EasyTransferResponse)},
-  { 257, -1, sizeof(::protocol::AddressPrKeyPairMessage)},
-  { 264, -1, sizeof(::protocol::TransactionExtention)},
-  { 274, -1, sizeof(::protocol::BlockExtention)},
-  { 282, -1, sizeof(::protocol::BlockListExtention)},
-  { 288, -1, sizeof(::protocol::TransactionListExtention)},
-  { 294, -1, sizeof(::protocol::BlockIncrementalMerkleTree)},
-  { 301, -1, sizeof(::protocol::TransactionSignWeight_Result)},
-  { 308, -1, sizeof(::protocol::TransactionSignWeight)},
-  { 318, -1, sizeof(::protocol::TransactionApprovedList_Result)},
-  { 325, -1, sizeof(::protocol::TransactionApprovedList)},
-  { 333, -1, sizeof(::protocol::IvkDecryptParameters)},
-  { 341, -1, sizeof(::protocol::IvkDecryptAndMarkParameters)},
-  { 351, -1, sizeof(::protocol::OvkDecryptParameters)},
-  { 359, -1, sizeof(::protocol::DecryptNotes_NoteTx)},
-  { 367, -1, sizeof(::protocol::DecryptNotes)},
-  { 373, -1, sizeof(::protocol::DecryptNotesMarked_NoteTx)},
-  { 382, -1, sizeof(::protocol::DecryptNotesMarked)},
-  { 388, -1, sizeof(::protocol::Note)},
-  { 397, -1, sizeof(::protocol::SpendNote)},
-  { 406, -1, sizeof(::protocol::ReceiveNote)},
-  { 412, -1, sizeof(::protocol::PrivateParameters)},
-  { 427, -1, sizeof(::protocol::PrivateParametersWithoutAsk)},
-  { 442, -1, sizeof(::protocol::SpendAuthSigParameters)},
-  { 450, -1, sizeof(::protocol::NfParameters)},
-  { 459, -1, sizeof(::protocol::ExpandedSpendingKeyMessage)},
-  { 467, -1, sizeof(::protocol::ViewingKeyMessage)},
-  { 474, -1, sizeof(::protocol::IncomingViewingKeyMessage)},
-  { 480, -1, sizeof(::protocol::DiversifierMessage)},
-  { 486, -1, sizeof(::protocol::IncomingViewingKeyDiversifierMessage)},
-  { 493, -1, sizeof(::protocol::PaymentAddressMessage)},
-  { 501, -1, sizeof(::protocol::ShieldedAddressInfo)},
-  { 516, -1, sizeof(::protocol::NoteParameters)},
-  { 526, -1, sizeof(::protocol::SpendResult)},
-  { 533, -1, sizeof(::protocol::TransactionInfoList)},
-  { 539, -1, sizeof(::protocol::SpendNoteTRC20)},
-  { 549, -1, sizeof(::protocol::PrivateShieldedTRC20Parameters)},
-  { 563, -1, sizeof(::protocol::PrivateShieldedTRC20ParametersWithoutAsk)},
-  { 577, -1, sizeof(::protocol::ShieldedTRC20Parameters)},
-  { 588, -1, sizeof(::protocol::IvkDecryptTRC20Parameters)},
-  { 600, -1, sizeof(::protocol::OvkDecryptTRC20Parameters)},
-  { 610, -1, sizeof(::protocol::DecryptNotesTRC20_NoteTx)},
-  { 622, -1, sizeof(::protocol::DecryptNotesTRC20)},
-  { 628, -1, sizeof(::protocol::NfTRC20Parameters)},
-  { 638, -1, sizeof(::protocol::NullifierResult)},
-  { 644, -1, sizeof(::protocol::ShieldedTRC20TriggerContractParameters)},
+  { 51, -1, sizeof(::protocol::TransactionIdList)},
+  { 57, -1, sizeof(::protocol::DelegatedResourceMessage)},
+  { 64, -1, sizeof(::protocol::DelegatedResourceList)},
+  { 70, -1, sizeof(::protocol::NodeList)},
+  { 76, -1, sizeof(::protocol::Node)},
+  { 82, -1, sizeof(::protocol::Address)},
+  { 89, -1, sizeof(::protocol::EmptyMessage)},
+  { 94, -1, sizeof(::protocol::NumberMessage)},
+  { 100, -1, sizeof(::protocol::BytesMessage)},
+  { 106, -1, sizeof(::protocol::TimeMessage)},
+  { 113, -1, sizeof(::protocol::BlockLimit)},
+  { 120, -1, sizeof(::protocol::TransactionLimit)},
+  { 127, -1, sizeof(::protocol::AccountPaginated)},
+  { 135, -1, sizeof(::protocol::TimePaginatedMessage)},
+  { 143, 150, sizeof(::protocol::AccountNetMessage_AssetNetUsedEntry_DoNotUse)},
+  { 152, 159, sizeof(::protocol::AccountNetMessage_AssetNetLimitEntry_DoNotUse)},
+  { 161, -1, sizeof(::protocol::AccountNetMessage)},
+  { 174, 181, sizeof(::protocol::AccountResourceMessage_AssetNetUsedEntry_DoNotUse)},
+  { 183, 190, sizeof(::protocol::AccountResourceMessage_AssetNetLimitEntry_DoNotUse)},
+  { 192, -1, sizeof(::protocol::AccountResourceMessage)},
+  { 214, -1, sizeof(::protocol::PaginatedMessage)},
+  { 221, -1, sizeof(::protocol::EasyTransferMessage)},
+  { 229, -1, sizeof(::protocol::EasyTransferAssetMessage)},
+  { 238, -1, sizeof(::protocol::EasyTransferByPrivateMessage)},
+  { 246, -1, sizeof(::protocol::EasyTransferAssetByPrivateMessage)},
+  { 255, -1, sizeof(::protocol::EasyTransferResponse)},
+  { 263, -1, sizeof(::protocol::AddressPrKeyPairMessage)},
+  { 270, -1, sizeof(::protocol::TransactionExtention)},
+  { 282, -1, sizeof(::protocol::BlockExtention)},
+  { 290, -1, sizeof(::protocol::BlockListExtention)},
+  { 296, -1, sizeof(::protocol::TransactionListExtention)},
+  { 302, -1, sizeof(::protocol::BlockIncrementalMerkleTree)},
+  { 309, -1, sizeof(::protocol::TransactionSignWeight_Result)},
+  { 316, -1, sizeof(::protocol::TransactionSignWeight)},
+  { 326, -1, sizeof(::protocol::TransactionApprovedList_Result)},
+  { 333, -1, sizeof(::protocol::TransactionApprovedList)},
+  { 341, -1, sizeof(::protocol::IvkDecryptParameters)},
+  { 349, -1, sizeof(::protocol::IvkDecryptAndMarkParameters)},
+  { 359, -1, sizeof(::protocol::OvkDecryptParameters)},
+  { 367, -1, sizeof(::protocol::DecryptNotes_NoteTx)},
+  { 375, -1, sizeof(::protocol::DecryptNotes)},
+  { 381, -1, sizeof(::protocol::DecryptNotesMarked_NoteTx)},
+  { 390, -1, sizeof(::protocol::DecryptNotesMarked)},
+  { 396, -1, sizeof(::protocol::Note)},
+  { 405, -1, sizeof(::protocol::SpendNote)},
+  { 414, -1, sizeof(::protocol::ReceiveNote)},
+  { 420, -1, sizeof(::protocol::PrivateParameters)},
+  { 435, -1, sizeof(::protocol::PrivateParametersWithoutAsk)},
+  { 450, -1, sizeof(::protocol::SpendAuthSigParameters)},
+  { 458, -1, sizeof(::protocol::NfParameters)},
+  { 467, -1, sizeof(::protocol::ExpandedSpendingKeyMessage)},
+  { 475, -1, sizeof(::protocol::ViewingKeyMessage)},
+  { 482, -1, sizeof(::protocol::IncomingViewingKeyMessage)},
+  { 488, -1, sizeof(::protocol::DiversifierMessage)},
+  { 494, -1, sizeof(::protocol::IncomingViewingKeyDiversifierMessage)},
+  { 501, -1, sizeof(::protocol::PaymentAddressMessage)},
+  { 509, -1, sizeof(::protocol::ShieldedAddressInfo)},
+  { 524, -1, sizeof(::protocol::NoteParameters)},
+  { 534, -1, sizeof(::protocol::SpendResult)},
+  { 541, -1, sizeof(::protocol::TransactionInfoList)},
+  { 547, -1, sizeof(::protocol::SpendNoteTRC20)},
+  { 557, -1, sizeof(::protocol::PrivateShieldedTRC20Parameters)},
+  { 571, -1, sizeof(::protocol::PrivateShieldedTRC20ParametersWithoutAsk)},
+  { 585, -1, sizeof(::protocol::ShieldedTRC20Parameters)},
+  { 596, -1, sizeof(::protocol::IvkDecryptTRC20Parameters)},
+  { 608, -1, sizeof(::protocol::OvkDecryptTRC20Parameters)},
+  { 618, -1, sizeof(::protocol::DecryptNotesTRC20_NoteTx)},
+  { 630, -1, sizeof(::protocol::DecryptNotesTRC20)},
+  { 636, -1, sizeof(::protocol::NfTRC20Parameters)},
+  { 646, -1, sizeof(::protocol::NullifierResult)},
+  { 652, -1, sizeof(::protocol::ShieldedTRC20TriggerContractParameters)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -1875,6 +1898,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_AssetIssueList_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_BlockList_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_TransactionList_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_TransactionIdList_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_DelegatedResourceMessage_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_DelegatedResourceList_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_NodeList_default_instance_),
@@ -1956,9 +1980,9 @@ const char descriptor_table_protodef_api_2fapi_2eproto[] PROTOBUF_SECTION_VARIAB
   "tract/balance_contract.proto\032%core/contr"
   "act/proposal_contract.proto\032$core/contra"
   "ct/storage_contract.proto\032%core/contract"
-  "/exchange_contract.proto\032\"core/contract/"
-  "smart_contract.proto\032#core/contract/shie"
-  "ld_contract.proto\032#core/contract/market_"
+  "/exchange_contract.proto\032#core/contract/"
+  "market_contract.proto\032\"core/contract/sma"
+  "rt_contract.proto\032#core/contract/shield_"
   "contract.proto\"\224\003\n\006Return\022\016\n\006result\030\001 \001("
   "\010\022,\n\004code\030\002 \001(\0162\036.protocol.Return.respon"
   "se_code\022\017\n\007message\030\003 \001(\014\"\272\002\n\rresponse_co"
@@ -1979,674 +2003,693 @@ const char descriptor_table_protodef_api_2fapi_2eproto[] PROTOBUF_SECTION_VARIAB
   "\034.protocol.AssetIssueContract\"+\n\tBlockLi"
   "st\022\036\n\005block\030\001 \003(\0132\017.protocol.Block\"=\n\017Tr"
   "ansactionList\022*\n\013transaction\030\001 \003(\0132\025.pro"
-  "tocol.Transaction\"B\n\030DelegatedResourceMe"
-  "ssage\022\023\n\013fromAddress\030\001 \001(\014\022\021\n\ttoAddress\030"
-  "\002 \001(\014\"O\n\025DelegatedResourceList\0226\n\021delega"
-  "tedResource\030\001 \003(\0132\033.protocol.DelegatedRe"
-  "source\")\n\010NodeList\022\035\n\005nodes\030\001 \003(\0132\016.prot"
-  "ocol.Node\"*\n\004Node\022\"\n\007address\030\001 \001(\0132\021.pro"
-  "tocol.Address\"%\n\007Address\022\014\n\004host\030\001 \001(\014\022\014"
-  "\n\004port\030\002 \001(\005\"\016\n\014EmptyMessage\"\034\n\rNumberMe"
-  "ssage\022\013\n\003num\030\001 \001(\003\"\035\n\014BytesMessage\022\r\n\005va"
-  "lue\030\001 \001(\014\"E\n\013TimeMessage\022\033\n\023beginInMilli"
-  "seconds\030\001 \001(\003\022\031\n\021endInMilliseconds\030\002 \001(\003"
-  "\".\n\nBlockLimit\022\020\n\010startNum\030\001 \001(\003\022\016\n\006endN"
-  "um\030\002 \001(\003\";\n\020TransactionLimit\022\025\n\rtransact"
-  "ionId\030\001 \001(\014\022\020\n\010limitNum\030\002 \001(\003\"U\n\020Account"
-  "Paginated\022\"\n\007account\030\001 \001(\0132\021.protocol.Ac"
-  "count\022\016\n\006offset\030\002 \001(\003\022\r\n\005limit\030\003 \001(\003\"a\n\024"
-  "TimePaginatedMessage\022*\n\013timeMessage\030\001 \001("
-  "\0132\025.protocol.TimeMessage\022\016\n\006offset\030\002 \001(\003"
-  "\022\r\n\005limit\030\003 \001(\003\"\207\003\n\021AccountNetMessage\022\023\n"
-  "\013freeNetUsed\030\001 \001(\003\022\024\n\014freeNetLimit\030\002 \001(\003"
-  "\022\017\n\007NetUsed\030\003 \001(\003\022\020\n\010NetLimit\030\004 \001(\003\022C\n\014a"
-  "ssetNetUsed\030\005 \003(\0132-.protocol.AccountNetM"
-  "essage.AssetNetUsedEntry\022E\n\rassetNetLimi"
-  "t\030\006 \003(\0132..protocol.AccountNetMessage.Ass"
-  "etNetLimitEntry\022\025\n\rTotalNetLimit\030\007 \001(\003\022\026"
-  "\n\016TotalNetWeight\030\010 \001(\003\0323\n\021AssetNetUsedEn"
-  "try\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\003:\0028\001\0324\n\022A"
-  "ssetNetLimitEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030"
-  "\002 \001(\003:\0028\001\"\354\004\n\026AccountResourceMessage\022\023\n\013"
-  "freeNetUsed\030\001 \001(\003\022\024\n\014freeNetLimit\030\002 \001(\003\022"
-  "\017\n\007NetUsed\030\003 \001(\003\022\020\n\010NetLimit\030\004 \001(\003\022H\n\014as"
-  "setNetUsed\030\005 \003(\01322.protocol.AccountResou"
-  "rceMessage.AssetNetUsedEntry\022J\n\rassetNet"
-  "Limit\030\006 \003(\01323.protocol.AccountResourceMe"
-  "ssage.AssetNetLimitEntry\022\025\n\rTotalNetLimi"
-  "t\030\007 \001(\003\022\026\n\016TotalNetWeight\030\010 \001(\003\022\034\n\024Total"
-  "TronPowerWeight\030\t \001(\003\022\025\n\rtronPowerUsed\030\n"
-  " \001(\003\022\026\n\016tronPowerLimit\030\013 \001(\003\022\022\n\nEnergyUs"
-  "ed\030\r \001(\003\022\023\n\013EnergyLimit\030\016 \001(\003\022\030\n\020TotalEn"
-  "ergyLimit\030\017 \001(\003\022\031\n\021TotalEnergyWeight\030\020 \001"
-  "(\003\022\023\n\013storageUsed\030\025 \001(\003\022\024\n\014storageLimit\030"
-  "\026 \001(\003\0323\n\021AssetNetUsedEntry\022\013\n\003key\030\001 \001(\t\022"
-  "\r\n\005value\030\002 \001(\003:\0028\001\0324\n\022AssetNetLimitEntry"
-  "\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\003:\0028\001\"1\n\020Pagi"
-  "natedMessage\022\016\n\006offset\030\001 \001(\003\022\r\n\005limit\030\002 "
-  "\001(\003\"L\n\023EasyTransferMessage\022\022\n\npassPhrase"
-  "\030\001 \001(\014\022\021\n\ttoAddress\030\002 \001(\014\022\016\n\006amount\030\003 \001("
-  "\003\"b\n\030EasyTransferAssetMessage\022\022\n\npassPhr"
-  "ase\030\001 \001(\014\022\021\n\ttoAddress\030\002 \001(\014\022\017\n\007assetId\030"
-  "\003 \001(\t\022\016\n\006amount\030\004 \001(\003\"U\n\034EasyTransferByP"
-  "rivateMessage\022\022\n\nprivateKey\030\001 \001(\014\022\021\n\ttoA"
-  "ddress\030\002 \001(\014\022\016\n\006amount\030\003 \001(\003\"k\n!EasyTran"
-  "sferAssetByPrivateMessage\022\022\n\nprivateKey\030"
-  "\001 \001(\014\022\021\n\ttoAddress\030\002 \001(\014\022\017\n\007assetId\030\003 \001("
-  "\t\022\016\n\006amount\030\004 \001(\003\"r\n\024EasyTransferRespons"
-  "e\022*\n\013transaction\030\001 \001(\0132\025.protocol.Transa"
-  "ction\022 \n\006result\030\002 \001(\0132\020.protocol.Return\022"
-  "\014\n\004txid\030\003 \001(\014\">\n\027AddressPrKeyPairMessage"
-  "\022\017\n\007address\030\001 \001(\t\022\022\n\nprivateKey\030\002 \001(\t\"\240\001"
-  "\n\024TransactionExtention\022*\n\013transaction\030\001 "
-  "\001(\0132\025.protocol.Transaction\022\014\n\004txid\030\002 \001(\014"
-  "\022\027\n\017constant_result\030\003 \003(\014\022 \n\006result\030\004 \001("
-  "\0132\020.protocol.Return\022\023\n\013energy_used\030\005 \001(\003"
-  "\"\204\001\n\016BlockExtention\0224\n\014transactions\030\001 \003("
-  "\0132\036.protocol.TransactionExtention\022+\n\014blo"
-  "ck_header\030\002 \001(\0132\025.protocol.BlockHeader\022\017"
-  "\n\007blockid\030\003 \001(\014\"=\n\022BlockListExtention\022\'\n"
-  "\005block\030\001 \003(\0132\030.protocol.BlockExtention\"O"
-  "\n\030TransactionListExtention\0223\n\013transactio"
-  "n\030\001 \003(\0132\036.protocol.TransactionExtention\""
-  "a\n\032BlockIncrementalMerkleTree\022\016\n\006number\030"
-  "\001 \001(\003\0223\n\nmerkleTree\030\002 \001(\0132\037.protocol.Inc"
-  "rementalMerkleTree\"\337\003\n\025TransactionSignWe"
-  "ight\022(\n\npermission\030\001 \001(\0132\024.protocol.Perm"
-  "ission\022\025\n\rapproved_list\030\002 \003(\014\022\026\n\016current"
-  "_weight\030\003 \001(\003\0226\n\006result\030\004 \001(\0132&.protocol"
-  ".TransactionSignWeight.Result\0223\n\013transac"
-  "tion\030\005 \001(\0132\036.protocol.TransactionExtenti"
-  "on\032\377\001\n\006Result\022B\n\004code\030\001 \001(\01624.protocol.T"
-  "ransactionSignWeight.Result.response_cod"
-  "e\022\017\n\007message\030\002 \001(\t\"\237\001\n\rresponse_code\022\025\n\021"
-  "ENOUGH_PERMISSION\020\000\022\031\n\025NOT_ENOUGH_PERMIS"
-  "SION\020\001\022\032\n\026SIGNATURE_FORMAT_ERROR\020\002\022\031\n\025CO"
-  "MPUTE_ADDRESS_ERROR\020\003\022\024\n\020PERMISSION_ERRO"
-  "R\020\004\022\017\n\013OTHER_ERROR\020\024\"\347\002\n\027TransactionAppr"
-  "ovedList\022\025\n\rapproved_list\030\002 \003(\014\0228\n\006resul"
-  "t\030\004 \001(\0132(.protocol.TransactionApprovedLi"
-  "st.Result\0223\n\013transaction\030\005 \001(\0132\036.protoco"
-  "l.TransactionExtention\032\305\001\n\006Result\022D\n\004cod"
-  "e\030\001 \001(\01626.protocol.TransactionApprovedLi"
-  "st.Result.response_code\022\017\n\007message\030\002 \001(\t"
-  "\"d\n\rresponse_code\022\013\n\007SUCCESS\020\000\022\032\n\026SIGNAT"
-  "URE_FORMAT_ERROR\020\001\022\031\n\025COMPUTE_ADDRESS_ER"
-  "ROR\020\002\022\017\n\013OTHER_ERROR\020\024\"W\n\024IvkDecryptPara"
-  "meters\022\031\n\021start_block_index\030\001 \001(\003\022\027\n\017end"
-  "_block_index\030\002 \001(\003\022\013\n\003ivk\030\003 \001(\014\"v\n\033IvkDe"
-  "cryptAndMarkParameters\022\031\n\021start_block_in"
-  "dex\030\001 \001(\003\022\027\n\017end_block_index\030\002 \001(\003\022\013\n\003iv"
-  "k\030\005 \001(\014\022\n\n\002ak\030\003 \001(\014\022\n\n\002nk\030\004 \001(\014\"W\n\024OvkDe"
-  "cryptParameters\022\031\n\021start_block_index\030\001 \001"
-  "(\003\022\027\n\017end_block_index\030\002 \001(\003\022\013\n\003ovk\030\003 \001(\014"
-  "\"\203\001\n\014DecryptNotes\022.\n\007noteTxs\030\001 \003(\0132\035.pro"
-  "tocol.DecryptNotes.NoteTx\032C\n\006NoteTx\022\034\n\004n"
-  "ote\030\001 \001(\0132\016.protocol.Note\022\014\n\004txid\030\002 \001(\014\022"
-  "\r\n\005index\030\003 \001(\005\"\241\001\n\022DecryptNotesMarked\0224\n"
-  "\007noteTxs\030\001 \003(\0132#.protocol.DecryptNotesMa"
-  "rked.NoteTx\032U\n\006NoteTx\022\034\n\004note\030\001 \001(\0132\016.pr"
-  "otocol.Note\022\014\n\004txid\030\002 \001(\014\022\r\n\005index\030\003 \001(\005"
-  "\022\020\n\010is_spend\030\004 \001(\010\"I\n\004Note\022\r\n\005value\030\001 \001("
-  "\003\022\027\n\017payment_address\030\002 \001(\t\022\013\n\003rcm\030\003 \001(\014\022"
-  "\014\n\004memo\030\004 \001(\014\"{\n\tSpendNote\022\034\n\004note\030\003 \001(\013"
-  "2\016.protocol.Note\022\r\n\005alpha\030\004 \001(\014\0223\n\007vouch"
-  "er\030\005 \001(\0132\".protocol.IncrementalMerkleVou"
-  "cher\022\014\n\004path\030\006 \001(\014\"+\n\013ReceiveNote\022\034\n\004not"
-  "e\030\001 \001(\0132\016.protocol.Note\"\225\002\n\021PrivateParam"
-  "eters\022 \n\030transparent_from_address\030\001 \001(\014\022"
-  "\013\n\003ask\030\002 \001(\014\022\013\n\003nsk\030\003 \001(\014\022\013\n\003ovk\030\004 \001(\014\022\023"
-  "\n\013from_amount\030\005 \001(\003\022,\n\017shielded_spends\030\006"
-  " \003(\0132\023.protocol.SpendNote\0220\n\021shielded_re"
-  "ceives\030\007 \003(\0132\025.protocol.ReceiveNote\022\036\n\026t"
-  "ransparent_to_address\030\010 \001(\014\022\021\n\tto_amount"
-  "\030\t \001(\003\022\017\n\007timeout\030\n \001(\003\"\236\002\n\033PrivateParam"
-  "etersWithoutAsk\022 \n\030transparent_from_addr"
-  "ess\030\001 \001(\014\022\n\n\002ak\030\002 \001(\014\022\013\n\003nsk\030\003 \001(\014\022\013\n\003ov"
-  "k\030\004 \001(\014\022\023\n\013from_amount\030\005 \001(\003\022,\n\017shielded"
-  "_spends\030\006 \003(\0132\023.protocol.SpendNote\0220\n\021sh"
-  "ielded_receives\030\007 \003(\0132\025.protocol.Receive"
-  "Note\022\036\n\026transparent_to_address\030\010 \001(\014\022\021\n\t"
-  "to_amount\030\t \001(\003\022\017\n\007timeout\030\n \001(\003\"E\n\026Spen"
-  "dAuthSigParameters\022\013\n\003ask\030\001 \001(\014\022\017\n\007tx_ha"
-  "sh\030\002 \001(\014\022\r\n\005alpha\030\003 \001(\014\"y\n\014NfParameters\022"
-  "\034\n\004note\030\001 \001(\0132\016.protocol.Note\0223\n\007voucher"
-  "\030\002 \001(\0132\".protocol.IncrementalMerkleVouch"
-  "er\022\n\n\002ak\030\003 \001(\014\022\n\n\002nk\030\004 \001(\014\"C\n\032ExpandedSp"
-  "endingKeyMessage\022\013\n\003ask\030\001 \001(\014\022\013\n\003nsk\030\002 \001"
-  "(\014\022\013\n\003ovk\030\003 \001(\014\"+\n\021ViewingKeyMessage\022\n\n\002"
-  "ak\030\001 \001(\014\022\n\n\002nk\030\002 \001(\014\"(\n\031IncomingViewingK"
-  "eyMessage\022\013\n\003ivk\030\001 \001(\014\"\037\n\022DiversifierMes"
-  "sage\022\t\n\001d\030\001 \001(\014\"\201\001\n$IncomingViewingKeyDi"
-  "versifierMessage\0220\n\003ivk\030\001 \001(\0132#.protocol"
-  ".IncomingViewingKeyMessage\022\'\n\001d\030\002 \001(\0132\034."
-  "protocol.DiversifierMessage\"f\n\025PaymentAd"
-  "dressMessage\022\'\n\001d\030\001 \001(\0132\034.protocol.Diver"
-  "sifierMessage\022\013\n\003pkD\030\002 \001(\014\022\027\n\017payment_ad"
-  "dress\030\003 \001(\t\"\236\001\n\023ShieldedAddressInfo\022\n\n\002s"
-  "k\030\001 \001(\014\022\013\n\003ask\030\002 \001(\014\022\013\n\003nsk\030\003 \001(\014\022\013\n\003ovk"
-  "\030\004 \001(\014\022\n\n\002ak\030\005 \001(\014\022\n\n\002nk\030\006 \001(\014\022\013\n\003ivk\030\007 "
-  "\001(\014\022\t\n\001d\030\010 \001(\014\022\013\n\003pkD\030\t \001(\014\022\027\n\017payment_a"
-  "ddress\030\n \001(\t\"c\n\016NoteParameters\022\n\n\002ak\030\001 \001"
-  "(\014\022\n\n\002nk\030\002 \001(\014\022\034\n\004note\030\003 \001(\0132\016.protocol."
-  "Note\022\014\n\004txid\030\004 \001(\014\022\r\n\005index\030\005 \001(\005\".\n\013Spe"
-  "ndResult\022\016\n\006result\030\001 \001(\010\022\017\n\007message\030\002 \001("
-  "\t\"I\n\023TransactionInfoList\0222\n\017transactionI"
-  "nfo\030\001 \003(\0132\031.protocol.TransactionInfo\"f\n\016"
-  "SpendNoteTRC20\022\034\n\004note\030\001 \001(\0132\016.protocol."
-  "Note\022\r\n\005alpha\030\002 \001(\014\022\014\n\004root\030\003 \001(\014\022\014\n\004pat"
-  "h\030\004 \001(\014\022\013\n\003pos\030\005 \001(\003\"\235\002\n\036PrivateShielded"
-  "TRC20Parameters\022\013\n\003ask\030\001 \001(\014\022\013\n\003nsk\030\002 \001("
-  "\014\022\013\n\003ovk\030\003 \001(\014\022\023\n\013from_amount\030\004 \001(\t\0221\n\017s"
-  "hielded_spends\030\005 \003(\0132\030.protocol.SpendNot"
-  "eTRC20\0220\n\021shielded_receives\030\006 \003(\0132\025.prot"
-  "ocol.ReceiveNote\022\036\n\026transparent_to_addre"
-  "ss\030\007 \001(\014\022\021\n\tto_amount\030\010 \001(\t\022\'\n\037shielded_"
-  "TRC20_contract_address\030\t \001(\014\"\246\002\n(Private"
-  "ShieldedTRC20ParametersWithoutAsk\022\n\n\002ak\030"
-  "\001 \001(\014\022\013\n\003nsk\030\002 \001(\014\022\013\n\003ovk\030\003 \001(\014\022\023\n\013from_"
-  "amount\030\004 \001(\t\0221\n\017shielded_spends\030\005 \003(\0132\030."
-  "protocol.SpendNoteTRC20\0220\n\021shielded_rece"
-  "ives\030\006 \003(\0132\025.protocol.ReceiveNote\022\036\n\026tra"
-  "nsparent_to_address\030\007 \001(\014\022\021\n\tto_amount\030\010"
-  " \001(\t\022\'\n\037shielded_TRC20_contract_address\030"
-  "\t \001(\014\"\364\001\n\027ShieldedTRC20Parameters\0225\n\021spe"
-  "nd_description\030\001 \003(\0132\032.protocol.SpendDes"
-  "cription\0229\n\023receive_description\030\002 \003(\0132\034."
-  "protocol.ReceiveDescription\022\031\n\021binding_s"
-  "ignature\030\003 \001(\014\022\024\n\014message_hash\030\004 \001(\014\022\036\n\026"
-  "trigger_contract_input\030\005 \001(\t\022\026\n\016paramete"
-  "r_type\030\006 \001(\t\"\255\001\n\031IvkDecryptTRC20Paramete"
-  "rs\022\031\n\021start_block_index\030\001 \001(\003\022\027\n\017end_blo"
-  "ck_index\030\002 \001(\003\022\'\n\037shielded_TRC20_contrac"
-  "t_address\030\003 \001(\014\022\013\n\003ivk\030\004 \001(\014\022\n\n\002ak\030\005 \001(\014"
-  "\022\n\n\002nk\030\006 \001(\014\022\016\n\006events\030\007 \003(\t\"\225\001\n\031OvkDecr"
-  "yptTRC20Parameters\022\031\n\021start_block_index\030"
-  "\001 \001(\003\022\027\n\017end_block_index\030\002 \001(\003\022\013\n\003ovk\030\003 "
-  "\001(\014\022\'\n\037shielded_TRC20_contract_address\030\004"
-  " \001(\014\022\016\n\006events\030\005 \003(\t\"\345\001\n\021DecryptNotesTRC"
-  "20\0223\n\007noteTxs\030\001 \003(\0132\".protocol.DecryptNo"
-  "tesTRC20.NoteTx\032\232\001\n\006NoteTx\022\034\n\004note\030\001 \001(\013"
-  "2\016.protocol.Note\022\020\n\010position\030\002 \001(\003\022\020\n\010is"
-  "_spent\030\003 \001(\010\022\014\n\004txid\030\004 \001(\014\022\r\n\005index\030\005 \001("
-  "\005\022\021\n\tto_amount\030\006 \001(\t\022\036\n\026transparent_to_a"
-  "ddress\030\007 \001(\014\"\204\001\n\021NfTRC20Parameters\022\034\n\004no"
-  "te\030\001 \001(\0132\016.protocol.Note\022\n\n\002ak\030\002 \001(\014\022\n\n\002"
-  "nk\030\003 \001(\014\022\020\n\010position\030\004 \001(\003\022\'\n\037shielded_T"
-  "RC20_contract_address\030\005 \001(\014\"#\n\017Nullifier"
-  "Result\022\020\n\010is_spent\030\001 \001(\010\"\331\001\n&ShieldedTRC"
-  "20TriggerContractParameters\022D\n\031shielded_"
-  "TRC20_Parameters\030\001 \001(\0132!.protocol.Shield"
-  "edTRC20Parameters\0229\n\031spend_authority_sig"
-  "nature\030\002 \003(\0132\026.protocol.BytesMessage\022\016\n\006"
-  "amount\030\003 \001(\t\022\036\n\026transparent_to_address\030\004"
-  " \001(\0142\310m\n\006Wallet\022g\n\nGetAccount\022\021.protocol"
-  ".Account\032\021.protocol.Account\"3\202\323\344\223\002-\"\022/wa"
-  "llet/getaccount:\001*Z\024\022\022/wallet/getaccount"
-  "\022s\n\016GetAccountById\022\021.protocol.Account\032\021."
-  "protocol.Account\";\202\323\344\223\0025\"\026/wallet/getacc"
-  "ountbyid:\001*Z\030\022\026/wallet/getaccountbyid\022\231\001"
-  "\n\021GetAccountBalance\022\037.protocol.AccountBa"
-  "lanceRequest\032 .protocol.AccountBalanceRe"
-  "sponse\"A\202\323\344\223\002;\"\031/wallet/getaccountbalanc"
-  "e:\001*Z\033\022\031/wallet/getaccountbalance\022\251\001\n\024Ge"
-  "tBlockBalanceTrace\022+.protocol.BlockBalan"
-  "ceTrace.BlockIdentifier\032\033.protocol.Block"
-  "BalanceTrace\"G\202\323\344\223\002A\"\034/wallet/getblockba"
-  "lancetrace:\001*Z\036\022\034/wallet/getblockbalance"
-  "trace\022\211\001\n\021CreateTransaction\022\032.protocol.T"
-  "ransferContract\032\025.protocol.Transaction\"A"
-  "\202\323\344\223\002;\"\031/wallet/createtransaction:\001*Z\033\022\031"
-  "/wallet/createtransaction\022R\n\022CreateTrans"
-  "action2\022\032.protocol.TransferContract\032\036.pr"
-  "otocol.TransactionExtention\"\000\022\210\001\n\024Broadc"
-  "astTransaction\022\025.protocol.Transaction\032\020."
-  "protocol.Return\"G\202\323\344\223\002A\"\034/wallet/broadca"
-  "sttransaction:\001*Z\036\022\034/wallet/broadcasttra"
-  "nsaction\022\202\001\n\rUpdateAccount\022\037.protocol.Ac"
-  "countUpdateContract\032\025.protocol.Transacti"
-  "on\"9\202\323\344\223\0023\"\025/wallet/updateaccount:\001*Z\027\022\025"
-  "/wallet/updateaccount\022~\n\014SetAccountId\022\036."
-  "protocol.SetAccountIdContract\032\025.protocol"
-  ".Transaction\"7\202\323\344\223\0021\"\024/wallet/setaccount"
-  "id:\001*Z\026\022\024/wallet/setaccountid\022S\n\016UpdateA"
-  "ccount2\022\037.protocol.AccountUpdateContract"
-  "\032\036.protocol.TransactionExtention\"\000\022\217\001\n\022V"
-  "oteWitnessAccount\022\035.protocol.VoteWitness"
-  "Contract\032\025.protocol.Transaction\"C\202\323\344\223\002=\""
-  "\032/wallet/votewitnessaccount:\001*Z\034\022\032/walle"
-  "t/votewitnessaccount\022R\n\rUpdateSetting\022\037."
-  "protocol.UpdateSettingContract\032\036.protoco"
-  "l.TransactionExtention\"\000\022Z\n\021UpdateEnergy"
-  "Limit\022#.protocol.UpdateEnergyLimitContra"
-  "ct\032\036.protocol.TransactionExtention\"\000\022V\n\023"
-  "VoteWitnessAccount2\022\035.protocol.VoteWitne"
-  "ssContract\032\036.protocol.TransactionExtenti"
-  "on\"\000\022\210\001\n\020CreateAssetIssue\022\034.protocol.Ass"
-  "etIssueContract\032\025.protocol.Transaction\"\?"
-  "\202\323\344\223\0029\"\030/wallet/createassetissue:\001*Z\032\022\030/"
-  "wallet/createassetissue\022S\n\021CreateAssetIs"
-  "sue2\022\034.protocol.AssetIssueContract\032\036.pro"
-  "tocol.TransactionExtention\"\000\022\202\001\n\rUpdateW"
-  "itness\022\037.protocol.WitnessUpdateContract\032"
+  "tocol.Transaction\"!\n\021TransactionIdList\022\014"
+  "\n\004txId\030\001 \003(\t\"B\n\030DelegatedResourceMessage"
+  "\022\023\n\013fromAddress\030\001 \001(\014\022\021\n\ttoAddress\030\002 \001(\014"
+  "\"O\n\025DelegatedResourceList\0226\n\021delegatedRe"
+  "source\030\001 \003(\0132\033.protocol.DelegatedResourc"
+  "e\")\n\010NodeList\022\035\n\005nodes\030\001 \003(\0132\016.protocol."
+  "Node\"*\n\004Node\022\"\n\007address\030\001 \001(\0132\021.protocol"
+  ".Address\"%\n\007Address\022\014\n\004host\030\001 \001(\014\022\014\n\004por"
+  "t\030\002 \001(\005\"\016\n\014EmptyMessage\"\034\n\rNumberMessage"
+  "\022\013\n\003num\030\001 \001(\003\"\035\n\014BytesMessage\022\r\n\005value\030\001"
+  " \001(\014\"E\n\013TimeMessage\022\033\n\023beginInMillisecon"
+  "ds\030\001 \001(\003\022\031\n\021endInMilliseconds\030\002 \001(\003\".\n\nB"
+  "lockLimit\022\020\n\010startNum\030\001 \001(\003\022\016\n\006endNum\030\002 "
+  "\001(\003\";\n\020TransactionLimit\022\025\n\rtransactionId"
+  "\030\001 \001(\014\022\020\n\010limitNum\030\002 \001(\003\"U\n\020AccountPagin"
+  "ated\022\"\n\007account\030\001 \001(\0132\021.protocol.Account"
+  "\022\016\n\006offset\030\002 \001(\003\022\r\n\005limit\030\003 \001(\003\"a\n\024TimeP"
+  "aginatedMessage\022*\n\013timeMessage\030\001 \001(\0132\025.p"
+  "rotocol.TimeMessage\022\016\n\006offset\030\002 \001(\003\022\r\n\005l"
+  "imit\030\003 \001(\003\"\207\003\n\021AccountNetMessage\022\023\n\013free"
+  "NetUsed\030\001 \001(\003\022\024\n\014freeNetLimit\030\002 \001(\003\022\017\n\007N"
+  "etUsed\030\003 \001(\003\022\020\n\010NetLimit\030\004 \001(\003\022C\n\014assetN"
+  "etUsed\030\005 \003(\0132-.protocol.AccountNetMessag"
+  "e.AssetNetUsedEntry\022E\n\rassetNetLimit\030\006 \003"
+  "(\0132..protocol.AccountNetMessage.AssetNet"
+  "LimitEntry\022\025\n\rTotalNetLimit\030\007 \001(\003\022\026\n\016Tot"
+  "alNetWeight\030\010 \001(\003\0323\n\021AssetNetUsedEntry\022\013"
+  "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\003:\0028\001\0324\n\022AssetN"
+  "etLimitEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\003"
+  ":\0028\001\"\354\004\n\026AccountResourceMessage\022\023\n\013freeN"
+  "etUsed\030\001 \001(\003\022\024\n\014freeNetLimit\030\002 \001(\003\022\017\n\007Ne"
+  "tUsed\030\003 \001(\003\022\020\n\010NetLimit\030\004 \001(\003\022H\n\014assetNe"
+  "tUsed\030\005 \003(\01322.protocol.AccountResourceMe"
+  "ssage.AssetNetUsedEntry\022J\n\rassetNetLimit"
+  "\030\006 \003(\01323.protocol.AccountResourceMessage"
+  ".AssetNetLimitEntry\022\025\n\rTotalNetLimit\030\007 \001"
+  "(\003\022\026\n\016TotalNetWeight\030\010 \001(\003\022\034\n\024TotalTronP"
+  "owerWeight\030\t \001(\003\022\025\n\rtronPowerUsed\030\n \001(\003\022"
+  "\026\n\016tronPowerLimit\030\013 \001(\003\022\022\n\nEnergyUsed\030\r "
+  "\001(\003\022\023\n\013EnergyLimit\030\016 \001(\003\022\030\n\020TotalEnergyL"
+  "imit\030\017 \001(\003\022\031\n\021TotalEnergyWeight\030\020 \001(\003\022\023\n"
+  "\013storageUsed\030\025 \001(\003\022\024\n\014storageLimit\030\026 \001(\003"
+  "\0323\n\021AssetNetUsedEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005va"
+  "lue\030\002 \001(\003:\0028\001\0324\n\022AssetNetLimitEntry\022\013\n\003k"
+  "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\003:\0028\001\"1\n\020Paginated"
+  "Message\022\016\n\006offset\030\001 \001(\003\022\r\n\005limit\030\002 \001(\003\"L"
+  "\n\023EasyTransferMessage\022\022\n\npassPhrase\030\001 \001("
+  "\014\022\021\n\ttoAddress\030\002 \001(\014\022\016\n\006amount\030\003 \001(\003\"b\n\030"
+  "EasyTransferAssetMessage\022\022\n\npassPhrase\030\001"
+  " \001(\014\022\021\n\ttoAddress\030\002 \001(\014\022\017\n\007assetId\030\003 \001(\t"
+  "\022\016\n\006amount\030\004 \001(\003\"U\n\034EasyTransferByPrivat"
+  "eMessage\022\022\n\nprivateKey\030\001 \001(\014\022\021\n\ttoAddres"
+  "s\030\002 \001(\014\022\016\n\006amount\030\003 \001(\003\"k\n!EasyTransferA"
+  "ssetByPrivateMessage\022\022\n\nprivateKey\030\001 \001(\014"
+  "\022\021\n\ttoAddress\030\002 \001(\014\022\017\n\007assetId\030\003 \001(\t\022\016\n\006"
+  "amount\030\004 \001(\003\"r\n\024EasyTransferResponse\022*\n\013"
+  "transaction\030\001 \001(\0132\025.protocol.Transaction"
+  "\022 \n\006result\030\002 \001(\0132\020.protocol.Return\022\014\n\004tx"
+  "id\030\003 \001(\014\">\n\027AddressPrKeyPairMessage\022\017\n\007a"
+  "ddress\030\001 \001(\t\022\022\n\nprivateKey\030\002 \001(\t\"\213\002\n\024Tra"
+  "nsactionExtention\022*\n\013transaction\030\001 \001(\0132\025"
+  ".protocol.Transaction\022\014\n\004txid\030\002 \001(\014\022\027\n\017c"
+  "onstant_result\030\003 \003(\014\022 \n\006result\030\004 \001(\0132\020.p"
+  "rotocol.Return\022\023\n\013energy_used\030\005 \001(\003\022+\n\004l"
+  "ogs\030\006 \003(\0132\035.protocol.TransactionInfo.Log"
+  "\022<\n\025internal_transactions\030\007 \003(\0132\035.protoc"
+  "ol.InternalTransaction\"\204\001\n\016BlockExtentio"
+  "n\0224\n\014transactions\030\001 \003(\0132\036.protocol.Trans"
+  "actionExtention\022+\n\014block_header\030\002 \001(\0132\025."
+  "protocol.BlockHeader\022\017\n\007blockid\030\003 \001(\014\"=\n"
+  "\022BlockListExtention\022\'\n\005block\030\001 \003(\0132\030.pro"
+  "tocol.BlockExtention\"O\n\030TransactionListE"
+  "xtention\0223\n\013transaction\030\001 \003(\0132\036.protocol"
+  ".TransactionExtention\"a\n\032BlockIncrementa"
+  "lMerkleTree\022\016\n\006number\030\001 \001(\003\0223\n\nmerkleTre"
+  "e\030\002 \001(\0132\037.protocol.IncrementalMerkleTree"
+  "\"\337\003\n\025TransactionSignWeight\022(\n\npermission"
+  "\030\001 \001(\0132\024.protocol.Permission\022\025\n\rapproved"
+  "_list\030\002 \003(\014\022\026\n\016current_weight\030\003 \001(\003\0226\n\006r"
+  "esult\030\004 \001(\0132&.protocol.TransactionSignWe"
+  "ight.Result\0223\n\013transaction\030\005 \001(\0132\036.proto"
+  "col.TransactionExtention\032\377\001\n\006Result\022B\n\004c"
+  "ode\030\001 \001(\01624.protocol.TransactionSignWeig"
+  "ht.Result.response_code\022\017\n\007message\030\002 \001(\t"
+  "\"\237\001\n\rresponse_code\022\025\n\021ENOUGH_PERMISSION\020"
+  "\000\022\031\n\025NOT_ENOUGH_PERMISSION\020\001\022\032\n\026SIGNATUR"
+  "E_FORMAT_ERROR\020\002\022\031\n\025COMPUTE_ADDRESS_ERRO"
+  "R\020\003\022\024\n\020PERMISSION_ERROR\020\004\022\017\n\013OTHER_ERROR"
+  "\020\024\"\347\002\n\027TransactionApprovedList\022\025\n\rapprov"
+  "ed_list\030\002 \003(\014\0228\n\006result\030\004 \001(\0132(.protocol"
+  ".TransactionApprovedList.Result\0223\n\013trans"
+  "action\030\005 \001(\0132\036.protocol.TransactionExten"
+  "tion\032\305\001\n\006Result\022D\n\004code\030\001 \001(\01626.protocol"
+  ".TransactionApprovedList.Result.response"
+  "_code\022\017\n\007message\030\002 \001(\t\"d\n\rresponse_code\022"
+  "\013\n\007SUCCESS\020\000\022\032\n\026SIGNATURE_FORMAT_ERROR\020\001"
+  "\022\031\n\025COMPUTE_ADDRESS_ERROR\020\002\022\017\n\013OTHER_ERR"
+  "OR\020\024\"W\n\024IvkDecryptParameters\022\031\n\021start_bl"
+  "ock_index\030\001 \001(\003\022\027\n\017end_block_index\030\002 \001(\003"
+  "\022\013\n\003ivk\030\003 \001(\014\"v\n\033IvkDecryptAndMarkParame"
+  "ters\022\031\n\021start_block_index\030\001 \001(\003\022\027\n\017end_b"
+  "lock_index\030\002 \001(\003\022\013\n\003ivk\030\005 \001(\014\022\n\n\002ak\030\003 \001("
+  "\014\022\n\n\002nk\030\004 \001(\014\"W\n\024OvkDecryptParameters\022\031\n"
+  "\021start_block_index\030\001 \001(\003\022\027\n\017end_block_in"
+  "dex\030\002 \001(\003\022\013\n\003ovk\030\003 \001(\014\"\203\001\n\014DecryptNotes\022"
+  ".\n\007noteTxs\030\001 \003(\0132\035.protocol.DecryptNotes"
+  ".NoteTx\032C\n\006NoteTx\022\034\n\004note\030\001 \001(\0132\016.protoc"
+  "ol.Note\022\014\n\004txid\030\002 \001(\014\022\r\n\005index\030\003 \001(\005\"\241\001\n"
+  "\022DecryptNotesMarked\0224\n\007noteTxs\030\001 \003(\0132#.p"
+  "rotocol.DecryptNotesMarked.NoteTx\032U\n\006Not"
+  "eTx\022\034\n\004note\030\001 \001(\0132\016.protocol.Note\022\014\n\004txi"
+  "d\030\002 \001(\014\022\r\n\005index\030\003 \001(\005\022\020\n\010is_spend\030\004 \001(\010"
+  "\"I\n\004Note\022\r\n\005value\030\001 \001(\003\022\027\n\017payment_addre"
+  "ss\030\002 \001(\t\022\013\n\003rcm\030\003 \001(\014\022\014\n\004memo\030\004 \001(\014\"{\n\tS"
+  "pendNote\022\034\n\004note\030\003 \001(\0132\016.protocol.Note\022\r"
+  "\n\005alpha\030\004 \001(\014\0223\n\007voucher\030\005 \001(\0132\".protoco"
+  "l.IncrementalMerkleVoucher\022\014\n\004path\030\006 \001(\014"
+  "\"+\n\013ReceiveNote\022\034\n\004note\030\001 \001(\0132\016.protocol"
+  ".Note\"\225\002\n\021PrivateParameters\022 \n\030transpare"
+  "nt_from_address\030\001 \001(\014\022\013\n\003ask\030\002 \001(\014\022\013\n\003ns"
+  "k\030\003 \001(\014\022\013\n\003ovk\030\004 \001(\014\022\023\n\013from_amount\030\005 \001("
+  "\003\022,\n\017shielded_spends\030\006 \003(\0132\023.protocol.Sp"
+  "endNote\0220\n\021shielded_receives\030\007 \003(\0132\025.pro"
+  "tocol.ReceiveNote\022\036\n\026transparent_to_addr"
+  "ess\030\010 \001(\014\022\021\n\tto_amount\030\t \001(\003\022\017\n\007timeout\030"
+  "\n \001(\003\"\236\002\n\033PrivateParametersWithoutAsk\022 \n"
+  "\030transparent_from_address\030\001 \001(\014\022\n\n\002ak\030\002 "
+  "\001(\014\022\013\n\003nsk\030\003 \001(\014\022\013\n\003ovk\030\004 \001(\014\022\023\n\013from_am"
+  "ount\030\005 \001(\003\022,\n\017shielded_spends\030\006 \003(\0132\023.pr"
+  "otocol.SpendNote\0220\n\021shielded_receives\030\007 "
+  "\003(\0132\025.protocol.ReceiveNote\022\036\n\026transparen"
+  "t_to_address\030\010 \001(\014\022\021\n\tto_amount\030\t \001(\003\022\017\n"
+  "\007timeout\030\n \001(\003\"E\n\026SpendAuthSigParameters"
+  "\022\013\n\003ask\030\001 \001(\014\022\017\n\007tx_hash\030\002 \001(\014\022\r\n\005alpha\030"
+  "\003 \001(\014\"y\n\014NfParameters\022\034\n\004note\030\001 \001(\0132\016.pr"
+  "otocol.Note\0223\n\007voucher\030\002 \001(\0132\".protocol."
+  "IncrementalMerkleVoucher\022\n\n\002ak\030\003 \001(\014\022\n\n\002"
+  "nk\030\004 \001(\014\"C\n\032ExpandedSpendingKeyMessage\022\013"
+  "\n\003ask\030\001 \001(\014\022\013\n\003nsk\030\002 \001(\014\022\013\n\003ovk\030\003 \001(\014\"+\n"
+  "\021ViewingKeyMessage\022\n\n\002ak\030\001 \001(\014\022\n\n\002nk\030\002 \001"
+  "(\014\"(\n\031IncomingViewingKeyMessage\022\013\n\003ivk\030\001"
+  " \001(\014\"\037\n\022DiversifierMessage\022\t\n\001d\030\001 \001(\014\"\201\001"
+  "\n$IncomingViewingKeyDiversifierMessage\0220"
+  "\n\003ivk\030\001 \001(\0132#.protocol.IncomingViewingKe"
+  "yMessage\022\'\n\001d\030\002 \001(\0132\034.protocol.Diversifi"
+  "erMessage\"f\n\025PaymentAddressMessage\022\'\n\001d\030"
+  "\001 \001(\0132\034.protocol.DiversifierMessage\022\013\n\003p"
+  "kD\030\002 \001(\014\022\027\n\017payment_address\030\003 \001(\t\"\236\001\n\023Sh"
+  "ieldedAddressInfo\022\n\n\002sk\030\001 \001(\014\022\013\n\003ask\030\002 \001"
+  "(\014\022\013\n\003nsk\030\003 \001(\014\022\013\n\003ovk\030\004 \001(\014\022\n\n\002ak\030\005 \001(\014"
+  "\022\n\n\002nk\030\006 \001(\014\022\013\n\003ivk\030\007 \001(\014\022\t\n\001d\030\010 \001(\014\022\013\n\003"
+  "pkD\030\t \001(\014\022\027\n\017payment_address\030\n \001(\t\"c\n\016No"
+  "teParameters\022\n\n\002ak\030\001 \001(\014\022\n\n\002nk\030\002 \001(\014\022\034\n\004"
+  "note\030\003 \001(\0132\016.protocol.Note\022\014\n\004txid\030\004 \001(\014"
+  "\022\r\n\005index\030\005 \001(\005\".\n\013SpendResult\022\016\n\006result"
+  "\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"I\n\023TransactionIn"
+  "foList\0222\n\017transactionInfo\030\001 \003(\0132\031.protoc"
+  "ol.TransactionInfo\"f\n\016SpendNoteTRC20\022\034\n\004"
+  "note\030\001 \001(\0132\016.protocol.Note\022\r\n\005alpha\030\002 \001("
+  "\014\022\014\n\004root\030\003 \001(\014\022\014\n\004path\030\004 \001(\014\022\013\n\003pos\030\005 \001"
+  "(\003\"\235\002\n\036PrivateShieldedTRC20Parameters\022\013\n"
+  "\003ask\030\001 \001(\014\022\013\n\003nsk\030\002 \001(\014\022\013\n\003ovk\030\003 \001(\014\022\023\n\013"
+  "from_amount\030\004 \001(\t\0221\n\017shielded_spends\030\005 \003"
+  "(\0132\030.protocol.SpendNoteTRC20\0220\n\021shielded"
+  "_receives\030\006 \003(\0132\025.protocol.ReceiveNote\022\036"
+  "\n\026transparent_to_address\030\007 \001(\014\022\021\n\tto_amo"
+  "unt\030\010 \001(\t\022\'\n\037shielded_TRC20_contract_add"
+  "ress\030\t \001(\014\"\246\002\n(PrivateShieldedTRC20Param"
+  "etersWithoutAsk\022\n\n\002ak\030\001 \001(\014\022\013\n\003nsk\030\002 \001(\014"
+  "\022\013\n\003ovk\030\003 \001(\014\022\023\n\013from_amount\030\004 \001(\t\0221\n\017sh"
+  "ielded_spends\030\005 \003(\0132\030.protocol.SpendNote"
+  "TRC20\0220\n\021shielded_receives\030\006 \003(\0132\025.proto"
+  "col.ReceiveNote\022\036\n\026transparent_to_addres"
+  "s\030\007 \001(\014\022\021\n\tto_amount\030\010 \001(\t\022\'\n\037shielded_T"
+  "RC20_contract_address\030\t \001(\014\"\364\001\n\027Shielded"
+  "TRC20Parameters\0225\n\021spend_description\030\001 \003"
+  "(\0132\032.protocol.SpendDescription\0229\n\023receiv"
+  "e_description\030\002 \003(\0132\034.protocol.ReceiveDe"
+  "scription\022\031\n\021binding_signature\030\003 \001(\014\022\024\n\014"
+  "message_hash\030\004 \001(\014\022\036\n\026trigger_contract_i"
+  "nput\030\005 \001(\t\022\026\n\016parameter_type\030\006 \001(\t\"\255\001\n\031I"
+  "vkDecryptTRC20Parameters\022\031\n\021start_block_"
+  "index\030\001 \001(\003\022\027\n\017end_block_index\030\002 \001(\003\022\'\n\037"
+  "shielded_TRC20_contract_address\030\003 \001(\014\022\013\n"
+  "\003ivk\030\004 \001(\014\022\n\n\002ak\030\005 \001(\014\022\n\n\002nk\030\006 \001(\014\022\016\n\006ev"
+  "ents\030\007 \003(\t\"\225\001\n\031OvkDecryptTRC20Parameters"
+  "\022\031\n\021start_block_index\030\001 \001(\003\022\027\n\017end_block"
+  "_index\030\002 \001(\003\022\013\n\003ovk\030\003 \001(\014\022\'\n\037shielded_TR"
+  "C20_contract_address\030\004 \001(\014\022\016\n\006events\030\005 \003"
+  "(\t\"\345\001\n\021DecryptNotesTRC20\0223\n\007noteTxs\030\001 \003("
+  "\0132\".protocol.DecryptNotesTRC20.NoteTx\032\232\001"
+  "\n\006NoteTx\022\034\n\004note\030\001 \001(\0132\016.protocol.Note\022\020"
+  "\n\010position\030\002 \001(\003\022\020\n\010is_spent\030\003 \001(\010\022\014\n\004tx"
+  "id\030\004 \001(\014\022\r\n\005index\030\005 \001(\005\022\021\n\tto_amount\030\006 \001"
+  "(\t\022\036\n\026transparent_to_address\030\007 \001(\014\"\204\001\n\021N"
+  "fTRC20Parameters\022\034\n\004note\030\001 \001(\0132\016.protoco"
+  "l.Note\022\n\n\002ak\030\002 \001(\014\022\n\n\002nk\030\003 \001(\014\022\020\n\010positi"
+  "on\030\004 \001(\003\022\'\n\037shielded_TRC20_contract_addr"
+  "ess\030\005 \001(\014\"#\n\017NullifierResult\022\020\n\010is_spent"
+  "\030\001 \001(\010\"\331\001\n&ShieldedTRC20TriggerContractP"
+  "arameters\022D\n\031shielded_TRC20_Parameters\030\001"
+  " \001(\0132!.protocol.ShieldedTRC20Parameters\022"
+  "9\n\031spend_authority_signature\030\002 \003(\0132\026.pro"
+  "tocol.BytesMessage\022\016\n\006amount\030\003 \001(\t\022\036\n\026tr"
+  "ansparent_to_address\030\004 \001(\0142\333p\n\006Wallet\022g\n"
+  "\nGetAccount\022\021.protocol.Account\032\021.protoco"
+  "l.Account\"3\202\323\344\223\002-\"\022/wallet/getaccount:\001*"
+  "Z\024\022\022/wallet/getaccount\022s\n\016GetAccountById"
+  "\022\021.protocol.Account\032\021.protocol.Account\";"
+  "\202\323\344\223\0025\"\026/wallet/getaccountbyid:\001*Z\030\022\026/wa"
+  "llet/getaccountbyid\022\231\001\n\021GetAccountBalanc"
+  "e\022\037.protocol.AccountBalanceRequest\032 .pro"
+  "tocol.AccountBalanceResponse\"A\202\323\344\223\002;\"\031/w"
+  "allet/getaccountbalance:\001*Z\033\022\031/wallet/ge"
+  "taccountbalance\022\251\001\n\024GetBlockBalanceTrace"
+  "\022+.protocol.BlockBalanceTrace.BlockIdent"
+  "ifier\032\033.protocol.BlockBalanceTrace\"G\202\323\344\223"
+  "\002A\"\034/wallet/getblockbalancetrace:\001*Z\036\022\034/"
+  "wallet/getblockbalancetrace\022\211\001\n\021CreateTr"
+  "ansaction\022\032.protocol.TransferContract\032\025."
+  "protocol.Transaction\"A\202\323\344\223\002;\"\031/wallet/cr"
+  "eatetransaction:\001*Z\033\022\031/wallet/createtran"
+  "saction\022R\n\022CreateTransaction2\022\032.protocol"
+  ".TransferContract\032\036.protocol.Transaction"
+  "Extention\"\000\022\210\001\n\024BroadcastTransaction\022\025.p"
+  "rotocol.Transaction\032\020.protocol.Return\"G\202"
+  "\323\344\223\002A\"\034/wallet/broadcasttransaction:\001*Z\036"
+  "\022\034/wallet/broadcasttransaction\022\202\001\n\rUpdat"
+  "eAccount\022\037.protocol.AccountUpdateContrac"
+  "t\032\025.protocol.Transaction\"9\202\323\344\223\0023\"\025/walle"
+  "t/updateaccount:\001*Z\027\022\025/wallet/updateacco"
+  "unt\022~\n\014SetAccountId\022\036.protocol.SetAccoun"
+  "tIdContract\032\025.protocol.Transaction\"7\202\323\344\223"
+  "\0021\"\024/wallet/setaccountid:\001*Z\026\022\024/wallet/s"
+  "etaccountid\022S\n\016UpdateAccount2\022\037.protocol"
+  ".AccountUpdateContract\032\036.protocol.Transa"
+  "ctionExtention\"\000\022\217\001\n\022VoteWitnessAccount\022"
+  "\035.protocol.VoteWitnessContract\032\025.protoco"
+  "l.Transaction\"C\202\323\344\223\002=\"\032/wallet/votewitne"
+  "ssaccount:\001*Z\034\022\032/wallet/votewitnessaccou"
+  "nt\022R\n\rUpdateSetting\022\037.protocol.UpdateSet"
+  "tingContract\032\036.protocol.TransactionExten"
+  "tion\"\000\022Z\n\021UpdateEnergyLimit\022#.protocol.U"
+  "pdateEnergyLimitContract\032\036.protocol.Tran"
+  "sactionExtention\"\000\022V\n\023VoteWitnessAccount"
+  "2\022\035.protocol.VoteWitnessContract\032\036.proto"
+  "col.TransactionExtention\"\000\022\210\001\n\020CreateAss"
+  "etIssue\022\034.protocol.AssetIssueContract\032\025."
+  "protocol.Transaction\"\?\202\323\344\223\0029\"\030/wallet/cr"
+  "eateassetissue:\001*Z\032\022\030/wallet/createasset"
+  "issue\022S\n\021CreateAssetIssue2\022\034.protocol.As"
+  "setIssueContract\032\036.protocol.TransactionE"
+  "xtention\"\000\022\202\001\n\rUpdateWitness\022\037.protocol."
+  "WitnessUpdateContract\032\025.protocol.Transac"
+  "tion\"9\202\323\344\223\0023\"\025/wallet/updatewitness:\001*Z\027"
+  "\022\025/wallet/updatewitness\022S\n\016UpdateWitness"
+  "2\022\037.protocol.WitnessUpdateContract\032\036.pro"
+  "tocol.TransactionExtention\"\000\022\202\001\n\rCreateA"
+  "ccount\022\037.protocol.AccountCreateContract\032"
   "\025.protocol.Transaction\"9\202\323\344\223\0023\"\025/wallet/"
-  "updatewitness:\001*Z\027\022\025/wallet/updatewitnes"
-  "s\022S\n\016UpdateWitness2\022\037.protocol.WitnessUp"
-  "dateContract\032\036.protocol.TransactionExten"
-  "tion\"\000\022\202\001\n\rCreateAccount\022\037.protocol.Acco"
-  "untCreateContract\032\025.protocol.Transaction"
-  "\"9\202\323\344\223\0023\"\025/wallet/createaccount:\001*Z\027\022\025/w"
-  "allet/createaccount\022S\n\016CreateAccount2\022\037."
-  "protocol.AccountCreateContract\032\036.protoco"
-  "l.TransactionExtention\"\000\022\202\001\n\rCreateWitne"
-  "ss\022\037.protocol.WitnessCreateContract\032\025.pr"
-  "otocol.Transaction\"9\202\323\344\223\0023\"\025/wallet/crea"
-  "tewitness:\001*Z\027\022\025/wallet/createwitness\022S\n"
-  "\016CreateWitness2\022\037.protocol.WitnessCreate"
+  "createaccount:\001*Z\027\022\025/wallet/createaccoun"
+  "t\022S\n\016CreateAccount2\022\037.protocol.AccountCr"
+  "eateContract\032\036.protocol.TransactionExten"
+  "tion\"\000\022\202\001\n\rCreateWitness\022\037.protocol.Witn"
+  "essCreateContract\032\025.protocol.Transaction"
+  "\"9\202\323\344\223\0023\"\025/wallet/createwitness:\001*Z\027\022\025/w"
+  "allet/createwitness\022S\n\016CreateWitness2\022\037."
+  "protocol.WitnessCreateContract\032\036.protoco"
+  "l.TransactionExtention\"\000\022\202\001\n\rTransferAss"
+  "et\022\037.protocol.TransferAssetContract\032\025.pr"
+  "otocol.Transaction\"9\202\323\344\223\0023\"\025/wallet/tran"
+  "sferasset:\001*Z\027\022\025/wallet/transferasset\022S\n"
+  "\016TransferAsset2\022\037.protocol.TransferAsset"
   "Contract\032\036.protocol.TransactionExtention"
-  "\"\000\022\202\001\n\rTransferAsset\022\037.protocol.Transfer"
-  "AssetContract\032\025.protocol.Transaction\"9\202\323"
-  "\344\223\0023\"\025/wallet/transferasset:\001*Z\027\022\025/walle"
-  "t/transferasset\022S\n\016TransferAsset2\022\037.prot"
-  "ocol.TransferAssetContract\032\036.protocol.Tr"
-  "ansactionExtention\"\000\022\242\001\n\025ParticipateAsse"
-  "tIssue\022\'.protocol.ParticipateAssetIssueC"
-  "ontract\032\025.protocol.Transaction\"I\202\323\344\223\002C\"\035"
-  "/wallet/participateassetissue:\001*Z\037\022\035/wal"
-  "let/participateassetissue\022c\n\026Participate"
-  "AssetIssue2\022\'.protocol.ParticipateAssetI"
-  "ssueContract\032\036.protocol.TransactionExten"
-  "tion\"\000\022\202\001\n\rFreezeBalance\022\037.protocol.Free"
-  "zeBalanceContract\032\025.protocol.Transaction"
-  "\"9\202\323\344\223\0023\"\025/wallet/freezebalance:\001*Z\027\022\025/w"
-  "allet/freezebalance\022S\n\016FreezeBalance2\022\037."
-  "protocol.FreezeBalanceContract\032\036.protoco"
-  "l.TransactionExtention\"\000\022\212\001\n\017UnfreezeBal"
-  "ance\022!.protocol.UnfreezeBalanceContract\032"
-  "\025.protocol.Transaction\"=\202\323\344\223\0027\"\027/wallet/"
-  "unfreezebalance:\001*Z\031\022\027/wallet/unfreezeba"
-  "lance\022W\n\020UnfreezeBalance2\022!.protocol.Unf"
-  "reezeBalanceContract\032\036.protocol.Transact"
-  "ionExtention\"\000\022\202\001\n\rUnfreezeAsset\022\037.proto"
-  "col.UnfreezeAssetContract\032\025.protocol.Tra"
-  "nsaction\"9\202\323\344\223\0023\"\025/wallet/unfreezeasset:"
-  "\001*Z\027\022\025/wallet/unfreezeasset\022S\n\016UnfreezeA"
-  "sset2\022\037.protocol.UnfreezeAssetContract\032\036"
-  ".protocol.TransactionExtention\"\000\022\212\001\n\017Wit"
-  "hdrawBalance\022!.protocol.WithdrawBalanceC"
-  "ontract\032\025.protocol.Transaction\"=\202\323\344\223\0027\"\027"
-  "/wallet/withdrawbalance:\001*Z\031\022\027/wallet/wi"
-  "thdrawbalance\022W\n\020WithdrawBalance2\022!.prot"
-  "ocol.WithdrawBalanceContract\032\036.protocol."
-  "TransactionExtention\"\000\022z\n\013UpdateAsset\022\035."
-  "protocol.UpdateAssetContract\032\025.protocol."
-  "Transaction\"5\202\323\344\223\002/\"\023/wallet/updateasset"
-  ":\001*Z\025\022\023/wallet/updateasset\022O\n\014UpdateAsse"
-  "t2\022\035.protocol.UpdateAssetContract\032\036.prot"
-  "ocol.TransactionExtention\"\000\022T\n\016ProposalC"
-  "reate\022 .protocol.ProposalCreateContract\032"
-  "\036.protocol.TransactionExtention\"\000\022V\n\017Pro"
-  "posalApprove\022!.protocol.ProposalApproveC"
+  "\"\000\022\242\001\n\025ParticipateAssetIssue\022\'.protocol."
+  "ParticipateAssetIssueContract\032\025.protocol"
+  ".Transaction\"I\202\323\344\223\002C\"\035/wallet/participat"
+  "eassetissue:\001*Z\037\022\035/wallet/participateass"
+  "etissue\022c\n\026ParticipateAssetIssue2\022\'.prot"
+  "ocol.ParticipateAssetIssueContract\032\036.pro"
+  "tocol.TransactionExtention\"\000\022\202\001\n\rFreezeB"
+  "alance\022\037.protocol.FreezeBalanceContract\032"
+  "\025.protocol.Transaction\"9\202\323\344\223\0023\"\025/wallet/"
+  "freezebalance:\001*Z\027\022\025/wallet/freezebalanc"
+  "e\022S\n\016FreezeBalance2\022\037.protocol.FreezeBal"
+  "anceContract\032\036.protocol.TransactionExten"
+  "tion\"\000\022\212\001\n\017UnfreezeBalance\022!.protocol.Un"
+  "freezeBalanceContract\032\025.protocol.Transac"
+  "tion\"=\202\323\344\223\0027\"\027/wallet/unfreezebalance:\001*"
+  "Z\031\022\027/wallet/unfreezebalance\022W\n\020UnfreezeB"
+  "alance2\022!.protocol.UnfreezeBalanceContra"
+  "ct\032\036.protocol.TransactionExtention\"\000\022\202\001\n"
+  "\rUnfreezeAsset\022\037.protocol.UnfreezeAssetC"
+  "ontract\032\025.protocol.Transaction\"9\202\323\344\223\0023\"\025"
+  "/wallet/unfreezeasset:\001*Z\027\022\025/wallet/unfr"
+  "eezeasset\022S\n\016UnfreezeAsset2\022\037.protocol.U"
+  "nfreezeAssetContract\032\036.protocol.Transact"
+  "ionExtention\"\000\022\212\001\n\017WithdrawBalance\022!.pro"
+  "tocol.WithdrawBalanceContract\032\025.protocol"
+  ".Transaction\"=\202\323\344\223\0027\"\027/wallet/withdrawba"
+  "lance:\001*Z\031\022\027/wallet/withdrawbalance\022W\n\020W"
+  "ithdrawBalance2\022!.protocol.WithdrawBalan"
+  "ceContract\032\036.protocol.TransactionExtenti"
+  "on\"\000\022z\n\013UpdateAsset\022\035.protocol.UpdateAss"
+  "etContract\032\025.protocol.Transaction\"5\202\323\344\223\002"
+  "/\"\023/wallet/updateasset:\001*Z\025\022\023/wallet/upd"
+  "ateasset\022O\n\014UpdateAsset2\022\035.protocol.Upda"
+  "teAssetContract\032\036.protocol.TransactionEx"
+  "tention\"\000\022T\n\016ProposalCreate\022 .protocol.P"
+  "roposalCreateContract\032\036.protocol.Transac"
+  "tionExtention\"\000\022V\n\017ProposalApprove\022!.pro"
+  "tocol.ProposalApproveContract\032\036.protocol"
+  ".TransactionExtention\"\000\022T\n\016ProposalDelet"
+  "e\022 .protocol.ProposalDeleteContract\032\036.pr"
+  "otocol.TransactionExtention\"\000\022L\n\nBuyStor"
+  "age\022\034.protocol.BuyStorageContract\032\036.prot"
+  "ocol.TransactionExtention\"\000\022V\n\017BuyStorag"
+  "eBytes\022!.protocol.BuyStorageBytesContrac"
+  "t\032\036.protocol.TransactionExtention\"\000\022N\n\013S"
+  "ellStorage\022\035.protocol.SellStorageContrac"
+  "t\032\036.protocol.TransactionExtention\"\000\022T\n\016E"
+  "xchangeCreate\022 .protocol.ExchangeCreateC"
   "ontract\032\036.protocol.TransactionExtention\""
-  "\000\022T\n\016ProposalDelete\022 .protocol.ProposalD"
-  "eleteContract\032\036.protocol.TransactionExte"
-  "ntion\"\000\022L\n\nBuyStorage\022\034.protocol.BuyStor"
-  "ageContract\032\036.protocol.TransactionExtent"
-  "ion\"\000\022V\n\017BuyStorageBytes\022!.protocol.BuyS"
-  "torageBytesContract\032\036.protocol.Transacti"
-  "onExtention\"\000\022N\n\013SellStorage\022\035.protocol."
-  "SellStorageContract\032\036.protocol.Transacti"
-  "onExtention\"\000\022T\n\016ExchangeCreate\022 .protoc"
-  "ol.ExchangeCreateContract\032\036.protocol.Tra"
-  "nsactionExtention\"\000\022T\n\016ExchangeInject\022 ."
-  "protocol.ExchangeInjectContract\032\036.protoc"
-  "ol.TransactionExtention\"\000\022X\n\020ExchangeWit"
-  "hdraw\022\".protocol.ExchangeWithdrawContrac"
-  "t\032\036.protocol.TransactionExtention\"\000\022^\n\023E"
-  "xchangeTransaction\022%.protocol.ExchangeTr"
-  "ansactionContract\032\036.protocol.Transaction"
-  "Extention\"\000\022j\n\tListNodes\022\026.protocol.Empt"
-  "yMessage\032\022.protocol.NodeList\"1\202\323\344\223\002+\"\021/w"
-  "allet/listnodes:\001*Z\023\022\021/wallet/listnodes\022"
-  "\222\001\n\026GetAssetIssueByAccount\022\021.protocol.Ac"
-  "count\032\030.protocol.AssetIssueList\"K\202\323\344\223\002E\""
-  "\036/wallet/getassetissuebyaccount:\001*Z \022\036/w"
-  "allet/getassetissuebyaccount\022z\n\rGetAccou"
-  "ntNet\022\021.protocol.Account\032\033.protocol.Acco"
-  "untNetMessage\"9\202\323\344\223\0023\"\025/wallet/getaccoun"
-  "tnet:\001*Z\027\022\025/wallet/getaccountnet\022K\n\022GetA"
-  "ccountResource\022\021.protocol.Account\032 .prot"
-  "ocol.AccountResourceMessage\"\000\022\222\001\n\023GetAss"
-  "etIssueByName\022\026.protocol.BytesMessage\032\034."
-  "protocol.AssetIssueContract\"E\202\323\344\223\002\?\"\033/wa"
-  "llet/getassetissuebyname:\001*Z\035\022\033/wallet/g"
-  "etassetissuebyname\022M\n\027GetAssetIssueListB"
-  "yName\022\026.protocol.BytesMessage\032\030.protocol"
-  ".AssetIssueList\"\000\022K\n\021GetAssetIssueById\022\026"
-  ".protocol.BytesMessage\032\034.protocol.AssetI"
-  "ssueContract\"\000\022m\n\013GetNowBlock\022\026.protocol"
-  ".EmptyMessage\032\017.protocol.Block\"5\202\323\344\223\002/\"\023"
-  "/wallet/getnowblock:\001*Z\025\022\023/wallet/getnow"
-  "block\022B\n\014GetNowBlock2\022\026.protocol.EmptyMe"
-  "ssage\032\030.protocol.BlockExtention\"\000\022t\n\rGet"
-  "BlockByNum\022\027.protocol.NumberMessage\032\017.pr"
-  "otocol.Block\"9\202\323\344\223\0023\"\025/wallet/getblockby"
-  "num:\001*Z\027\022\025/wallet/getblockbynum\022E\n\016GetBl"
-  "ockByNum2\022\027.protocol.NumberMessage\032\030.pro"
-  "tocol.BlockExtention\"\000\022S\n\035GetTransaction"
-  "CountByBlockNum\022\027.protocol.NumberMessage"
-  "\032\027.protocol.NumberMessage\"\000\022p\n\014GetBlockB"
-  "yId\022\026.protocol.BytesMessage\032\017.protocol.B"
-  "lock\"7\202\323\344\223\0021\"\024/wallet/getblockbyid:\001*Z\026\022"
-  "\024/wallet/getblockbyid\022\207\001\n\023GetBlockByLimi"
-  "tNext\022\024.protocol.BlockLimit\032\023.protocol.B"
-  "lockList\"E\202\323\344\223\002\?\"\033/wallet/getblockbylimi"
-  "tnext:\001*Z\035\022\033/wallet/getblockbylimitnext\022"
-  "L\n\024GetBlockByLimitNext2\022\024.protocol.Block"
-  "Limit\032\034.protocol.BlockListExtention\"\000\022\212\001"
-  "\n\023GetBlockByLatestNum\022\027.protocol.NumberM"
-  "essage\032\023.protocol.BlockList\"E\202\323\344\223\002\?\"\033/wa"
-  "llet/getblockbylatestnum:\001*Z\035\022\033/wallet/g"
-  "etblockbylatestnum\022O\n\024GetBlockByLatestNu"
-  "m2\022\027.protocol.NumberMessage\032\034.protocol.B"
-  "lockListExtention\"\000\022\210\001\n\022GetTransactionBy"
-  "Id\022\026.protocol.BytesMessage\032\025.protocol.Tr"
-  "ansaction\"C\202\323\344\223\002=\"\032/wallet/gettransactio"
-  "nbyid:\001*Z\034\022\032/wallet/gettransactionbyid\022Q"
-  "\n\016DeployContract\022\035.protocol.CreateSmartC"
+  "\000\022T\n\016ExchangeInject\022 .protocol.ExchangeI"
+  "njectContract\032\036.protocol.TransactionExte"
+  "ntion\"\000\022X\n\020ExchangeWithdraw\022\".protocol.E"
+  "xchangeWithdrawContract\032\036.protocol.Trans"
+  "actionExtention\"\000\022^\n\023ExchangeTransaction"
+  "\022%.protocol.ExchangeTransactionContract\032"
+  "\036.protocol.TransactionExtention\"\000\022V\n\017Mar"
+  "ketSellAsset\022!.protocol.MarketSellAssetC"
   "ontract\032\036.protocol.TransactionExtention\""
-  "\000\022@\n\013GetContract\022\026.protocol.BytesMessage"
-  "\032\027.protocol.SmartContract\"\000\022O\n\017GetContra"
-  "ctInfo\022\026.protocol.BytesMessage\032\".protoco"
-  "l.SmartContractDataWrapper\"\000\022S\n\017TriggerC"
-  "ontract\022\036.protocol.TriggerSmartContract\032"
-  "\036.protocol.TransactionExtention\"\000\022[\n\027Tri"
-  "ggerConstantContract\022\036.protocol.TriggerS"
-  "martContract\032\036.protocol.TransactionExten"
-  "tion\"\000\022P\n\020ClearContractABI\022\032.protocol.Cl"
-  "earABIContract\032\036.protocol.TransactionExt"
-  "ention\"\000\022y\n\rListWitnesses\022\026.protocol.Emp"
-  "tyMessage\032\025.protocol.WitnessList\"9\202\323\344\223\0023"
-  "\"\025/wallet/listwitnesses:\001*Z\027\022\025/wallet/li"
-  "stwitnesses\022]\n\024GetDelegatedResource\022\".pr"
-  "otocol.DelegatedResourceMessage\032\037.protoc"
-  "ol.DelegatedResourceList\"\000\022z\n\rListPropos"
-  "als\022\026.protocol.EmptyMessage\032\026.protocol.P"
-  "roposalList\"9\202\323\344\223\0023\"\025/wallet/listproposa"
-  "ls:\001*Z\027\022\025/wallet/listproposals\022\237\001\n\030GetPa"
-  "ginatedProposalList\022\032.protocol.Paginated"
-  "Message\032\026.protocol.ProposalList\"O\202\323\344\223\002I\""
-  " /wallet/getpaginatedproposallist:\001*Z\"\022 "
-  "/wallet/getpaginatedproposallist\022|\n\017GetP"
-  "roposalById\022\026.protocol.BytesMessage\032\022.pr"
-  "otocol.Proposal\"=\202\323\344\223\0027\"\027/wallet/getprop"
-  "osalbyid:\001*Z\031\022\027/wallet/getproposalbyid\022z"
-  "\n\rListExchanges\022\026.protocol.EmptyMessage\032"
-  "\026.protocol.ExchangeList\"9\202\323\344\223\0023\"\025/wallet"
-  "/listexchanges:\001*Z\027\022\025/wallet/listexchang"
-  "es\022\237\001\n\030GetPaginatedExchangeList\022\032.protoc"
-  "ol.PaginatedMessage\032\026.protocol.ExchangeL"
-  "ist\"O\202\323\344\223\002I\" /wallet/getpaginatedexchang"
-  "elist:\001*Z\"\022 /wallet/getpaginatedexchange"
-  "list\022|\n\017GetExchangeById\022\026.protocol.Bytes"
-  "Message\032\022.protocol.Exchange\"=\202\323\344\223\0027\"\027/wa"
-  "llet/getexchangebyid:\001*Z\031\022\027/wallet/getex"
-  "changebyid\022\214\001\n\022GetChainParameters\022\026.prot"
-  "ocol.EmptyMessage\032\031.protocol.ChainParame"
-  "ters\"C\202\323\344\223\002=\"\032/wallet/getchainparameters"
-  ":\001*Z\034\022\032/wallet/getchainparameters\022\210\001\n\021Ge"
-  "tAssetIssueList\022\026.protocol.EmptyMessage\032"
-  "\030.protocol.AssetIssueList\"A\202\323\344\223\002;\"\031/wall"
-  "et/getassetissuelist:\001*Z\033\022\031/wallet/getas"
-  "setissuelist\022\247\001\n\032GetPaginatedAssetIssueL"
-  "ist\022\032.protocol.PaginatedMessage\032\030.protoc"
-  "ol.AssetIssueList\"S\202\323\344\223\002M\"\"/wallet/getpa"
-  "ginatedassetissuelist:\001*Z$\022\"/wallet/getp"
-  "aginatedassetissuelist\022\204\001\n\020TotalTransact"
-  "ion\022\026.protocol.EmptyMessage\032\027.protocol.N"
-  "umberMessage\"\?\202\323\344\223\0029\"\030/wallet/totaltrans"
-  "action:\001*Z\032\022\030/wallet/totaltransaction\022\226\001"
-  "\n\026GetNextMaintenanceTime\022\026.protocol.Empt"
-  "yMessage\032\027.protocol.NumberMessage\"K\202\323\344\223\002"
-  "E\"\036/wallet/getnextmaintenancetime:\001*Z \022\036"
-  "/wallet/getnextmaintenancetime\022\213\001\n\022GetTr"
-  "ansactionSign\022\031.protocol.TransactionSign"
-  "\032\025.protocol.Transaction\"C\202\323\344\223\002=\"\032/wallet"
-  "/gettransactionsign:\001*Z\034\022\032/wallet/gettra"
-  "nsactionsign\022R\n\023GetTransactionSign2\022\031.pr"
-  "otocol.TransactionSign\032\036.protocol.Transa"
-  "ctionExtention\"\000\022z\n\rCreateAddress\022\026.prot"
-  "ocol.BytesMessage\032\026.protocol.BytesMessag"
-  "e\"9\202\323\344\223\0023\"\025/wallet/createaddress:\001*Z\027\022\025/"
-  "wallet/createaddress\022Y\n\021EasyTransferAsse"
-  "t\022\".protocol.EasyTransferAssetMessage\032\036."
-  "protocol.EasyTransferResponse\"\000\022k\n\032EasyT"
-  "ransferAssetByPrivate\022+.protocol.EasyTra"
-  "nsferAssetByPrivateMessage\032\036.protocol.Ea"
-  "syTransferResponse\"\000\022\206\001\n\014EasyTransfer\022\035."
-  "protocol.EasyTransferMessage\032\036.protocol."
-  "EasyTransferResponse\"7\202\323\344\223\0021\"\024/wallet/ea"
-  "sytransfer:\001*Z\026\022\024/wallet/easytransfer\022\252\001"
-  "\n\025EasyTransferByPrivate\022&.protocol.EasyT"
-  "ransferByPrivateMessage\032\036.protocol.EasyT"
-  "ransferResponse\"I\202\323\344\223\002C\"\035/wallet/easytra"
-  "nsferbyprivate:\001*Z\037\022\035/wallet/easytransfe"
-  "rbyprivate\022\213\001\n\017GenerateAddress\022\026.protoco"
-  "l.EmptyMessage\032!.protocol.AddressPrKeyPa"
-  "irMessage\"=\202\323\344\223\0027\"\027/wallet/generateaddre"
-  "ss:\001*Z\031\022\027/wallet/generateaddress\022\230\001\n\026Get"
-  "TransactionInfoById\022\026.protocol.BytesMess"
-  "age\032\031.protocol.TransactionInfo\"K\202\323\344\223\002E\"\036"
-  "/wallet/gettransactioninfobyid:\001*Z \022\036/wa"
-  "llet/gettransactioninfobyid\022\263\001\n\027AccountP"
-  "ermissionUpdate\022).protocol.AccountPermis"
-  "sionUpdateContract\032\036.protocol.Transactio"
-  "nExtention\"M\202\323\344\223\002G\"\037/wallet/accountpermi"
-  "ssionupdate:\001*Z!\022\037/wallet/accountpermiss"
-  "ionupdate\022F\n\007AddSign\022\031.protocol.Transact"
-  "ionSign\032\036.protocol.TransactionExtention\""
-  "\000\022T\n\030GetTransactionSignWeight\022\025.protocol"
-  ".Transaction\032\037.protocol.TransactionSignW"
-  "eight\"\000\022X\n\032GetTransactionApprovedList\022\025."
-  "protocol.Transaction\032!.protocol.Transact"
-  "ionApprovedList\"\000\022;\n\013GetNodeInfo\022\026.proto"
-  "col.EmptyMessage\032\022.protocol.NodeInfo\"\000\022B"
-  "\n\rGetRewardInfo\022\026.protocol.BytesMessage\032"
-  "\027.protocol.NumberMessage\"\000\022E\n\020GetBrokera"
-  "geInfo\022\026.protocol.BytesMessage\032\027.protoco"
-  "l.NumberMessage\"\000\022V\n\017UpdateBrokerage\022!.p"
-  "rotocol.UpdateBrokerageContract\032\036.protoc"
-  "ol.TransactionExtention\"\000\022Z\n\031CreateShiel"
-  "dedTransaction\022\033.protocol.PrivateParamet"
-  "ers\032\036.protocol.TransactionExtention\"\000\022_\n"
-  "\030GetMerkleTreeVoucherInfo\022\031.protocol.Out"
-  "putPointInfo\032&.protocol.IncrementalMerkl"
-  "eVoucherInfo\"\000\022I\n\rScanNoteByIvk\022\036.protoc"
-  "ol.IvkDecryptParameters\032\026.protocol.Decry"
-  "ptNotes\"\000\022]\n\024ScanAndMarkNoteByIvk\022%.prot"
-  "ocol.IvkDecryptAndMarkParameters\032\034.proto"
-  "col.DecryptNotesMarked\"\000\022I\n\rScanNoteByOv"
-  "k\022\036.protocol.OvkDecryptParameters\032\026.prot"
-  "ocol.DecryptNotes\"\000\022B\n\016GetSpendingKey\022\026."
-  "protocol.EmptyMessage\032\026.protocol.BytesMe"
-  "ssage\"\000\022X\n\026GetExpandedSpendingKey\022\026.prot"
-  "ocol.BytesMessage\032$.protocol.ExpandedSpe"
-  "ndingKeyMessage\"\000\022@\n\014GetAkFromAsk\022\026.prot"
-  "ocol.BytesMessage\032\026.protocol.BytesMessag"
-  "e\"\000\022@\n\014GetNkFromNsk\022\026.protocol.BytesMess"
-  "age\032\026.protocol.BytesMessage\"\000\022[\n\025GetInco"
-  "mingViewingKey\022\033.protocol.ViewingKeyMess"
-  "age\032#.protocol.IncomingViewingKeyMessage"
-  "\"\000\022H\n\016GetDiversifier\022\026.protocol.EmptyMes"
-  "sage\032\034.protocol.DiversifierMessage\"\000\022P\n\025"
-  "GetNewShieldedAddress\022\026.protocol.EmptyMe"
-  "ssage\032\035.protocol.ShieldedAddressInfo\"\000\022i"
-  "\n\024GetZenPaymentAddress\022..protocol.Incomi"
-  "ngViewingKeyDiversifierMessage\032\037.protoco"
-  "l.PaymentAddressMessage\"\000\022:\n\006GetRcm\022\026.pr"
-  "otocol.EmptyMessage\032\026.protocol.BytesMess"
-  "age\"\000\022<\n\007IsSpend\022\030.protocol.NoteParamete"
-  "rs\032\025.protocol.SpendResult\"\000\022w\n,CreateShi"
-  "eldedTransactionWithoutSpendAuthSig\022%.pr"
-  "otocol.PrivateParametersWithoutAsk\032\036.pro"
-  "tocol.TransactionExtention\"\000\022K\n\030GetShiel"
-  "dTransactionHash\022\025.protocol.Transaction\032"
-  "\026.protocol.BytesMessage\"\000\022P\n\022CreateSpend"
-  "AuthSig\022 .protocol.SpendAuthSigParameter"
-  "s\032\026.protocol.BytesMessage\"\000\022I\n\025CreateShi"
-  "eldNullifier\022\026.protocol.NfParameters\032\026.p"
-  "rotocol.BytesMessage\"\000\022q\n CreateShielded"
-  "ContractParameters\022(.protocol.PrivateShi"
-  "eldedTRC20Parameters\032!.protocol.Shielded"
-  "TRC20Parameters\"\000\022\205\001\n*CreateShieldedCont"
-  "ractParametersWithoutAsk\0222.protocol.Priv"
-  "ateShieldedTRC20ParametersWithoutAsk\032!.p"
-  "rotocol.ShieldedTRC20Parameters\"\000\022a\n\033Sca"
-  "nShieldedTRC20NotesByIvk\022#.protocol.IvkD"
-  "ecryptTRC20Parameters\032\033.protocol.Decrypt"
-  "NotesTRC20\"\000\022a\n\033ScanShieldedTRC20NotesBy"
-  "Ovk\022#.protocol.OvkDecryptTRC20Parameters"
-  "\032\033.protocol.DecryptNotesTRC20\"\000\022\\\n IsShi"
-  "eldedTRC20ContractNoteSpent\022\033.protocol.N"
-  "fTRC20Parameters\032\031.protocol.NullifierRes"
-  "ult\"\000\022u\n\'GetTriggerInputForShieldedTRC20"
-  "Contract\0220.protocol.ShieldedTRC20Trigger"
-  "ContractParameters\032\026.protocol.BytesMessa"
-  "ge\"\000\022R\n\027CreateCommonTransaction\022\025.protoc"
-  "ol.Transaction\032\036.protocol.TransactionExt"
-  "ention\"\000\022X\n\034GetTransactionInfoByBlockNum"
-  "\022\027.protocol.NumberMessage\032\035.protocol.Tra"
-  "nsactionInfoList\"\000\022V\n\017MarketSellAsset\022!."
-  "protocol.MarketSellAssetContract\032\036.proto"
-  "col.TransactionExtention\"\000\022Z\n\021MarketCanc"
-  "elOrder\022#.protocol.MarketCancelOrderCont"
-  "ract\032\036.protocol.TransactionExtention\"\000\022N"
-  "\n\027GetMarketOrderByAccount\022\026.protocol.Byt"
-  "esMessage\032\031.protocol.MarketOrderList\"\000\022E"
-  "\n\022GetMarketOrderById\022\026.protocol.BytesMes"
-  "sage\032\025.protocol.MarketOrder\"\000\022N\n\024GetMark"
-  "etPriceByPair\022\031.protocol.MarketOrderPair"
-  "\032\031.protocol.MarketPriceList\"\000\022R\n\030GetMark"
-  "etOrderListByPair\022\031.protocol.MarketOrder"
-  "Pair\032\031.protocol.MarketOrderList\"\000\022L\n\021Get"
-  "MarketPairList\022\026.protocol.EmptyMessage\032\035"
-  ".protocol.MarketOrderPairList\"\0002\362\034\n\016Wall"
-  "etSolidity\022w\n\nGetAccount\022\021.protocol.Acco"
-  "unt\032\021.protocol.Account\"C\202\323\344\223\002=\"\032/wallets"
-  "olidity/getaccount:\001*Z\034\022\032/walletsolidity"
-  "/getaccount\022\203\001\n\016GetAccountById\022\021.protoco"
-  "l.Account\032\021.protocol.Account\"K\202\323\344\223\002E\"\036/w"
-  "alletsolidity/getaccountbyid:\001*Z \022\036/wall"
-  "etsolidity/getaccountbyid\022\211\001\n\rListWitnes"
-  "ses\022\026.protocol.EmptyMessage\032\025.protocol.W"
-  "itnessList\"I\202\323\344\223\002C\"\035/walletsolidity/list"
-  "witnesses:\001*Z\037\022\035/walletsolidity/listwitn"
-  "esses\022\230\001\n\021GetAssetIssueList\022\026.protocol.E"
-  "mptyMessage\032\030.protocol.AssetIssueList\"Q\202"
-  "\323\344\223\002K\"!/walletsolidity/getassetissuelist"
-  ":\001*Z#\022!/walletsolidity/getassetissuelist"
-  "\022\267\001\n\032GetPaginatedAssetIssueList\022\032.protoc"
-  "ol.PaginatedMessage\032\030.protocol.AssetIssu"
-  "eList\"c\202\323\344\223\002]\"*/walletsolidity/getpagina"
-  "tedassetissuelist:\001*Z,\022*/walletsolidity/"
-  "getpaginatedassetissuelist\022M\n\023GetAssetIs"
-  "sueByName\022\026.protocol.BytesMessage\032\034.prot"
-  "ocol.AssetIssueContract\"\000\022M\n\027GetAssetIss"
-  "ueListByName\022\026.protocol.BytesMessage\032\030.p"
-  "rotocol.AssetIssueList\"\000\022K\n\021GetAssetIssu"
-  "eById\022\026.protocol.BytesMessage\032\034.protocol"
-  ".AssetIssueContract\"\000\022}\n\013GetNowBlock\022\026.p"
-  "rotocol.EmptyMessage\032\017.protocol.Block\"E\202"
-  "\323\344\223\002\?\"\033/walletsolidity/getnowblock:\001*Z\035\022"
-  "\033/walletsolidity/getnowblock\022B\n\014GetNowBl"
-  "ock2\022\026.protocol.EmptyMessage\032\030.protocol."
-  "BlockExtention\"\000\022\204\001\n\rGetBlockByNum\022\027.pro"
-  "tocol.NumberMessage\032\017.protocol.Block\"I\202\323"
-  "\344\223\002C\"\035/walletsolidity/getblockbynum:\001*Z\037"
-  "\022\035/walletsolidity/getblockbynum\022E\n\016GetBl"
-  "ockByNum2\022\027.protocol.NumberMessage\032\030.pro"
-  "tocol.BlockExtention\"\000\022S\n\035GetTransaction"
-  "CountByBlockNum\022\027.protocol.NumberMessage"
-  "\032\027.protocol.NumberMessage\"\000\022]\n\024GetDelega"
-  "tedResource\022\".protocol.DelegatedResource"
-  "Message\032\037.protocol.DelegatedResourceList"
-  "\"\000\022e\n GetDelegatedResourceAccountIndex\022\026"
-  ".protocol.BytesMessage\032\'.protocol.Delega"
-  "tedResourceAccountIndex\"\000\022\?\n\017GetExchange"
-  "ById\022\026.protocol.BytesMessage\032\022.protocol."
-  "Exchange\"\000\022A\n\rListExchanges\022\026.protocol.E"
-  "mptyMessage\032\026.protocol.ExchangeList\"\000\022\230\001"
-  "\n\022GetTransactionById\022\026.protocol.BytesMes"
-  "sage\032\025.protocol.Transaction\"S\202\323\344\223\002M\"\"/wa"
-  "lletsolidity/gettransactionbyid:\001*Z$\022\"/w"
-  "alletsolidity/gettransactionbyid\022\250\001\n\026Get"
-  "TransactionInfoById\022\026.protocol.BytesMess"
-  "age\032\031.protocol.TransactionInfo\"[\202\323\344\223\002U\"&"
-  "/walletsolidity/gettransactioninfobyid:\001"
-  "*Z(\022&/walletsolidity/gettransactioninfob"
-  "yid\022\233\001\n\017GenerateAddress\022\026.protocol.Empty"
-  "Message\032!.protocol.AddressPrKeyPairMessa"
-  "ge\"M\202\323\344\223\002G\"\037/walletsolidity/generateaddr"
-  "ess:\001*Z!\022\037/walletsolidity/generateaddres"
-  "s\022_\n\030GetMerkleTreeVoucherInfo\022\031.protocol"
-  ".OutputPointInfo\032&.protocol.IncrementalM"
-  "erkleVoucherInfo\"\000\022I\n\rScanNoteByIvk\022\036.pr"
-  "otocol.IvkDecryptParameters\032\026.protocol.D"
-  "ecryptNotes\"\000\022]\n\024ScanAndMarkNoteByIvk\022%."
-  "protocol.IvkDecryptAndMarkParameters\032\034.p"
-  "rotocol.DecryptNotesMarked\"\000\022I\n\rScanNote"
-  "ByOvk\022\036.protocol.OvkDecryptParameters\032\026."
-  "protocol.DecryptNotes\"\000\022<\n\007IsSpend\022\030.pro"
+  "\000\022Z\n\021MarketCancelOrder\022#.protocol.Market"
+  "CancelOrderContract\032\036.protocol.Transacti"
+  "onExtention\"\000\022E\n\022GetMarketOrderById\022\026.pr"
+  "otocol.BytesMessage\032\025.protocol.MarketOrd"
+  "er\"\000\022N\n\027GetMarketOrderByAccount\022\026.protoc"
+  "ol.BytesMessage\032\031.protocol.MarketOrderLi"
+  "st\"\000\022N\n\024GetMarketPriceByPair\022\031.protocol."
+  "MarketOrderPair\032\031.protocol.MarketPriceLi"
+  "st\"\000\022R\n\030GetMarketOrderListByPair\022\031.proto"
+  "col.MarketOrderPair\032\031.protocol.MarketOrd"
+  "erList\"\000\022L\n\021GetMarketPairList\022\026.protocol"
+  ".EmptyMessage\032\035.protocol.MarketOrderPair"
+  "List\"\000\022j\n\tListNodes\022\026.protocol.EmptyMess"
+  "age\032\022.protocol.NodeList\"1\202\323\344\223\002+\"\021/wallet"
+  "/listnodes:\001*Z\023\022\021/wallet/listnodes\022\222\001\n\026G"
+  "etAssetIssueByAccount\022\021.protocol.Account"
+  "\032\030.protocol.AssetIssueList\"K\202\323\344\223\002E\"\036/wal"
+  "let/getassetissuebyaccount:\001*Z \022\036/wallet"
+  "/getassetissuebyaccount\022z\n\rGetAccountNet"
+  "\022\021.protocol.Account\032\033.protocol.AccountNe"
+  "tMessage\"9\202\323\344\223\0023\"\025/wallet/getaccountnet:"
+  "\001*Z\027\022\025/wallet/getaccountnet\022K\n\022GetAccoun"
+  "tResource\022\021.protocol.Account\032 .protocol."
+  "AccountResourceMessage\"\000\022\222\001\n\023GetAssetIss"
+  "ueByName\022\026.protocol.BytesMessage\032\034.proto"
+  "col.AssetIssueContract\"E\202\323\344\223\002\?\"\033/wallet/"
+  "getassetissuebyname:\001*Z\035\022\033/wallet/getass"
+  "etissuebyname\022M\n\027GetAssetIssueListByName"
+  "\022\026.protocol.BytesMessage\032\030.protocol.Asse"
+  "tIssueList\"\000\022K\n\021GetAssetIssueById\022\026.prot"
+  "ocol.BytesMessage\032\034.protocol.AssetIssueC"
+  "ontract\"\000\022m\n\013GetNowBlock\022\026.protocol.Empt"
+  "yMessage\032\017.protocol.Block\"5\202\323\344\223\002/\"\023/wall"
+  "et/getnowblock:\001*Z\025\022\023/wallet/getnowblock"
+  "\022B\n\014GetNowBlock2\022\026.protocol.EmptyMessage"
+  "\032\030.protocol.BlockExtention\"\000\022t\n\rGetBlock"
+  "ByNum\022\027.protocol.NumberMessage\032\017.protoco"
+  "l.Block\"9\202\323\344\223\0023\"\025/wallet/getblockbynum:\001"
+  "*Z\027\022\025/wallet/getblockbynum\022E\n\016GetBlockBy"
+  "Num2\022\027.protocol.NumberMessage\032\030.protocol"
+  ".BlockExtention\"\000\022S\n\035GetTransactionCount"
+  "ByBlockNum\022\027.protocol.NumberMessage\032\027.pr"
+  "otocol.NumberMessage\"\000\022p\n\014GetBlockById\022\026"
+  ".protocol.BytesMessage\032\017.protocol.Block\""
+  "7\202\323\344\223\0021\"\024/wallet/getblockbyid:\001*Z\026\022\024/wal"
+  "let/getblockbyid\022\207\001\n\023GetBlockByLimitNext"
+  "\022\024.protocol.BlockLimit\032\023.protocol.BlockL"
+  "ist\"E\202\323\344\223\002\?\"\033/wallet/getblockbylimitnext"
+  ":\001*Z\035\022\033/wallet/getblockbylimitnext\022L\n\024Ge"
+  "tBlockByLimitNext2\022\024.protocol.BlockLimit"
+  "\032\034.protocol.BlockListExtention\"\000\022\212\001\n\023Get"
+  "BlockByLatestNum\022\027.protocol.NumberMessag"
+  "e\032\023.protocol.BlockList\"E\202\323\344\223\002\?\"\033/wallet/"
+  "getblockbylatestnum:\001*Z\035\022\033/wallet/getblo"
+  "ckbylatestnum\022O\n\024GetBlockByLatestNum2\022\027."
+  "protocol.NumberMessage\032\034.protocol.BlockL"
+  "istExtention\"\000\022\210\001\n\022GetTransactionById\022\026."
+  "protocol.BytesMessage\032\025.protocol.Transac"
+  "tion\"C\202\323\344\223\002=\"\032/wallet/gettransactionbyid"
+  ":\001*Z\034\022\032/wallet/gettransactionbyid\022Q\n\016Dep"
+  "loyContract\022\035.protocol.CreateSmartContra"
+  "ct\032\036.protocol.TransactionExtention\"\000\022@\n\013"
+  "GetContract\022\026.protocol.BytesMessage\032\027.pr"
+  "otocol.SmartContract\"\000\022O\n\017GetContractInf"
+  "o\022\026.protocol.BytesMessage\032\".protocol.Sma"
+  "rtContractDataWrapper\"\000\022S\n\017TriggerContra"
+  "ct\022\036.protocol.TriggerSmartContract\032\036.pro"
+  "tocol.TransactionExtention\"\000\022[\n\027TriggerC"
+  "onstantContract\022\036.protocol.TriggerSmartC"
+  "ontract\032\036.protocol.TransactionExtention\""
+  "\000\022P\n\020ClearContractABI\022\032.protocol.ClearAB"
+  "IContract\032\036.protocol.TransactionExtentio"
+  "n\"\000\022y\n\rListWitnesses\022\026.protocol.EmptyMes"
+  "sage\032\025.protocol.WitnessList\"9\202\323\344\223\0023\"\025/wa"
+  "llet/listwitnesses:\001*Z\027\022\025/wallet/listwit"
+  "nesses\022]\n\024GetDelegatedResource\022\".protoco"
+  "l.DelegatedResourceMessage\032\037.protocol.De"
+  "legatedResourceList\"\000\022e\n GetDelegatedRes"
+  "ourceAccountIndex\022\026.protocol.BytesMessag"
+  "e\032\'.protocol.DelegatedResourceAccountInd"
+  "ex\"\000\022z\n\rListProposals\022\026.protocol.EmptyMe"
+  "ssage\032\026.protocol.ProposalList\"9\202\323\344\223\0023\"\025/"
+  "wallet/listproposals:\001*Z\027\022\025/wallet/listp"
+  "roposals\022\237\001\n\030GetPaginatedProposalList\022\032."
+  "protocol.PaginatedMessage\032\026.protocol.Pro"
+  "posalList\"O\202\323\344\223\002I\" /wallet/getpaginatedp"
+  "roposallist:\001*Z\"\022 /wallet/getpaginatedpr"
+  "oposallist\022|\n\017GetProposalById\022\026.protocol"
+  ".BytesMessage\032\022.protocol.Proposal\"=\202\323\344\223\002"
+  "7\"\027/wallet/getproposalbyid:\001*Z\031\022\027/wallet"
+  "/getproposalbyid\022z\n\rListExchanges\022\026.prot"
+  "ocol.EmptyMessage\032\026.protocol.ExchangeLis"
+  "t\"9\202\323\344\223\0023\"\025/wallet/listexchanges:\001*Z\027\022\025/"
+  "wallet/listexchanges\022\237\001\n\030GetPaginatedExc"
+  "hangeList\022\032.protocol.PaginatedMessage\032\026."
+  "protocol.ExchangeList\"O\202\323\344\223\002I\" /wallet/g"
+  "etpaginatedexchangelist:\001*Z\"\022 /wallet/ge"
+  "tpaginatedexchangelist\022|\n\017GetExchangeByI"
+  "d\022\026.protocol.BytesMessage\032\022.protocol.Exc"
+  "hange\"=\202\323\344\223\0027\"\027/wallet/getexchangebyid:\001"
+  "*Z\031\022\027/wallet/getexchangebyid\022\214\001\n\022GetChai"
+  "nParameters\022\026.protocol.EmptyMessage\032\031.pr"
+  "otocol.ChainParameters\"C\202\323\344\223\002=\"\032/wallet/"
+  "getchainparameters:\001*Z\034\022\032/wallet/getchai"
+  "nparameters\022\210\001\n\021GetAssetIssueList\022\026.prot"
+  "ocol.EmptyMessage\032\030.protocol.AssetIssueL"
+  "ist\"A\202\323\344\223\002;\"\031/wallet/getassetissuelist:\001"
+  "*Z\033\022\031/wallet/getassetissuelist\022\247\001\n\032GetPa"
+  "ginatedAssetIssueList\022\032.protocol.Paginat"
+  "edMessage\032\030.protocol.AssetIssueList\"S\202\323\344"
+  "\223\002M\"\"/wallet/getpaginatedassetissuelist:"
+  "\001*Z$\022\"/wallet/getpaginatedassetissuelist"
+  "\022\204\001\n\020TotalTransaction\022\026.protocol.EmptyMe"
+  "ssage\032\027.protocol.NumberMessage\"\?\202\323\344\223\0029\"\030"
+  "/wallet/totaltransaction:\001*Z\032\022\030/wallet/t"
+  "otaltransaction\022\226\001\n\026GetNextMaintenanceTi"
+  "me\022\026.protocol.EmptyMessage\032\027.protocol.Nu"
+  "mberMessage\"K\202\323\344\223\002E\"\036/wallet/getnextmain"
+  "tenancetime:\001*Z \022\036/wallet/getnextmainten"
+  "ancetime\022\213\001\n\022GetTransactionSign\022\031.protoc"
+  "ol.TransactionSign\032\025.protocol.Transactio"
+  "n\"C\202\323\344\223\002=\"\032/wallet/gettransactionsign:\001*"
+  "Z\034\022\032/wallet/gettransactionsign\022R\n\023GetTra"
+  "nsactionSign2\022\031.protocol.TransactionSign"
+  "\032\036.protocol.TransactionExtention\"\000\022z\n\rCr"
+  "eateAddress\022\026.protocol.BytesMessage\032\026.pr"
+  "otocol.BytesMessage\"9\202\323\344\223\0023\"\025/wallet/cre"
+  "ateaddress:\001*Z\027\022\025/wallet/createaddress\022Y"
+  "\n\021EasyTransferAsset\022\".protocol.EasyTrans"
+  "ferAssetMessage\032\036.protocol.EasyTransferR"
+  "esponse\"\000\022k\n\032EasyTransferAssetByPrivate\022"
+  "+.protocol.EasyTransferAssetByPrivateMes"
+  "sage\032\036.protocol.EasyTransferResponse\"\000\022\206"
+  "\001\n\014EasyTransfer\022\035.protocol.EasyTransferM"
+  "essage\032\036.protocol.EasyTransferResponse\"7"
+  "\202\323\344\223\0021\"\024/wallet/easytransfer:\001*Z\026\022\024/wall"
+  "et/easytransfer\022\252\001\n\025EasyTransferByPrivat"
+  "e\022&.protocol.EasyTransferByPrivateMessag"
+  "e\032\036.protocol.EasyTransferResponse\"I\202\323\344\223\002"
+  "C\"\035/wallet/easytransferbyprivate:\001*Z\037\022\035/"
+  "wallet/easytransferbyprivate\022\213\001\n\017Generat"
+  "eAddress\022\026.protocol.EmptyMessage\032!.proto"
+  "col.AddressPrKeyPairMessage\"=\202\323\344\223\0027\"\027/wa"
+  "llet/generateaddress:\001*Z\031\022\027/wallet/gener"
+  "ateaddress\022\230\001\n\026GetTransactionInfoById\022\026."
+  "protocol.BytesMessage\032\031.protocol.Transac"
+  "tionInfo\"K\202\323\344\223\002E\"\036/wallet/gettransaction"
+  "infobyid:\001*Z \022\036/wallet/gettransactioninf"
+  "obyid\022\263\001\n\027AccountPermissionUpdate\022).prot"
+  "ocol.AccountPermissionUpdateContract\032\036.p"
+  "rotocol.TransactionExtention\"M\202\323\344\223\002G\"\037/w"
+  "allet/accountpermissionupdate:\001*Z!\022\037/wal"
+  "let/accountpermissionupdate\022F\n\007AddSign\022\031"
+  ".protocol.TransactionSign\032\036.protocol.Tra"
+  "nsactionExtention\"\000\022T\n\030GetTransactionSig"
+  "nWeight\022\025.protocol.Transaction\032\037.protoco"
+  "l.TransactionSignWeight\"\000\022X\n\032GetTransact"
+  "ionApprovedList\022\025.protocol.Transaction\032!"
+  ".protocol.TransactionApprovedList\"\000\022;\n\013G"
+  "etNodeInfo\022\026.protocol.EmptyMessage\032\022.pro"
+  "tocol.NodeInfo\"\000\022B\n\rGetRewardInfo\022\026.prot"
+  "ocol.BytesMessage\032\027.protocol.NumberMessa"
+  "ge\"\000\022E\n\020GetBrokerageInfo\022\026.protocol.Byte"
+  "sMessage\032\027.protocol.NumberMessage\"\000\022V\n\017U"
+  "pdateBrokerage\022!.protocol.UpdateBrokerag"
+  "eContract\032\036.protocol.TransactionExtentio"
+  "n\"\000\022Z\n\031CreateShieldedTransaction\022\033.proto"
+  "col.PrivateParameters\032\036.protocol.Transac"
+  "tionExtention\"\000\022_\n\030GetMerkleTreeVoucherI"
+  "nfo\022\031.protocol.OutputPointInfo\032&.protoco"
+  "l.IncrementalMerkleVoucherInfo\"\000\022I\n\rScan"
+  "NoteByIvk\022\036.protocol.IvkDecryptParameter"
+  "s\032\026.protocol.DecryptNotes\"\000\022]\n\024ScanAndMa"
+  "rkNoteByIvk\022%.protocol.IvkDecryptAndMark"
+  "Parameters\032\034.protocol.DecryptNotesMarked"
+  "\"\000\022I\n\rScanNoteByOvk\022\036.protocol.OvkDecryp"
+  "tParameters\032\026.protocol.DecryptNotes\"\000\022B\n"
+  "\016GetSpendingKey\022\026.protocol.EmptyMessage\032"
+  "\026.protocol.BytesMessage\"\000\022X\n\026GetExpanded"
+  "SpendingKey\022\026.protocol.BytesMessage\032$.pr"
+  "otocol.ExpandedSpendingKeyMessage\"\000\022@\n\014G"
+  "etAkFromAsk\022\026.protocol.BytesMessage\032\026.pr"
+  "otocol.BytesMessage\"\000\022@\n\014GetNkFromNsk\022\026."
+  "protocol.BytesMessage\032\026.protocol.BytesMe"
+  "ssage\"\000\022[\n\025GetIncomingViewingKey\022\033.proto"
+  "col.ViewingKeyMessage\032#.protocol.Incomin"
+  "gViewingKeyMessage\"\000\022H\n\016GetDiversifier\022\026"
+  ".protocol.EmptyMessage\032\034.protocol.Divers"
+  "ifierMessage\"\000\022P\n\025GetNewShieldedAddress\022"
+  "\026.protocol.EmptyMessage\032\035.protocol.Shiel"
+  "dedAddressInfo\"\000\022i\n\024GetZenPaymentAddress"
+  "\022..protocol.IncomingViewingKeyDiversifie"
+  "rMessage\032\037.protocol.PaymentAddressMessag"
+  "e\"\000\022:\n\006GetRcm\022\026.protocol.EmptyMessage\032\026."
+  "protocol.BytesMessage\"\000\022<\n\007IsSpend\022\030.pro"
   "tocol.NoteParameters\032\025.protocol.SpendRes"
-  "ult\"\000\022a\n\033ScanShieldedTRC20NotesByIvk\022#.p"
-  "rotocol.IvkDecryptTRC20Parameters\032\033.prot"
-  "ocol.DecryptNotesTRC20\"\000\022a\n\033ScanShielded"
-  "TRC20NotesByOvk\022#.protocol.OvkDecryptTRC"
-  "20Parameters\032\033.protocol.DecryptNotesTRC2"
-  "0\"\000\022\\\n IsShieldedTRC20ContractNoteSpent\022"
-  "\033.protocol.NfTRC20Parameters\032\031.protocol."
-  "NullifierResult\"\000\022B\n\rGetRewardInfo\022\026.pro"
-  "tocol.BytesMessage\032\027.protocol.NumberMess"
-  "age\"\000\022E\n\020GetBrokerageInfo\022\026.protocol.Byt"
-  "esMessage\032\027.protocol.NumberMessage\"\000\022[\n\027"
-  "TriggerConstantContract\022\036.protocol.Trigg"
-  "erSmartContract\032\036.protocol.TransactionEx"
-  "tention\"\000\022X\n\034GetTransactionInfoByBlockNu"
-  "m\022\027.protocol.NumberMessage\032\035.protocol.Tr"
-  "ansactionInfoList\"\000\022N\n\027GetMarketOrderByA"
-  "ccount\022\026.protocol.BytesMessage\032\031.protoco"
-  "l.MarketOrderList\"\000\022E\n\022GetMarketOrderByI"
-  "d\022\026.protocol.BytesMessage\032\025.protocol.Mar"
-  "ketOrder\"\000\022N\n\024GetMarketPriceByPair\022\031.pro"
-  "tocol.MarketOrderPair\032\031.protocol.MarketP"
-  "riceList\"\000\022R\n\030GetMarketOrderListByPair\022\031"
-  ".protocol.MarketOrderPair\032\031.protocol.Mar"
-  "ketOrderList\"\000\022L\n\021GetMarketPairList\022\026.pr"
-  "otocol.EmptyMessage\032\035.protocol.MarketOrd"
-  "erPairList\"\0002\255\004\n\017WalletExtension\022\261\001\n\027Get"
-  "TransactionsFromThis\022\032.protocol.AccountP"
-  "aginated\032\031.protocol.TransactionList\"_\202\323\344"
-  "\223\002Y\"(/walletextension/gettransactionsfro"
-  "mthis:\001*Z*\022(/walletextension/gettransact"
-  "ionsfromthis\022\\\n\030GetTransactionsFromThis2"
-  "\022\032.protocol.AccountPaginated\032\".protocol."
-  "TransactionListExtention\"\000\022\253\001\n\025GetTransa"
-  "ctionsToThis\022\032.protocol.AccountPaginated"
-  "\032\031.protocol.TransactionList\"[\202\323\344\223\002U\"&/wa"
-  "lletextension/gettransactionstothis:\001*Z("
-  "\022&/walletextension/gettransactionstothis"
-  "\022Z\n\026GetTransactionsToThis2\022\032.protocol.Ac"
-  "countPaginated\032\".protocol.TransactionLis"
-  "tExtention\"\0002\231\002\n\010Database\022G\n\021getBlockRef"
-  "erence\022\026.protocol.EmptyMessage\032\030.protoco"
-  "l.BlockReference\"\000\022M\n\024GetDynamicProperti"
-  "es\022\026.protocol.EmptyMessage\032\033.protocol.Dy"
-  "namicProperties\"\000\0228\n\013GetNowBlock\022\026.proto"
-  "col.EmptyMessage\032\017.protocol.Block\"\000\022;\n\rG"
-  "etBlockByNum\022\027.protocol.NumberMessage\032\017."
-  "protocol.Block\"\0002\t\n\007NetworkBA\n\014org.tron."
-  "apiB\007GrpcAPIZ(github.com/tronprotocol/gr"
-  "pc-gateway/apib\006proto3"
+  "ult\"\000\022w\n,CreateShieldedTransactionWithou"
+  "tSpendAuthSig\022%.protocol.PrivateParamete"
+  "rsWithoutAsk\032\036.protocol.TransactionExten"
+  "tion\"\000\022K\n\030GetShieldTransactionHash\022\025.pro"
+  "tocol.Transaction\032\026.protocol.BytesMessag"
+  "e\"\000\022P\n\022CreateSpendAuthSig\022 .protocol.Spe"
+  "ndAuthSigParameters\032\026.protocol.BytesMess"
+  "age\"\000\022I\n\025CreateShieldNullifier\022\026.protoco"
+  "l.NfParameters\032\026.protocol.BytesMessage\"\000"
+  "\022q\n CreateShieldedContractParameters\022(.p"
+  "rotocol.PrivateShieldedTRC20Parameters\032!"
+  ".protocol.ShieldedTRC20Parameters\"\000\022\205\001\n*"
+  "CreateShieldedContractParametersWithoutA"
+  "sk\0222.protocol.PrivateShieldedTRC20Parame"
+  "tersWithoutAsk\032!.protocol.ShieldedTRC20P"
+  "arameters\"\000\022a\n\033ScanShieldedTRC20NotesByI"
+  "vk\022#.protocol.IvkDecryptTRC20Parameters\032"
+  "\033.protocol.DecryptNotesTRC20\"\000\022a\n\033ScanSh"
+  "ieldedTRC20NotesByOvk\022#.protocol.OvkDecr"
+  "yptTRC20Parameters\032\033.protocol.DecryptNot"
+  "esTRC20\"\000\022\\\n IsShieldedTRC20ContractNote"
+  "Spent\022\033.protocol.NfTRC20Parameters\032\031.pro"
+  "tocol.NullifierResult\"\000\022u\n\'GetTriggerInp"
+  "utForShieldedTRC20Contract\0220.protocol.Sh"
+  "ieldedTRC20TriggerContractParameters\032\026.p"
+  "rotocol.BytesMessage\"\000\022R\n\027CreateCommonTr"
+  "ansaction\022\025.protocol.Transaction\032\036.proto"
+  "col.TransactionExtention\"\000\022X\n\034GetTransac"
+  "tionInfoByBlockNum\022\027.protocol.NumberMess"
+  "age\032\035.protocol.TransactionInfoList\"\000\022\?\n\n"
+  "GetBurnTrx\022\026.protocol.EmptyMessage\032\027.pro"
+  "tocol.NumberMessage\"\000\022L\n\031GetTransactionF"
+  "romPending\022\026.protocol.BytesMessage\032\025.pro"
+  "tocol.Transaction\"\000\022V\n\035GetTransactionLis"
+  "tFromPending\022\026.protocol.EmptyMessage\032\033.p"
+  "rotocol.TransactionIdList\"\000\022C\n\016GetPendin"
+  "gSize\022\026.protocol.EmptyMessage\032\027.protocol"
+  ".NumberMessage\"\0002\263\035\n\016WalletSolidity\022w\n\nG"
+  "etAccount\022\021.protocol.Account\032\021.protocol."
+  "Account\"C\202\323\344\223\002=\"\032/walletsolidity/getacco"
+  "unt:\001*Z\034\022\032/walletsolidity/getaccount\022\203\001\n"
+  "\016GetAccountById\022\021.protocol.Account\032\021.pro"
+  "tocol.Account\"K\202\323\344\223\002E\"\036/walletsolidity/g"
+  "etaccountbyid:\001*Z \022\036/walletsolidity/geta"
+  "ccountbyid\022\211\001\n\rListWitnesses\022\026.protocol."
+  "EmptyMessage\032\025.protocol.WitnessList\"I\202\323\344"
+  "\223\002C\"\035/walletsolidity/listwitnesses:\001*Z\037\022"
+  "\035/walletsolidity/listwitnesses\022\230\001\n\021GetAs"
+  "setIssueList\022\026.protocol.EmptyMessage\032\030.p"
+  "rotocol.AssetIssueList\"Q\202\323\344\223\002K\"!/wallets"
+  "olidity/getassetissuelist:\001*Z#\022!/wallets"
+  "olidity/getassetissuelist\022\267\001\n\032GetPaginat"
+  "edAssetIssueList\022\032.protocol.PaginatedMes"
+  "sage\032\030.protocol.AssetIssueList\"c\202\323\344\223\002]\"*"
+  "/walletsolidity/getpaginatedassetissueli"
+  "st:\001*Z,\022*/walletsolidity/getpaginatedass"
+  "etissuelist\022M\n\023GetAssetIssueByName\022\026.pro"
+  "tocol.BytesMessage\032\034.protocol.AssetIssue"
+  "Contract\"\000\022M\n\027GetAssetIssueListByName\022\026."
+  "protocol.BytesMessage\032\030.protocol.AssetIs"
+  "sueList\"\000\022K\n\021GetAssetIssueById\022\026.protoco"
+  "l.BytesMessage\032\034.protocol.AssetIssueCont"
+  "ract\"\000\022}\n\013GetNowBlock\022\026.protocol.EmptyMe"
+  "ssage\032\017.protocol.Block\"E\202\323\344\223\002\?\"\033/wallets"
+  "olidity/getnowblock:\001*Z\035\022\033/walletsolidit"
+  "y/getnowblock\022B\n\014GetNowBlock2\022\026.protocol"
+  ".EmptyMessage\032\030.protocol.BlockExtention\""
+  "\000\022\204\001\n\rGetBlockByNum\022\027.protocol.NumberMes"
+  "sage\032\017.protocol.Block\"I\202\323\344\223\002C\"\035/walletso"
+  "lidity/getblockbynum:\001*Z\037\022\035/walletsolidi"
+  "ty/getblockbynum\022E\n\016GetBlockByNum2\022\027.pro"
+  "tocol.NumberMessage\032\030.protocol.BlockExte"
+  "ntion\"\000\022S\n\035GetTransactionCountByBlockNum"
+  "\022\027.protocol.NumberMessage\032\027.protocol.Num"
+  "berMessage\"\000\022]\n\024GetDelegatedResource\022\".p"
+  "rotocol.DelegatedResourceMessage\032\037.proto"
+  "col.DelegatedResourceList\"\000\022e\n GetDelega"
+  "tedResourceAccountIndex\022\026.protocol.Bytes"
+  "Message\032\'.protocol.DelegatedResourceAcco"
+  "untIndex\"\000\022\?\n\017GetExchangeById\022\026.protocol"
+  ".BytesMessage\032\022.protocol.Exchange\"\000\022A\n\rL"
+  "istExchanges\022\026.protocol.EmptyMessage\032\026.p"
+  "rotocol.ExchangeList\"\000\022\230\001\n\022GetTransactio"
+  "nById\022\026.protocol.BytesMessage\032\025.protocol"
+  ".Transaction\"S\202\323\344\223\002M\"\"/walletsolidity/ge"
+  "ttransactionbyid:\001*Z$\022\"/walletsolidity/g"
+  "ettransactionbyid\022\250\001\n\026GetTransactionInfo"
+  "ById\022\026.protocol.BytesMessage\032\031.protocol."
+  "TransactionInfo\"[\202\323\344\223\002U\"&/walletsolidity"
+  "/gettransactioninfobyid:\001*Z(\022&/walletsol"
+  "idity/gettransactioninfobyid\022\233\001\n\017Generat"
+  "eAddress\022\026.protocol.EmptyMessage\032!.proto"
+  "col.AddressPrKeyPairMessage\"M\202\323\344\223\002G\"\037/wa"
+  "lletsolidity/generateaddress:\001*Z!\022\037/wall"
+  "etsolidity/generateaddress\022_\n\030GetMerkleT"
+  "reeVoucherInfo\022\031.protocol.OutputPointInf"
+  "o\032&.protocol.IncrementalMerkleVoucherInf"
+  "o\"\000\022I\n\rScanNoteByIvk\022\036.protocol.IvkDecry"
+  "ptParameters\032\026.protocol.DecryptNotes\"\000\022]"
+  "\n\024ScanAndMarkNoteByIvk\022%.protocol.IvkDec"
+  "ryptAndMarkParameters\032\034.protocol.Decrypt"
+  "NotesMarked\"\000\022I\n\rScanNoteByOvk\022\036.protoco"
+  "l.OvkDecryptParameters\032\026.protocol.Decryp"
+  "tNotes\"\000\022<\n\007IsSpend\022\030.protocol.NoteParam"
+  "eters\032\025.protocol.SpendResult\"\000\022a\n\033ScanSh"
+  "ieldedTRC20NotesByIvk\022#.protocol.IvkDecr"
+  "yptTRC20Parameters\032\033.protocol.DecryptNot"
+  "esTRC20\"\000\022a\n\033ScanShieldedTRC20NotesByOvk"
+  "\022#.protocol.OvkDecryptTRC20Parameters\032\033."
+  "protocol.DecryptNotesTRC20\"\000\022\\\n IsShield"
+  "edTRC20ContractNoteSpent\022\033.protocol.NfTR"
+  "C20Parameters\032\031.protocol.NullifierResult"
+  "\"\000\022B\n\rGetRewardInfo\022\026.protocol.BytesMess"
+  "age\032\027.protocol.NumberMessage\"\000\022E\n\020GetBro"
+  "kerageInfo\022\026.protocol.BytesMessage\032\027.pro"
+  "tocol.NumberMessage\"\000\022[\n\027TriggerConstant"
+  "Contract\022\036.protocol.TriggerSmartContract"
+  "\032\036.protocol.TransactionExtention\"\000\022X\n\034Ge"
+  "tTransactionInfoByBlockNum\022\027.protocol.Nu"
+  "mberMessage\032\035.protocol.TransactionInfoLi"
+  "st\"\000\022E\n\022GetMarketOrderById\022\026.protocol.By"
+  "tesMessage\032\025.protocol.MarketOrder\"\000\022N\n\027G"
+  "etMarketOrderByAccount\022\026.protocol.BytesM"
+  "essage\032\031.protocol.MarketOrderList\"\000\022N\n\024G"
+  "etMarketPriceByPair\022\031.protocol.MarketOrd"
+  "erPair\032\031.protocol.MarketPriceList\"\000\022R\n\030G"
+  "etMarketOrderListByPair\022\031.protocol.Marke"
+  "tOrderPair\032\031.protocol.MarketOrderList\"\000\022"
+  "L\n\021GetMarketPairList\022\026.protocol.EmptyMes"
+  "sage\032\035.protocol.MarketOrderPairList\"\000\022\?\n"
+  "\nGetBurnTrx\022\026.protocol.EmptyMessage\032\027.pr"
+  "otocol.NumberMessage\"\0002\255\004\n\017WalletExtensi"
+  "on\022\261\001\n\027GetTransactionsFromThis\022\032.protoco"
+  "l.AccountPaginated\032\031.protocol.Transactio"
+  "nList\"_\202\323\344\223\002Y\"(/walletextension/gettrans"
+  "actionsfromthis:\001*Z*\022(/walletextension/g"
+  "ettransactionsfromthis\022\\\n\030GetTransaction"
+  "sFromThis2\022\032.protocol.AccountPaginated\032\""
+  ".protocol.TransactionListExtention\"\000\022\253\001\n"
+  "\025GetTransactionsToThis\022\032.protocol.Accoun"
+  "tPaginated\032\031.protocol.TransactionList\"[\202"
+  "\323\344\223\002U\"&/walletextension/gettransactionst"
+  "othis:\001*Z(\022&/walletextension/gettransact"
+  "ionstothis\022Z\n\026GetTransactionsToThis2\022\032.p"
+  "rotocol.AccountPaginated\032\".protocol.Tran"
+  "sactionListExtention\"\0002\231\002\n\010Database\022G\n\021g"
+  "etBlockReference\022\026.protocol.EmptyMessage"
+  "\032\030.protocol.BlockReference\"\000\022M\n\024GetDynam"
+  "icProperties\022\026.protocol.EmptyMessage\032\033.p"
+  "rotocol.DynamicProperties\"\000\0228\n\013GetNowBlo"
+  "ck\022\026.protocol.EmptyMessage\032\017.protocol.Bl"
+  "ock\"\000\022;\n\rGetBlockByNum\022\027.protocol.Number"
+  "Message\032\017.protocol.Block\"\0002\203\001\n\007Monitor\022x"
+  "\n\014GetStatsInfo\022\026.protocol.EmptyMessage\032\025"
+  ".protocol.MetricsInfo\"9\202\323\344\223\0023\"\025/monitor/"
+  "getstatsinfo:\001*Z\027\022\025/monitor/getstatsinfo"
+  "2\t\n\007NetworkBA\n\014org.tron.apiB\007GrpcAPIZ(gi"
+  "thub.com/tronprotocol/grpc-gateway/apib\006"
+  "proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_api_2fapi_2eproto_deps[12] = {
   &::descriptor_table_core_2fTron_2eproto,
@@ -2664,8 +2707,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_api_2fapi_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_api_2fapi_2eproto = {
-  false, false, 27942, descriptor_table_protodef_api_2fapi_2eproto, "api/api.proto", 
-  &descriptor_table_api_2fapi_2eproto_once, descriptor_table_api_2fapi_2eproto_deps, 12, 78,
+  false, false, 28686, descriptor_table_protodef_api_2fapi_2eproto, "api/api.proto", 
+  &descriptor_table_api_2fapi_2eproto_once, descriptor_table_api_2fapi_2eproto_deps, 12, 79,
   schemas, file_default_instances, TableStruct_api_2fapi_2eproto::offsets,
   file_level_metadata_api_2fapi_2eproto, file_level_enum_descriptors_api_2fapi_2eproto, file_level_service_descriptors_api_2fapi_2eproto,
 };
@@ -4412,6 +4455,201 @@ void TransactionList::InternalSwap(TransactionList* other) {
 
 // ===================================================================
 
+class TransactionIdList::_Internal {
+ public:
+};
+
+TransactionIdList::TransactionIdList(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
+  txid_(arena) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:protocol.TransactionIdList)
+}
+TransactionIdList::TransactionIdList(const TransactionIdList& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      txid_(from.txid_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:protocol.TransactionIdList)
+}
+
+inline void TransactionIdList::SharedCtor() {
+}
+
+TransactionIdList::~TransactionIdList() {
+  // @@protoc_insertion_point(destructor:protocol.TransactionIdList)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void TransactionIdList::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void TransactionIdList::ArenaDtor(void* object) {
+  TransactionIdList* _this = reinterpret_cast< TransactionIdList* >(object);
+  (void)_this;
+}
+void TransactionIdList::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void TransactionIdList::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void TransactionIdList::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.TransactionIdList)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  txid_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* TransactionIdList::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated string txId = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_txid();
+            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.TransactionIdList.txId"));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* TransactionIdList::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.TransactionIdList)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated string txId = 1;
+  for (int i = 0, n = this->_internal_txid_size(); i < n; i++) {
+    const auto& s = this->_internal_txid(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.TransactionIdList.txId");
+    target = stream->WriteString(1, s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.TransactionIdList)
+  return target;
+}
+
+size_t TransactionIdList::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.TransactionIdList)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated string txId = 1;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(txid_.size());
+  for (int i = 0, n = txid_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      txid_.Get(i));
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TransactionIdList::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    TransactionIdList::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TransactionIdList::GetClassData() const { return &_class_data_; }
+
+void TransactionIdList::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+  static_cast<TransactionIdList *>(to)->MergeFrom(
+      static_cast<const TransactionIdList &>(from));
+}
+
+
+void TransactionIdList::MergeFrom(const TransactionIdList& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.TransactionIdList)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  txid_.MergeFrom(from.txid_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void TransactionIdList::CopyFrom(const TransactionIdList& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.TransactionIdList)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TransactionIdList::IsInitialized() const {
+  return true;
+}
+
+void TransactionIdList::InternalSwap(TransactionIdList* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  txid_.InternalSwap(&other->txid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TransactionIdList::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
+      file_level_metadata_api_2fapi_2eproto[8]);
+}
+
+// ===================================================================
+
 class DelegatedResourceMessage::_Internal {
  public:
 };
@@ -4639,7 +4877,7 @@ void DelegatedResourceMessage::InternalSwap(DelegatedResourceMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DelegatedResourceMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[8]);
+      file_level_metadata_api_2fapi_2eproto[9]);
 }
 
 // ===================================================================
@@ -4832,7 +5070,7 @@ void DelegatedResourceList::InternalSwap(DelegatedResourceList* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DelegatedResourceList::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[9]);
+      file_level_metadata_api_2fapi_2eproto[10]);
 }
 
 // ===================================================================
@@ -5022,7 +5260,7 @@ void NodeList::InternalSwap(NodeList* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata NodeList::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[10]);
+      file_level_metadata_api_2fapi_2eproto[11]);
 }
 
 // ===================================================================
@@ -5222,7 +5460,7 @@ void Node::InternalSwap(Node* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Node::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[11]);
+      file_level_metadata_api_2fapi_2eproto[12]);
 }
 
 // ===================================================================
@@ -5444,7 +5682,7 @@ void Address::InternalSwap(Address* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Address::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[12]);
+      file_level_metadata_api_2fapi_2eproto[13]);
 }
 
 // ===================================================================
@@ -5597,7 +5835,7 @@ void EmptyMessage::InternalSwap(EmptyMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EmptyMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[13]);
+      file_level_metadata_api_2fapi_2eproto[14]);
 }
 
 // ===================================================================
@@ -5782,7 +6020,7 @@ void NumberMessage::InternalSwap(NumberMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata NumberMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[14]);
+      file_level_metadata_api_2fapi_2eproto[15]);
 }
 
 // ===================================================================
@@ -5977,7 +6215,7 @@ void BytesMessage::InternalSwap(BytesMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata BytesMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[15]);
+      file_level_metadata_api_2fapi_2eproto[16]);
 }
 
 // ===================================================================
@@ -6197,7 +6435,7 @@ void TimeMessage::InternalSwap(TimeMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TimeMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[16]);
+      file_level_metadata_api_2fapi_2eproto[17]);
 }
 
 // ===================================================================
@@ -6417,7 +6655,7 @@ void BlockLimit::InternalSwap(BlockLimit* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata BlockLimit::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[17]);
+      file_level_metadata_api_2fapi_2eproto[18]);
 }
 
 // ===================================================================
@@ -6639,7 +6877,7 @@ void TransactionLimit::InternalSwap(TransactionLimit* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionLimit::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[18]);
+      file_level_metadata_api_2fapi_2eproto[19]);
 }
 
 // ===================================================================
@@ -6905,7 +7143,7 @@ void AccountPaginated::InternalSwap(AccountPaginated* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountPaginated::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[19]);
+      file_level_metadata_api_2fapi_2eproto[20]);
 }
 
 // ===================================================================
@@ -7165,7 +7403,7 @@ void TimePaginatedMessage::InternalSwap(TimePaginatedMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TimePaginatedMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[20]);
+      file_level_metadata_api_2fapi_2eproto[21]);
 }
 
 // ===================================================================
@@ -7179,7 +7417,7 @@ void AccountNetMessage_AssetNetUsedEntry_DoNotUse::MergeFrom(const AccountNetMes
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountNetMessage_AssetNetUsedEntry_DoNotUse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[21]);
+      file_level_metadata_api_2fapi_2eproto[22]);
 }
 
 // ===================================================================
@@ -7193,7 +7431,7 @@ void AccountNetMessage_AssetNetLimitEntry_DoNotUse::MergeFrom(const AccountNetMe
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountNetMessage_AssetNetLimitEntry_DoNotUse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[22]);
+      file_level_metadata_api_2fapi_2eproto[23]);
 }
 
 // ===================================================================
@@ -7646,7 +7884,7 @@ void AccountNetMessage::InternalSwap(AccountNetMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountNetMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[23]);
+      file_level_metadata_api_2fapi_2eproto[24]);
 }
 
 // ===================================================================
@@ -7660,7 +7898,7 @@ void AccountResourceMessage_AssetNetUsedEntry_DoNotUse::MergeFrom(const AccountR
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountResourceMessage_AssetNetUsedEntry_DoNotUse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[24]);
+      file_level_metadata_api_2fapi_2eproto[25]);
 }
 
 // ===================================================================
@@ -7674,7 +7912,7 @@ void AccountResourceMessage_AssetNetLimitEntry_DoNotUse::MergeFrom(const Account
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountResourceMessage_AssetNetLimitEntry_DoNotUse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[25]);
+      file_level_metadata_api_2fapi_2eproto[26]);
 }
 
 // ===================================================================
@@ -8334,7 +8572,7 @@ void AccountResourceMessage::InternalSwap(AccountResourceMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AccountResourceMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[26]);
+      file_level_metadata_api_2fapi_2eproto[27]);
 }
 
 // ===================================================================
@@ -8554,7 +8792,7 @@ void PaginatedMessage::InternalSwap(PaginatedMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PaginatedMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[27]);
+      file_level_metadata_api_2fapi_2eproto[28]);
 }
 
 // ===================================================================
@@ -8813,7 +9051,7 @@ void EasyTransferMessage::InternalSwap(EasyTransferMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EasyTransferMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[28]);
+      file_level_metadata_api_2fapi_2eproto[29]);
 }
 
 // ===================================================================
@@ -9114,7 +9352,7 @@ void EasyTransferAssetMessage::InternalSwap(EasyTransferAssetMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EasyTransferAssetMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[29]);
+      file_level_metadata_api_2fapi_2eproto[30]);
 }
 
 // ===================================================================
@@ -9373,7 +9611,7 @@ void EasyTransferByPrivateMessage::InternalSwap(EasyTransferByPrivateMessage* ot
 ::PROTOBUF_NAMESPACE_ID::Metadata EasyTransferByPrivateMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[30]);
+      file_level_metadata_api_2fapi_2eproto[31]);
 }
 
 // ===================================================================
@@ -9674,7 +9912,7 @@ void EasyTransferAssetByPrivateMessage::InternalSwap(EasyTransferAssetByPrivateM
 ::PROTOBUF_NAMESPACE_ID::Metadata EasyTransferAssetByPrivateMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[31]);
+      file_level_metadata_api_2fapi_2eproto[32]);
 }
 
 // ===================================================================
@@ -9965,7 +10203,7 @@ void EasyTransferResponse::InternalSwap(EasyTransferResponse* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EasyTransferResponse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[32]);
+      file_level_metadata_api_2fapi_2eproto[33]);
 }
 
 // ===================================================================
@@ -10207,7 +10445,7 @@ void AddressPrKeyPairMessage::InternalSwap(AddressPrKeyPairMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AddressPrKeyPairMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[33]);
+      file_level_metadata_api_2fapi_2eproto[34]);
 }
 
 // ===================================================================
@@ -10232,10 +10470,18 @@ void TransactionExtention::clear_transaction() {
   }
   transaction_ = nullptr;
 }
+void TransactionExtention::clear_logs() {
+  logs_.Clear();
+}
+void TransactionExtention::clear_internal_transactions() {
+  internal_transactions_.Clear();
+}
 TransactionExtention::TransactionExtention(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  constant_result_(arena) {
+  constant_result_(arena),
+  logs_(arena),
+  internal_transactions_(arena) {
   SharedCtor();
   if (!is_message_owned) {
     RegisterArenaDtor(arena);
@@ -10244,7 +10490,9 @@ TransactionExtention::TransactionExtention(::PROTOBUF_NAMESPACE_ID::Arena* arena
 }
 TransactionExtention::TransactionExtention(const TransactionExtention& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      constant_result_(from.constant_result_) {
+      constant_result_(from.constant_result_),
+      logs_(from.logs_),
+      internal_transactions_(from.internal_transactions_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   txid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_txid().empty()) {
@@ -10304,6 +10552,8 @@ void TransactionExtention::Clear() {
   (void) cached_has_bits;
 
   constant_result_.Clear();
+  logs_.Clear();
+  internal_transactions_.Clear();
   txid_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && transaction_ != nullptr) {
     delete transaction_;
@@ -10363,6 +10613,30 @@ const char* TransactionExtention::_InternalParse(const char* ptr, ::PROTOBUF_NAM
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           energy_used_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .protocol.TransactionInfo.Log logs = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_logs(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // repeated .protocol.InternalTransaction internal_transactions = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_internal_transactions(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -10428,6 +10702,22 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(5, this->_internal_energy_used(), target);
   }
 
+  // repeated .protocol.TransactionInfo.Log logs = 6;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_logs_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(6, this->_internal_logs(i), target, stream);
+  }
+
+  // repeated .protocol.InternalTransaction internal_transactions = 7;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_internal_transactions_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(7, this->_internal_internal_transactions(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -10450,6 +10740,20 @@ size_t TransactionExtention::ByteSizeLong() const {
   for (int i = 0, n = constant_result_.size(); i < n; i++) {
     total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
       constant_result_.Get(i));
+  }
+
+  // repeated .protocol.TransactionInfo.Log logs = 6;
+  total_size += 1UL * this->_internal_logs_size();
+  for (const auto& msg : this->logs_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .protocol.InternalTransaction internal_transactions = 7;
+  total_size += 1UL * this->_internal_internal_transactions_size();
+  for (const auto& msg : this->internal_transactions_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // bytes txid = 2;
@@ -10509,6 +10813,8 @@ void TransactionExtention::MergeFrom(const TransactionExtention& from) {
   (void) cached_has_bits;
 
   constant_result_.MergeFrom(from.constant_result_);
+  logs_.MergeFrom(from.logs_);
+  internal_transactions_.MergeFrom(from.internal_transactions_);
   if (!from._internal_txid().empty()) {
     _internal_set_txid(from._internal_txid());
   }
@@ -10539,6 +10845,8 @@ void TransactionExtention::InternalSwap(TransactionExtention* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   constant_result_.InternalSwap(&other->constant_result_);
+  logs_.InternalSwap(&other->logs_);
+  internal_transactions_.InternalSwap(&other->internal_transactions_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &txid_, GetArenaForAllocation(),
@@ -10555,7 +10863,7 @@ void TransactionExtention::InternalSwap(TransactionExtention* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionExtention::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[34]);
+      file_level_metadata_api_2fapi_2eproto[35]);
 }
 
 // ===================================================================
@@ -10830,7 +11138,7 @@ void BlockExtention::InternalSwap(BlockExtention* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata BlockExtention::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[35]);
+      file_level_metadata_api_2fapi_2eproto[36]);
 }
 
 // ===================================================================
@@ -11020,7 +11328,7 @@ void BlockListExtention::InternalSwap(BlockListExtention* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata BlockListExtention::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[36]);
+      file_level_metadata_api_2fapi_2eproto[37]);
 }
 
 // ===================================================================
@@ -11210,7 +11518,7 @@ void TransactionListExtention::InternalSwap(TransactionListExtention* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionListExtention::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[37]);
+      file_level_metadata_api_2fapi_2eproto[38]);
 }
 
 // ===================================================================
@@ -11449,7 +11757,7 @@ void BlockIncrementalMerkleTree::InternalSwap(BlockIncrementalMerkleTree* other)
 ::PROTOBUF_NAMESPACE_ID::Metadata BlockIncrementalMerkleTree::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[38]);
+      file_level_metadata_api_2fapi_2eproto[39]);
 }
 
 // ===================================================================
@@ -11677,7 +11985,7 @@ void TransactionSignWeight_Result::InternalSwap(TransactionSignWeight_Result* ot
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionSignWeight_Result::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[39]);
+      file_level_metadata_api_2fapi_2eproto[40]);
 }
 
 // ===================================================================
@@ -12028,7 +12336,7 @@ void TransactionSignWeight::InternalSwap(TransactionSignWeight* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionSignWeight::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[40]);
+      file_level_metadata_api_2fapi_2eproto[41]);
 }
 
 // ===================================================================
@@ -12256,7 +12564,7 @@ void TransactionApprovedList_Result::InternalSwap(TransactionApprovedList_Result
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionApprovedList_Result::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[41]);
+      file_level_metadata_api_2fapi_2eproto[42]);
 }
 
 // ===================================================================
@@ -12536,7 +12844,7 @@ void TransactionApprovedList::InternalSwap(TransactionApprovedList* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionApprovedList::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[42]);
+      file_level_metadata_api_2fapi_2eproto[43]);
 }
 
 // ===================================================================
@@ -12793,7 +13101,7 @@ void IvkDecryptParameters::InternalSwap(IvkDecryptParameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IvkDecryptParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[43]);
+      file_level_metadata_api_2fapi_2eproto[44]);
 }
 
 // ===================================================================
@@ -13124,7 +13432,7 @@ void IvkDecryptAndMarkParameters::InternalSwap(IvkDecryptAndMarkParameters* othe
 ::PROTOBUF_NAMESPACE_ID::Metadata IvkDecryptAndMarkParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[44]);
+      file_level_metadata_api_2fapi_2eproto[45]);
 }
 
 // ===================================================================
@@ -13381,7 +13689,7 @@ void OvkDecryptParameters::InternalSwap(OvkDecryptParameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata OvkDecryptParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[45]);
+      file_level_metadata_api_2fapi_2eproto[46]);
 }
 
 // ===================================================================
@@ -13651,7 +13959,7 @@ void DecryptNotes_NoteTx::InternalSwap(DecryptNotes_NoteTx* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DecryptNotes_NoteTx::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[46]);
+      file_level_metadata_api_2fapi_2eproto[47]);
 }
 
 // ===================================================================
@@ -13841,7 +14149,7 @@ void DecryptNotes::InternalSwap(DecryptNotes* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DecryptNotes::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[47]);
+      file_level_metadata_api_2fapi_2eproto[48]);
 }
 
 // ===================================================================
@@ -14136,7 +14444,7 @@ void DecryptNotesMarked_NoteTx::InternalSwap(DecryptNotesMarked_NoteTx* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DecryptNotesMarked_NoteTx::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[48]);
+      file_level_metadata_api_2fapi_2eproto[49]);
 }
 
 // ===================================================================
@@ -14326,7 +14634,7 @@ void DecryptNotesMarked::InternalSwap(DecryptNotesMarked* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DecryptNotesMarked::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[49]);
+      file_level_metadata_api_2fapi_2eproto[50]);
 }
 
 // ===================================================================
@@ -14627,7 +14935,7 @@ void Note::InternalSwap(Note* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Note::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[50]);
+      file_level_metadata_api_2fapi_2eproto[51]);
 }
 
 // ===================================================================
@@ -14955,7 +15263,7 @@ void SpendNote::InternalSwap(SpendNote* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SpendNote::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[51]);
+      file_level_metadata_api_2fapi_2eproto[52]);
 }
 
 // ===================================================================
@@ -15155,7 +15463,7 @@ void ReceiveNote::InternalSwap(ReceiveNote* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ReceiveNote::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[52]);
+      file_level_metadata_api_2fapi_2eproto[53]);
 }
 
 // ===================================================================
@@ -15647,7 +15955,7 @@ void PrivateParameters::InternalSwap(PrivateParameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PrivateParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[53]);
+      file_level_metadata_api_2fapi_2eproto[54]);
 }
 
 // ===================================================================
@@ -16139,7 +16447,7 @@ void PrivateParametersWithoutAsk::InternalSwap(PrivateParametersWithoutAsk* othe
 ::PROTOBUF_NAMESPACE_ID::Metadata PrivateParametersWithoutAsk::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[54]);
+      file_level_metadata_api_2fapi_2eproto[55]);
 }
 
 // ===================================================================
@@ -16408,7 +16716,7 @@ void SpendAuthSigParameters::InternalSwap(SpendAuthSigParameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SpendAuthSigParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[55]);
+      file_level_metadata_api_2fapi_2eproto[56]);
 }
 
 // ===================================================================
@@ -16736,7 +17044,7 @@ void NfParameters::InternalSwap(NfParameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata NfParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[56]);
+      file_level_metadata_api_2fapi_2eproto[57]);
 }
 
 // ===================================================================
@@ -17005,7 +17313,7 @@ void ExpandedSpendingKeyMessage::InternalSwap(ExpandedSpendingKeyMessage* other)
 ::PROTOBUF_NAMESPACE_ID::Metadata ExpandedSpendingKeyMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[57]);
+      file_level_metadata_api_2fapi_2eproto[58]);
 }
 
 // ===================================================================
@@ -17237,7 +17545,7 @@ void ViewingKeyMessage::InternalSwap(ViewingKeyMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ViewingKeyMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[58]);
+      file_level_metadata_api_2fapi_2eproto[59]);
 }
 
 // ===================================================================
@@ -17432,7 +17740,7 @@ void IncomingViewingKeyMessage::InternalSwap(IncomingViewingKeyMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IncomingViewingKeyMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[59]);
+      file_level_metadata_api_2fapi_2eproto[60]);
 }
 
 // ===================================================================
@@ -17627,7 +17935,7 @@ void DiversifierMessage::InternalSwap(DiversifierMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DiversifierMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[60]);
+      file_level_metadata_api_2fapi_2eproto[61]);
 }
 
 // ===================================================================
@@ -17875,7 +18183,7 @@ void IncomingViewingKeyDiversifierMessage::InternalSwap(IncomingViewingKeyDivers
 ::PROTOBUF_NAMESPACE_ID::Metadata IncomingViewingKeyDiversifierMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[61]);
+      file_level_metadata_api_2fapi_2eproto[62]);
 }
 
 // ===================================================================
@@ -18154,7 +18462,7 @@ void PaymentAddressMessage::InternalSwap(PaymentAddressMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PaymentAddressMessage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[62]);
+      file_level_metadata_api_2fapi_2eproto[63]);
 }
 
 // ===================================================================
@@ -18687,7 +18995,7 @@ void ShieldedAddressInfo::InternalSwap(ShieldedAddressInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ShieldedAddressInfo::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[63]);
+      file_level_metadata_api_2fapi_2eproto[64]);
 }
 
 // ===================================================================
@@ -19031,7 +19339,7 @@ void NoteParameters::InternalSwap(NoteParameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata NoteParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[64]);
+      file_level_metadata_api_2fapi_2eproto[65]);
 }
 
 // ===================================================================
@@ -19256,7 +19564,7 @@ void SpendResult::InternalSwap(SpendResult* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SpendResult::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[65]);
+      file_level_metadata_api_2fapi_2eproto[66]);
 }
 
 // ===================================================================
@@ -19449,7 +19757,7 @@ void TransactionInfoList::InternalSwap(TransactionInfoList* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TransactionInfoList::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[66]);
+      file_level_metadata_api_2fapi_2eproto[67]);
 }
 
 // ===================================================================
@@ -19793,7 +20101,7 @@ void SpendNoteTRC20::InternalSwap(SpendNoteTRC20* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SpendNoteTRC20::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[67]);
+      file_level_metadata_api_2fapi_2eproto[68]);
 }
 
 // ===================================================================
@@ -20284,7 +20592,7 @@ void PrivateShieldedTRC20Parameters::InternalSwap(PrivateShieldedTRC20Parameters
 ::PROTOBUF_NAMESPACE_ID::Metadata PrivateShieldedTRC20Parameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[68]);
+      file_level_metadata_api_2fapi_2eproto[69]);
 }
 
 // ===================================================================
@@ -20775,7 +21083,7 @@ void PrivateShieldedTRC20ParametersWithoutAsk::InternalSwap(PrivateShieldedTRC20
 ::PROTOBUF_NAMESPACE_ID::Metadata PrivateShieldedTRC20ParametersWithoutAsk::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[69]);
+      file_level_metadata_api_2fapi_2eproto[70]);
 }
 
 // ===================================================================
@@ -21161,7 +21469,7 @@ void ShieldedTRC20Parameters::InternalSwap(ShieldedTRC20Parameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ShieldedTRC20Parameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[70]);
+      file_level_metadata_api_2fapi_2eproto[71]);
 }
 
 // ===================================================================
@@ -21566,7 +21874,7 @@ void IvkDecryptTRC20Parameters::InternalSwap(IvkDecryptTRC20Parameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IvkDecryptTRC20Parameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[71]);
+      file_level_metadata_api_2fapi_2eproto[72]);
 }
 
 // ===================================================================
@@ -21897,7 +22205,7 @@ void OvkDecryptTRC20Parameters::InternalSwap(OvkDecryptTRC20Parameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata OvkDecryptTRC20Parameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[72]);
+      file_level_metadata_api_2fapi_2eproto[73]);
 }
 
 // ===================================================================
@@ -22294,7 +22602,7 @@ void DecryptNotesTRC20_NoteTx::InternalSwap(DecryptNotesTRC20_NoteTx* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DecryptNotesTRC20_NoteTx::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[73]);
+      file_level_metadata_api_2fapi_2eproto[74]);
 }
 
 // ===================================================================
@@ -22484,7 +22792,7 @@ void DecryptNotesTRC20::InternalSwap(DecryptNotesTRC20* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DecryptNotesTRC20::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[74]);
+      file_level_metadata_api_2fapi_2eproto[75]);
 }
 
 // ===================================================================
@@ -22828,7 +23136,7 @@ void NfTRC20Parameters::InternalSwap(NfTRC20Parameters* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata NfTRC20Parameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[75]);
+      file_level_metadata_api_2fapi_2eproto[76]);
 }
 
 // ===================================================================
@@ -23011,7 +23319,7 @@ void NullifierResult::InternalSwap(NullifierResult* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata NullifierResult::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[76]);
+      file_level_metadata_api_2fapi_2eproto[77]);
 }
 
 // ===================================================================
@@ -23322,7 +23630,7 @@ void ShieldedTRC20TriggerContractParameters::InternalSwap(ShieldedTRC20TriggerCo
 ::PROTOBUF_NAMESPACE_ID::Metadata ShieldedTRC20TriggerContractParameters::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_api_2fapi_2eproto_getter, &descriptor_table_api_2fapi_2eproto_once,
-      file_level_metadata_api_2fapi_2eproto[77]);
+      file_level_metadata_api_2fapi_2eproto[78]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -23351,6 +23659,9 @@ template<> PROTOBUF_NOINLINE ::protocol::BlockList* Arena::CreateMaybeMessage< :
 }
 template<> PROTOBUF_NOINLINE ::protocol::TransactionList* Arena::CreateMaybeMessage< ::protocol::TransactionList >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::TransactionList >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::TransactionIdList* Arena::CreateMaybeMessage< ::protocol::TransactionIdList >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::TransactionIdList >(arena);
 }
 template<> PROTOBUF_NOINLINE ::protocol::DelegatedResourceMessage* Arena::CreateMaybeMessage< ::protocol::DelegatedResourceMessage >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::DelegatedResourceMessage >(arena);
