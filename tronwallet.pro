@@ -27,6 +27,9 @@ SOURCES += \
     qt/tronaddressentryvalidator.cpp \
     tron/account.cpp \
     tron/myaccount.cpp \
+    tron/transaction.cpp \
+    tron/transfercontracttransaction.cpp \
+    tron/tronclient.cpp \
     tronwalletapplication.cpp \
     tron/proto/api/api.pb.cc \
     tron/proto/api/api.grpc.pb.cc \
@@ -64,13 +67,16 @@ HEADERS += \
     qt/tronaddressentryvalidator.h \
     tron/account.h \
     tron/myaccount.h \
+    tron/transaction.h \
+    tron/transfercontracttransaction.h \
+    tron/tronclient.h \
     tronwalletapplication.h \
     utils.h
 
 
 FORMS += \
     qt/forms/mainwindow.ui \
-    qt/optionsdialog.ui
+    qt/forms/optionsdialog.ui
 
 QT_QRC_LOCALE = qt/locale.qrc
 

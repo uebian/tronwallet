@@ -11,6 +11,7 @@ public:
     static bool convertAndValidateAddress(std::string address,unsigned char* data);
     static std::string calculateAddress(const unsigned char* data);
     std::string getAddress();
+    const unsigned char* getAddressInBytes();
     void refreshInformation();
 
 protected:

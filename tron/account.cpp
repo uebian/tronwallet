@@ -81,3 +81,8 @@ bool Account::convertAndValidateAddress(std::string address,unsigned char* data)
         return false;
     }
 }
+
+const unsigned char* Account::getAddressInBytes()
+{
+    return address;
+}
