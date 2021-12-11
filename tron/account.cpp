@@ -57,10 +57,10 @@ std::string Account::calculateAddress(const unsigned char* address)
     unsigned char hash1[32];
     sha256(buf,21,hash0);
     sha256(hash0,32,hash1);
-    buf[21]=hash1[0];
-    buf[22]=hash1[1];
-    buf[23]=hash1[2];
-    buf[24]=hash1[3];
+    for(int i=0;i<4;i++)
+    {
+        buf[21+i]=hash1[i];
+    }
     std::string addressRet=Base58Encode(buf,25);
     return addressRet;
 }

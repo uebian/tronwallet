@@ -7,7 +7,7 @@ TronClient::TronClient(const std::string& target)
     channel=grpc::CreateChannel(target, grpc::InsecureChannelCredentials());
 }
 
-protocol::BlockExtention TronClient::GetNowBlock()
+Block TronClient::GetNowBlock()
 {
     protocol::BlockExtention block;
     auto stub=protocol::WalletSolidity::NewStub(channel);
@@ -18,7 +18,8 @@ protocol::BlockExtention TronClient::GetNowBlock()
     {
         throw std::runtime_error(status.error_message());
     }
-    return block;
+    Block ret(&block);
+    return ret;
 }
 
 TronClient* tronClient;

@@ -27,6 +27,9 @@
 
 #include "tron/tronclient.h"
 #include "qt/optionsmodel.h"
+#include "utils.h"
+#include "tron/myaccount.h"
+#include "tron/transfercontracttransaction.h"
 
 static QString GetLangTerritory()
 {
@@ -129,7 +132,20 @@ void initClient()
     QSettings settings;
     QString defaultTarget=(QString)DEFAULT_GUI_FULLNODE_HOST+":"+QString("%1").arg(DEFAULT_GUI_FULLNODE_PORT);
     tronClient=new TronClient(settings.value("addrFullNode",defaultTarget).toString().toStdString());
-    std::cout<<tronClient->GetNowBlock().block_header().raw_data().timestamp()<<std::endl;
+}
+
+void runTestCode()
+{
+    /*unsigned char priKey[64];
+    hex2bytes(priKey,"PRIVATEKEY");
+    MyAccount account(priKey);
+    Account to("TEERVrdYihJbeqY7KZUskh8qbp3WwfmQvC");
+    TransferContractTransaction transaction(account,to,1000);
+    transaction.setBlockInfo(tronClient->GetNowBlock());
+    account.signTransaction(transaction);
+    unsigned char* t=new unsigned char[transaction.getRawDataLength()];
+    transaction.getRawData(t);
+    std::cout<<bytes2hex(t,transaction.getRawDataLength())<<std::endl;*/
 }
 
 int GuiMain(int argc, char* argv[])
@@ -153,17 +169,15 @@ int GuiMain(int argc, char* argv[])
     /// 3. Initialization of gRPC Client
     initClient();
 
-    // Allow for separate UI settings for testnets
-    QApplication::setApplicationName(QAPP_APP_NAME_DEFAULT);
-    // Re-initialize translations after changing application name (language in network-specific settings can be different)
-    initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
-
-    /// 9. Main GUI initialization
+    /// 4. Main GUI initialization
     // Load GUI settings from QSettings
     app.createOptionsModel(false);
 
+    runTestCode();
+
     app.createWindow();
     qInfo() << __func__ << ": Application started.";
+
     return app.exec();
 }
 

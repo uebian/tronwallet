@@ -26,6 +26,7 @@ SOURCES += \
     qt/qvaluecombobox.cpp \
     qt/tronaddressentryvalidator.cpp \
     tron/account.cpp \
+    tron/block.cpp \
     tron/myaccount.cpp \
     tron/transaction.cpp \
     tron/transfercontracttransaction.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     qt/qvaluecombobox.h \
     qt/tronaddressentryvalidator.h \
     tron/account.h \
+    tron/block.h \
     tron/myaccount.h \
     tron/transaction.h \
     tron/transfercontracttransaction.h \

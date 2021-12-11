@@ -58,3 +58,8 @@ MyAccount MyAccount::readFromJson(const std::string& path)
         throw std::invalid_argument("Invalid wallet file");
     }
 }
+
+void MyAccount::signTransaction(Transaction& transaction)
+{
+    transaction.sign(this->priKey);
+}

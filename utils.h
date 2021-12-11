@@ -8,5 +8,7 @@
 
 void hex2bytes(unsigned char bytearray[],std::string hex);
 std::string bytes2hex(unsigned char *data, int len);
+long currentTimeMillis();
+bool is_big_endian();
 
 #endif // UTILS_H
