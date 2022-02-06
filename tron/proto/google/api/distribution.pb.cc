@@ -122,12 +122,13 @@ static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_google_2fapi_2fdist
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_google_2fapi_2fdistribution_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_google_2fapi_2fdistribution_2eproto = nullptr;
 
-const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+const uint32_t TableStruct_google_2fapi_2fdistribution_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_Range, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_Range, min_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_Range, max_),
   ~0u,  // no _has_bits_
@@ -135,6 +136,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2e
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Linear, num_finite_buckets_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Linear, width_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Linear, offset_),
@@ -143,6 +145,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2e
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Exponential, num_finite_buckets_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Exponential, growth_factor_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Exponential, scale_),
@@ -151,12 +154,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2e
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions_Explicit, bounds_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions, _internal_metadata_),
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_BucketOptions, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
@@ -166,6 +171,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2e
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_Exemplar, value_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_Exemplar, timestamp_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution_Exemplar, attachments_),
@@ -174,6 +180,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2e
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution, count_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution, mean_),
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution, sum_of_squared_deviation_),
@@ -183,13 +190,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_google_2fapi_2fdistribution_2e
   PROTOBUF_FIELD_OFFSET(::google::api::Distribution, exemplars_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::google::api::Distribution_Range)},
-  { 7, -1, sizeof(::google::api::Distribution_BucketOptions_Linear)},
-  { 15, -1, sizeof(::google::api::Distribution_BucketOptions_Exponential)},
-  { 23, -1, sizeof(::google::api::Distribution_BucketOptions_Explicit)},
-  { 29, -1, sizeof(::google::api::Distribution_BucketOptions)},
-  { 38, -1, sizeof(::google::api::Distribution_Exemplar)},
-  { 46, -1, sizeof(::google::api::Distribution)},
+  { 0, -1, -1, sizeof(::google::api::Distribution_Range)},
+  { 8, -1, -1, sizeof(::google::api::Distribution_BucketOptions_Linear)},
+  { 17, -1, -1, sizeof(::google::api::Distribution_BucketOptions_Exponential)},
+  { 26, -1, -1, sizeof(::google::api::Distribution_BucketOptions_Explicit)},
+  { 33, -1, -1, sizeof(::google::api::Distribution_BucketOptions)},
+  { 43, -1, -1, sizeof(::google::api::Distribution_Exemplar)},
+  { 52, -1, -1, sizeof(::google::api::Distribution)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -306,7 +313,7 @@ void Distribution_Range::SetCachedSize(int size) const {
 
 void Distribution_Range::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution.Range)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -319,60 +326,70 @@ void Distribution_Range::Clear() {
 const char* Distribution_Range::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // double min = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 9)) {
           min_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double max = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
           max_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution_Range::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution_Range::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution.Range)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // double min = 1;
-  if (!(this->_internal_min() <= 0 && this->_internal_min() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_min = this->_internal_min();
+  uint64_t raw_min;
+  memcpy(&raw_min, &tmp_min, sizeof(tmp_min));
+  if (raw_min != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_min(), target);
   }
 
   // double max = 2;
-  if (!(this->_internal_max() <= 0 && this->_internal_max() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_max = this->_internal_max();
+  uint64_t raw_max;
+  memcpy(&raw_max, &tmp_max, sizeof(tmp_max));
+  if (raw_max != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_max(), target);
   }
@@ -389,27 +406,29 @@ size_t Distribution_Range::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution.Range)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // double min = 1;
-  if (!(this->_internal_min() <= 0 && this->_internal_min() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_min = this->_internal_min();
+  uint64_t raw_min;
+  memcpy(&raw_min, &tmp_min, sizeof(tmp_min));
+  if (raw_min != 0) {
     total_size += 1 + 8;
   }
 
   // double max = 2;
-  if (!(this->_internal_max() <= 0 && this->_internal_max() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_max = this->_internal_max();
+  uint64_t raw_max;
+  memcpy(&raw_max, &tmp_max, sizeof(tmp_max));
+  if (raw_max != 0) {
     total_size += 1 + 8;
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_Range::_class_data_ = {
@@ -418,8 +437,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_Range::_class_dat
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution_Range::GetClassData() const { return &_class_data_; }
 
-void Distribution_Range::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution_Range::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution_Range *>(to)->MergeFrom(
       static_cast<const Distribution_Range &>(from));
 }
@@ -428,13 +447,21 @@ void Distribution_Range::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
 void Distribution_Range::MergeFrom(const Distribution_Range& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution.Range)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!(from._internal_min() <= 0 && from._internal_min() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_min = from._internal_min();
+  uint64_t raw_min;
+  memcpy(&raw_min, &tmp_min, sizeof(tmp_min));
+  if (raw_min != 0) {
     _internal_set_min(from._internal_min());
   }
-  if (!(from._internal_max() <= 0 && from._internal_max() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_max = from._internal_max();
+  uint64_t raw_max;
+  memcpy(&raw_max, &tmp_max, sizeof(tmp_max));
+  if (raw_max != 0) {
     _internal_set_max(from._internal_max());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -522,7 +549,7 @@ void Distribution_BucketOptions_Linear::SetCachedSize(int size) const {
 
 void Distribution_BucketOptions_Linear::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution.BucketOptions.Linear)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -535,57 +562,60 @@ void Distribution_BucketOptions_Linear::Clear() {
 const char* Distribution_BucketOptions_Linear::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 num_finite_buckets = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          num_finite_buckets_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          num_finite_buckets_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double width = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
           width_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double offset = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
           offset_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution_BucketOptions_Linear::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution_BucketOptions_Linear::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution.BucketOptions.Linear)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int32 num_finite_buckets = 1;
@@ -595,13 +625,21 @@ failure:
   }
 
   // double width = 2;
-  if (!(this->_internal_width() <= 0 && this->_internal_width() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_width = this->_internal_width();
+  uint64_t raw_width;
+  memcpy(&raw_width, &tmp_width, sizeof(tmp_width));
+  if (raw_width != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_width(), target);
   }
 
   // double offset = 3;
-  if (!(this->_internal_offset() <= 0 && this->_internal_offset() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_offset = this->_internal_offset();
+  uint64_t raw_offset;
+  memcpy(&raw_offset, &tmp_offset, sizeof(tmp_offset));
+  if (raw_offset != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_offset(), target);
   }
@@ -618,34 +656,34 @@ size_t Distribution_BucketOptions_Linear::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution.BucketOptions.Linear)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // double width = 2;
-  if (!(this->_internal_width() <= 0 && this->_internal_width() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_width = this->_internal_width();
+  uint64_t raw_width;
+  memcpy(&raw_width, &tmp_width, sizeof(tmp_width));
+  if (raw_width != 0) {
     total_size += 1 + 8;
   }
 
   // double offset = 3;
-  if (!(this->_internal_offset() <= 0 && this->_internal_offset() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_offset = this->_internal_offset();
+  uint64_t raw_offset;
+  memcpy(&raw_offset, &tmp_offset, sizeof(tmp_offset));
+  if (raw_offset != 0) {
     total_size += 1 + 8;
   }
 
   // int32 num_finite_buckets = 1;
   if (this->_internal_num_finite_buckets() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_num_finite_buckets());
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_num_finite_buckets());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions_Linear::_class_data_ = {
@@ -654,8 +692,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions_Lin
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution_BucketOptions_Linear::GetClassData() const { return &_class_data_; }
 
-void Distribution_BucketOptions_Linear::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution_BucketOptions_Linear::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution_BucketOptions_Linear *>(to)->MergeFrom(
       static_cast<const Distribution_BucketOptions_Linear &>(from));
 }
@@ -664,13 +702,21 @@ void Distribution_BucketOptions_Linear::MergeImpl(::PROTOBUF_NAMESPACE_ID::Messa
 void Distribution_BucketOptions_Linear::MergeFrom(const Distribution_BucketOptions_Linear& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution.BucketOptions.Linear)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!(from._internal_width() <= 0 && from._internal_width() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_width = from._internal_width();
+  uint64_t raw_width;
+  memcpy(&raw_width, &tmp_width, sizeof(tmp_width));
+  if (raw_width != 0) {
     _internal_set_width(from._internal_width());
   }
-  if (!(from._internal_offset() <= 0 && from._internal_offset() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_offset = from._internal_offset();
+  uint64_t raw_offset;
+  memcpy(&raw_offset, &tmp_offset, sizeof(tmp_offset));
+  if (raw_offset != 0) {
     _internal_set_offset(from._internal_offset());
   }
   if (from._internal_num_finite_buckets() != 0) {
@@ -761,7 +807,7 @@ void Distribution_BucketOptions_Exponential::SetCachedSize(int size) const {
 
 void Distribution_BucketOptions_Exponential::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution.BucketOptions.Exponential)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -774,57 +820,60 @@ void Distribution_BucketOptions_Exponential::Clear() {
 const char* Distribution_BucketOptions_Exponential::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 num_finite_buckets = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          num_finite_buckets_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          num_finite_buckets_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double growth_factor = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
           growth_factor_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double scale = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
           scale_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution_BucketOptions_Exponential::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution_BucketOptions_Exponential::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution.BucketOptions.Exponential)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int32 num_finite_buckets = 1;
@@ -834,13 +883,21 @@ failure:
   }
 
   // double growth_factor = 2;
-  if (!(this->_internal_growth_factor() <= 0 && this->_internal_growth_factor() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_growth_factor = this->_internal_growth_factor();
+  uint64_t raw_growth_factor;
+  memcpy(&raw_growth_factor, &tmp_growth_factor, sizeof(tmp_growth_factor));
+  if (raw_growth_factor != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_growth_factor(), target);
   }
 
   // double scale = 3;
-  if (!(this->_internal_scale() <= 0 && this->_internal_scale() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_scale = this->_internal_scale();
+  uint64_t raw_scale;
+  memcpy(&raw_scale, &tmp_scale, sizeof(tmp_scale));
+  if (raw_scale != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_scale(), target);
   }
@@ -857,34 +914,34 @@ size_t Distribution_BucketOptions_Exponential::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution.BucketOptions.Exponential)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // double growth_factor = 2;
-  if (!(this->_internal_growth_factor() <= 0 && this->_internal_growth_factor() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_growth_factor = this->_internal_growth_factor();
+  uint64_t raw_growth_factor;
+  memcpy(&raw_growth_factor, &tmp_growth_factor, sizeof(tmp_growth_factor));
+  if (raw_growth_factor != 0) {
     total_size += 1 + 8;
   }
 
   // double scale = 3;
-  if (!(this->_internal_scale() <= 0 && this->_internal_scale() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_scale = this->_internal_scale();
+  uint64_t raw_scale;
+  memcpy(&raw_scale, &tmp_scale, sizeof(tmp_scale));
+  if (raw_scale != 0) {
     total_size += 1 + 8;
   }
 
   // int32 num_finite_buckets = 1;
   if (this->_internal_num_finite_buckets() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_num_finite_buckets());
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_num_finite_buckets());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions_Exponential::_class_data_ = {
@@ -893,8 +950,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions_Exp
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution_BucketOptions_Exponential::GetClassData() const { return &_class_data_; }
 
-void Distribution_BucketOptions_Exponential::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution_BucketOptions_Exponential::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution_BucketOptions_Exponential *>(to)->MergeFrom(
       static_cast<const Distribution_BucketOptions_Exponential &>(from));
 }
@@ -903,13 +960,21 @@ void Distribution_BucketOptions_Exponential::MergeImpl(::PROTOBUF_NAMESPACE_ID::
 void Distribution_BucketOptions_Exponential::MergeFrom(const Distribution_BucketOptions_Exponential& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution.BucketOptions.Exponential)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!(from._internal_growth_factor() <= 0 && from._internal_growth_factor() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_growth_factor = from._internal_growth_factor();
+  uint64_t raw_growth_factor;
+  memcpy(&raw_growth_factor, &tmp_growth_factor, sizeof(tmp_growth_factor));
+  if (raw_growth_factor != 0) {
     _internal_set_growth_factor(from._internal_growth_factor());
   }
-  if (!(from._internal_scale() <= 0 && from._internal_scale() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_scale = from._internal_scale();
+  uint64_t raw_scale;
+  memcpy(&raw_scale, &tmp_scale, sizeof(tmp_scale));
+  if (raw_scale != 0) {
     _internal_set_scale(from._internal_scale());
   }
   if (from._internal_num_finite_buckets() != 0) {
@@ -995,7 +1060,7 @@ void Distribution_BucketOptions_Explicit::SetCachedSize(int size) const {
 
 void Distribution_BucketOptions_Explicit::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution.BucketOptions.Explicit)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1006,46 +1071,47 @@ void Distribution_BucketOptions_Explicit::Clear() {
 const char* Distribution_BucketOptions_Explicit::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // repeated double bounds = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_bounds(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9) {
+        } else if (static_cast<uint8_t>(tag) == 9) {
           _internal_add_bounds(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution_BucketOptions_Explicit::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution_BucketOptions_Explicit::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution.BucketOptions.Explicit)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // repeated double bounds = 1;
@@ -1065,7 +1131,7 @@ size_t Distribution_BucketOptions_Explicit::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution.BucketOptions.Explicit)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1076,18 +1142,12 @@ size_t Distribution_BucketOptions_Explicit::ByteSizeLong() const {
     if (data_size > 0) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
+            static_cast<int32_t>(data_size));
     }
     total_size += data_size;
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions_Explicit::_class_data_ = {
@@ -1096,8 +1156,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions_Exp
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution_BucketOptions_Explicit::GetClassData() const { return &_class_data_; }
 
-void Distribution_BucketOptions_Explicit::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution_BucketOptions_Explicit::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution_BucketOptions_Explicit *>(to)->MergeFrom(
       static_cast<const Distribution_BucketOptions_Explicit &>(from));
 }
@@ -1106,7 +1166,7 @@ void Distribution_BucketOptions_Explicit::MergeImpl(::PROTOBUF_NAMESPACE_ID::Mes
 void Distribution_BucketOptions_Explicit::MergeFrom(const Distribution_BucketOptions_Explicit& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution.BucketOptions.Explicit)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   bounds_.MergeFrom(from.bounds_);
@@ -1294,7 +1354,7 @@ void Distribution_BucketOptions::clear_options() {
 
 void Distribution_BucketOptions::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution.BucketOptions)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1305,57 +1365,60 @@ void Distribution_BucketOptions::Clear() {
 const char* Distribution_BucketOptions::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .google.api.Distribution.BucketOptions.Linear linear_buckets = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_linear_buckets(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_exponential_buckets(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_explicit_buckets(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution_BucketOptions::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution_BucketOptions::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution.BucketOptions)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // .google.api.Distribution.BucketOptions.Linear linear_buckets = 1;
@@ -1394,7 +1457,7 @@ size_t Distribution_BucketOptions::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution.BucketOptions)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1424,13 +1487,7 @@ size_t Distribution_BucketOptions::ByteSizeLong() const {
       break;
     }
   }
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions::_class_data_ = {
@@ -1439,8 +1496,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_BucketOptions::_c
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution_BucketOptions::GetClassData() const { return &_class_data_; }
 
-void Distribution_BucketOptions::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution_BucketOptions::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution_BucketOptions *>(to)->MergeFrom(
       static_cast<const Distribution_BucketOptions &>(from));
 }
@@ -1449,7 +1506,7 @@ void Distribution_BucketOptions::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
 void Distribution_BucketOptions::MergeFrom(const Distribution_BucketOptions& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution.BucketOptions)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   switch (from.options_case()) {
@@ -1500,10 +1557,10 @@ void Distribution_BucketOptions::InternalSwap(Distribution_BucketOptions* other)
 
 class Distribution_Exemplar::_Internal {
  public:
-  static const PROTOBUF_NAMESPACE_ID::Timestamp& timestamp(const Distribution_Exemplar* msg);
+  static const ::PROTOBUF_NAMESPACE_ID::Timestamp& timestamp(const Distribution_Exemplar* msg);
 };
 
-const PROTOBUF_NAMESPACE_ID::Timestamp&
+const ::PROTOBUF_NAMESPACE_ID::Timestamp&
 Distribution_Exemplar::_Internal::timestamp(const Distribution_Exemplar* msg) {
   return *msg->timestamp_;
 }
@@ -1531,7 +1588,7 @@ Distribution_Exemplar::Distribution_Exemplar(const Distribution_Exemplar& from)
       attachments_(from.attachments_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_timestamp()) {
-    timestamp_ = new PROTOBUF_NAMESPACE_ID::Timestamp(*from.timestamp_);
+    timestamp_ = new ::PROTOBUF_NAMESPACE_ID::Timestamp(*from.timestamp_);
   } else {
     timestamp_ = nullptr;
   }
@@ -1570,7 +1627,7 @@ void Distribution_Exemplar::SetCachedSize(int size) const {
 
 void Distribution_Exemplar::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution.Exemplar)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1586,26 +1643,28 @@ void Distribution_Exemplar::Clear() {
 const char* Distribution_Exemplar::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // double value = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 9)) {
           value_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .google.protobuf.Timestamp timestamp = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_timestamp(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // repeated .google.protobuf.Any attachments = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -1613,39 +1672,44 @@ const char* Distribution_Exemplar::_InternalParse(const char* ptr, ::PROTOBUF_NA
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution_Exemplar::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution_Exemplar::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution.Exemplar)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // double value = 1;
-  if (!(this->_internal_value() <= 0 && this->_internal_value() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_value = this->_internal_value();
+  uint64_t raw_value;
+  memcpy(&raw_value, &tmp_value, sizeof(tmp_value));
+  if (raw_value != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_value(), target);
   }
@@ -1678,7 +1742,7 @@ size_t Distribution_Exemplar::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution.Exemplar)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1697,17 +1761,15 @@ size_t Distribution_Exemplar::ByteSizeLong() const {
   }
 
   // double value = 1;
-  if (!(this->_internal_value() <= 0 && this->_internal_value() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_value = this->_internal_value();
+  uint64_t raw_value;
+  memcpy(&raw_value, &tmp_value, sizeof(tmp_value));
+  if (raw_value != 0) {
     total_size += 1 + 8;
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_Exemplar::_class_data_ = {
@@ -1716,8 +1778,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution_Exemplar::_class_
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution_Exemplar::GetClassData() const { return &_class_data_; }
 
-void Distribution_Exemplar::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution_Exemplar::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution_Exemplar *>(to)->MergeFrom(
       static_cast<const Distribution_Exemplar &>(from));
 }
@@ -1726,14 +1788,18 @@ void Distribution_Exemplar::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
 void Distribution_Exemplar::MergeFrom(const Distribution_Exemplar& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution.Exemplar)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   attachments_.MergeFrom(from.attachments_);
   if (from._internal_has_timestamp()) {
-    _internal_mutable_timestamp()->PROTOBUF_NAMESPACE_ID::Timestamp::MergeFrom(from._internal_timestamp());
+    _internal_mutable_timestamp()->::PROTOBUF_NAMESPACE_ID::Timestamp::MergeFrom(from._internal_timestamp());
   }
-  if (!(from._internal_value() <= 0 && from._internal_value() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_value = from._internal_value();
+  uint64_t raw_value;
+  memcpy(&raw_value, &tmp_value, sizeof(tmp_value));
+  if (raw_value != 0) {
     _internal_set_value(from._internal_value());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -1848,7 +1914,7 @@ void Distribution::SetCachedSize(int size) const {
 
 void Distribution::Clear() {
 // @@protoc_insertion_point(message_clear_start:google.api.Distribution)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1871,57 +1937,63 @@ void Distribution::Clear() {
 const char* Distribution::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int64 count = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double mean = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
           mean_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // double sum_of_squared_deviation = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
           sum_of_squared_deviation_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .google.api.Distribution.Range range = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_range(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .google.api.Distribution.BucketOptions bucket_options = 6;
       case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
           ptr = ctx->ParseMessage(_internal_mutable_bucket_options(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // repeated int64 bucket_counts = 7;
       case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_bucket_counts(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56) {
+        } else if (static_cast<uint8_t>(tag) == 56) {
           _internal_add_bucket_counts(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // repeated .google.api.Distribution.Exemplar exemplars = 10;
       case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -1929,35 +2001,36 @@ const char* Distribution::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<82>(ptr));
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Distribution::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* Distribution::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:google.api.Distribution)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int64 count = 1;
@@ -1967,13 +2040,21 @@ failure:
   }
 
   // double mean = 2;
-  if (!(this->_internal_mean() <= 0 && this->_internal_mean() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_mean = this->_internal_mean();
+  uint64_t raw_mean;
+  memcpy(&raw_mean, &tmp_mean, sizeof(tmp_mean));
+  if (raw_mean != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_mean(), target);
   }
 
   // double sum_of_squared_deviation = 3;
-  if (!(this->_internal_sum_of_squared_deviation() <= 0 && this->_internal_sum_of_squared_deviation() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_sum_of_squared_deviation = this->_internal_sum_of_squared_deviation();
+  uint64_t raw_sum_of_squared_deviation;
+  memcpy(&raw_sum_of_squared_deviation, &tmp_sum_of_squared_deviation, sizeof(tmp_sum_of_squared_deviation));
+  if (raw_sum_of_squared_deviation != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_sum_of_squared_deviation(), target);
   }
@@ -2023,7 +2104,7 @@ size_t Distribution::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:google.api.Distribution)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -2034,7 +2115,7 @@ size_t Distribution::ByteSizeLong() const {
     if (data_size > 0) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
+            static_cast<int32_t>(data_size));
     }
     int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
     _bucket_counts_cached_byte_size_.store(cached_size,
@@ -2065,28 +2146,28 @@ size_t Distribution::ByteSizeLong() const {
 
   // int64 count = 1;
   if (this->_internal_count() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
-        this->_internal_count());
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64SizePlusOne(this->_internal_count());
   }
 
   // double mean = 2;
-  if (!(this->_internal_mean() <= 0 && this->_internal_mean() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_mean = this->_internal_mean();
+  uint64_t raw_mean;
+  memcpy(&raw_mean, &tmp_mean, sizeof(tmp_mean));
+  if (raw_mean != 0) {
     total_size += 1 + 8;
   }
 
   // double sum_of_squared_deviation = 3;
-  if (!(this->_internal_sum_of_squared_deviation() <= 0 && this->_internal_sum_of_squared_deviation() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_sum_of_squared_deviation = this->_internal_sum_of_squared_deviation();
+  uint64_t raw_sum_of_squared_deviation;
+  memcpy(&raw_sum_of_squared_deviation, &tmp_sum_of_squared_deviation, sizeof(tmp_sum_of_squared_deviation));
+  if (raw_sum_of_squared_deviation != 0) {
     total_size += 1 + 8;
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution::_class_data_ = {
@@ -2095,8 +2176,8 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Distribution::_class_data_ = {
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Distribution::GetClassData() const { return &_class_data_; }
 
-void Distribution::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+void Distribution::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
   static_cast<Distribution *>(to)->MergeFrom(
       static_cast<const Distribution &>(from));
 }
@@ -2105,7 +2186,7 @@ void Distribution::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
 void Distribution::MergeFrom(const Distribution& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:google.api.Distribution)
   GOOGLE_DCHECK_NE(&from, this);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   bucket_counts_.MergeFrom(from.bucket_counts_);
@@ -2119,10 +2200,18 @@ void Distribution::MergeFrom(const Distribution& from) {
   if (from._internal_count() != 0) {
     _internal_set_count(from._internal_count());
   }
-  if (!(from._internal_mean() <= 0 && from._internal_mean() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_mean = from._internal_mean();
+  uint64_t raw_mean;
+  memcpy(&raw_mean, &tmp_mean, sizeof(tmp_mean));
+  if (raw_mean != 0) {
     _internal_set_mean(from._internal_mean());
   }
-  if (!(from._internal_sum_of_squared_deviation() <= 0 && from._internal_sum_of_squared_deviation() >= 0)) {
+  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  double tmp_sum_of_squared_deviation = from._internal_sum_of_squared_deviation();
+  uint64_t raw_sum_of_squared_deviation;
+  memcpy(&raw_sum_of_squared_deviation, &tmp_sum_of_squared_deviation, sizeof(tmp_sum_of_squared_deviation));
+  if (raw_sum_of_squared_deviation != 0) {
     _internal_set_sum_of_squared_deviation(from._internal_sum_of_squared_deviation());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
