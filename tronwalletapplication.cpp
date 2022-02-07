@@ -79,8 +79,7 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
     if (translatorBase.load(lang, ":/translations/"))
         QApplication::installTranslator(&translatorBase);
 
-    // Load e.g. bitcoin_de_DE.qm (shortcut "de_DE" needs to be defined in bitcoin.qrc)
-    qDebug()<<QDir(":/translations/").entryList()[0];
+    // Load e.g. tronwallet_zh_CN.qm (shortcut "zh_CN" needs to be defined in locale.qrc)
     if (translator.load(lang_territory, ":/translations/"))
         QApplication::installTranslator(&translator);
 }
@@ -127,11 +126,15 @@ WId TronWalletApplication::getMainWinId() const
     return window->winId();
 }
 
-void initClient()
+void TronWalletApplication::initClient()
 {
     QSettings settings;
     QString defaultTarget=(QString)DEFAULT_GUI_FULLNODE_HOST+":"+QString("%1").arg(DEFAULT_GUI_FULLNODE_PORT);
-    tronClient=new TronClient(settings.value("addrFullNode",defaultTarget).toString().toStdString());
+    this->tronClient=new TronClient(settings.value("addrFullNode",defaultTarget).toString().toStdString());
+}
+
+TronClient* TronWalletApplication::getTronClient(){
+    return this->tronClient;
 }
 
 void runTestCode()
@@ -167,7 +170,7 @@ int GuiMain(int argc, char* argv[])
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
     /// 3. Initialization of gRPC Client
-    initClient();
+    app.initClient();
 
     /// 4. Main GUI initialization
     // Load GUI settings from QSettings

@@ -73,7 +73,6 @@ MyAccount* MyAccount::readFromJson(const std::string& path)
             delete account;
             return nullptr;
         }
-        qDebug()<<"Wallet"<<account->getAddress().c_str()<<"is loaded";
         return account;
     }else{
         return nullptr;

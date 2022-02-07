@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include "qt/optionsdialog.h"
 #include "qt/guiutil.h"
+#include "tron/myaccount.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +25,7 @@ public:
 private:
     void createActions();
     void createMenus();
+    void loadWallet(MyAccount* account);
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -50,6 +52,7 @@ private:
     QAction *aboutAct;
     QAction *aboutQtAct;
     QLabel *infoLabel;
+    QLabel* addressBar;
 Q_SIGNALS:
     void quitRequested();
 

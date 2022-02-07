@@ -4,9 +4,9 @@
 #include <assert.h>
 #include <memory>
 #include <optional>
+#include "tron/tronclient.h"
 
 #include <QApplication>
-#include "tron/myaccount.h"
 
 class MainWindow;
 class OptionsModel;
@@ -46,6 +46,10 @@ public:
     /// Setup platform style
     void setupPlatformStyle();
 
+    void initClient();
+
+    TronClient* getTronClient();
+
 public Q_SLOTS:
     /// Request core shutdown
     void requestShutdown();
@@ -61,7 +65,7 @@ private:
     MainWindow *window;
     QTimer *pollShutdownTimer;
     int returnValue;
-    MyAccount* account;
+    TronClient* tronClient;
 };
 
 int GuiMain(int argc, char* argv[]);

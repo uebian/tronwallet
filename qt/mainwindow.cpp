@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <functional>
 #include "tron/myaccount.h"
+#include "tronwalletapplication.h"
 #include "utils.h"
 
 
@@ -12,14 +13,18 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->centralwidget->hide();
     createActions();
     createMenus();
+    addressBar=new QLabel();
+    statusBar()->addWidget(addressBar);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete addressBar;
 }
 
 void MainWindow::createActions()
@@ -68,6 +73,13 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutQtAct);
 }
 
+void MainWindow::loadWallet(MyAccount* account)
+{
+    ((TronWalletApplication*)QApplication::instance())->getTronClient()->loadWallet(account);
+    ui->centralwidget->show();
+    addressBar->setText(account->getAddress().c_str());
+}
+
 void MainWindow::newWallet()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
@@ -82,7 +94,7 @@ void MainWindow::newWallet()
         msgBox.setText(tr("Failed to write wallet file."));
         msgBox.exec();
     }else{
-        //QApplication::instance()->setAccount();
+        loadWallet(account);
     }
 
 }
@@ -98,7 +110,7 @@ void MainWindow::openWallet()
         msgBox.setText(tr("Invalid Wallet File."));
         msgBox.exec();
     }else{
-        //QApplication::instance()->setAccount();
+        loadWallet(account);
     }
 }
 
