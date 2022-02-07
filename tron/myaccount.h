@@ -11,7 +11,8 @@ private:
 public:
     MyAccount(const unsigned char* priKey);
     void signTransaction(Transaction& transaction);
-    static MyAccount readFromJson(const std::string& path);
+    static MyAccount* readFromJson(const std::string& path);
+    bool saveToJson(const std::string& path);
 };
 
 #endif // MYACCOUNT_H

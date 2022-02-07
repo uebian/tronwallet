@@ -64,16 +64,32 @@
         <translation>更改密码(&amp;C)...</translation>
     </message>
     <message>
-        <source>Open &amp;URI...</source>
-        <translation>打开 &amp;URI...</translation>
-    </message>
-    <message>
         <source>Create Wallet...</source>
         <translation>创建钱包...</translation>
     </message>
     <message>
-        <source>Create a new wallet</source>
-        <translation>创建一个新的钱包</translation>
+        <source>Open Wallet...</source>
+        <translation>打开钱包...</translation>
+    </message>
+    <message>
+        <source>Open Wallet</source>
+        <translation>打开钱包</translation>
+    </message>
+    <message>
+        <source>Save Wallet</source>
+        <translation>保存钱包</translation>
+    </message>
+    <message>
+        <source>Create an new wallet</source>
+        <translation>创建一个新钱包</translation>
+    </message>
+    <message>
+        <source>Open an exist wallet</source>
+        <translation>打开一个现有的钱包</translation>
+    </message>
+    <message>
+        <source>Wallet File</source>
+        <translation>钱包文件</translation>
     </message>
     <message>
         <source>Wallet:</source>
@@ -242,14 +258,6 @@
     <message>
         <source>Open a bitcoin: URI</source>
         <translation>打开bitcoin:开头的URI</translation>
-    </message>
-    <message>
-        <source>Open Wallet</source>
-        <translation>打开钱包</translation>
-    </message>
-    <message>
-        <source>Open a wallet</source>
-        <translation>打开一个钱包</translation>
     </message>
     <message>
         <source>Close Wallet...</source>

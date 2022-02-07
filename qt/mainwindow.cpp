@@ -1,5 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFileDialog>
+#include <QDebug>
+#include <functional>
+#include "tron/myaccount.h"
+#include "utils.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,7 +27,11 @@ void MainWindow::createActions()
     newAct = new QAction(tr("Create Wallet..."), this);
     newAct->setShortcuts(QKeySequence::New);
     newAct->setStatusTip(tr("Create a new wallet"));
-    connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
+    connect(newAct, &QAction::triggered, this, &MainWindow::newWallet);
+    openAct = new QAction(tr("Open Wallet..."), this);
+    openAct->setShortcuts(QKeySequence::New);
+    openAct->setStatusTip(tr("Open an exist wallet"));
+    connect(openAct, &QAction::triggered, this, &MainWindow::openWallet);
     optionsQtAct = new QAction(tr("&Options..."), this);
     optionsQtAct->setShortcuts(QKeySequence::New);
     optionsQtAct->setStatusTip(tr("Modify configuration options"));
@@ -37,10 +47,10 @@ void MainWindow::createMenus()
 {
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(newAct);
+    fileMenu->addAction(openAct);
     toolsMenu = menuBar()->addMenu(tr("&Tools"));
     toolsMenu->addAction(optionsQtAct);
-    /*fileMenu->addAction(openAct);
-    fileMenu->addAction(saveAct);
+    /*fileMenu->addAction(saveAct);
     fileMenu->addAction(printAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
@@ -58,8 +68,38 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutQtAct);
 }
 
-void MainWindow::newFile()
+void MainWindow::newWallet()
 {
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save Wallet"),"", tr("Wallet Files (*.json)"));
+    unsigned char priKey[32];
+    randomBytes(priKey,32);
+    MyAccount* account=new MyAccount(priKey);
+    qDebug()<<"Generated wallet"<<account->getAddress().c_str();
+    if(!account->saveToJson(fileName.toStdString()))
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Failed to write wallet file."));
+        msgBox.exec();
+    }else{
+        //QApplication::instance()->setAccount();
+    }
+
+}
+
+void MainWindow::openWallet()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Wallet"),"", tr("Wallet Files (*.json)"));
+    MyAccount* account=MyAccount::readFromJson(fileName.toStdString());
+    if(account==nullptr)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Invalid Wallet File."));
+        msgBox.exec();
+    }else{
+        //QApplication::instance()->setAccount();
+    }
 }
 
 void MainWindow::aboutQt()

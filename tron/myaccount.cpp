@@ -32,14 +32,32 @@ MyAccount::MyAccount(const unsigned char* priKey):Account(calAddressFromPrivateK
     memcpy(this->priKey,priKey,32);
 }
 
-MyAccount MyAccount::readFromJson(const std::string& path)
+bool MyAccount::saveToJson(const std::string& path)
+{
+    QJsonDocument document;
+    QJsonObject  object;
+
+    object.insert("address", this->getAddress().c_str());
+    object.insert("priKey", bytes2hex(this->priKey,32).c_str());
+    document.setObject(object);
+    QFile fin(path.c_str());
+    if(!fin.open(QIODevice::WriteOnly))
+    {
+        return false;
+    }
+    fin.write(document.toJson());
+    fin.close();
+    return true;
+}
+
+MyAccount* MyAccount::readFromJson(const std::string& path)
 {
     QJsonParseError parseError;
     QFile fin(path.c_str());
     fin.open(QIODevice::ReadOnly);
     QByteArray contentBytes = fin.readAll();
-    QJsonDocument document = QJsonDocument::fromJson(contentBytes, &parseError);
     fin.close();
+    QJsonDocument document = QJsonDocument::fromJson(contentBytes, &parseError);
     if( !document.isNull() && (parseError.error == QJsonParseError::NoError))
     {
         QJsonObject object = document.object();
@@ -48,14 +66,17 @@ MyAccount MyAccount::readFromJson(const std::string& path)
         QJsonValue priKeyStr = object.value("priKey");
         unsigned char priKey[32];
         hex2bytes(priKey,priKeyStr.toString().toStdString());
-        MyAccount account(priKey);
-        if(account.getAddress()!=address.toString().toStdString())
+        MyAccount* account=new MyAccount(priKey);
+        if(account->getAddress()!=address.toString().toStdString())
         {
-            throw std::invalid_argument("Address and private key does not match");
+            qDebug()<<"Address and private key does not match";
+            delete account;
+            return nullptr;
         }
+        qDebug()<<"Wallet"<<account->getAddress().c_str()<<"is loaded";
         return account;
     }else{
-        throw std::invalid_argument("Invalid wallet file");
+        return nullptr;
     }
 }
 

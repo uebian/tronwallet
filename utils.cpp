@@ -1,5 +1,7 @@
 #include "utils.h"
 #include <chrono>
+#include <fcntl.h>
+#include <unistd.h>
 
 constexpr char hexmap[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -46,4 +48,11 @@ bool is_big_endian()
     } bint = {0x01020304};
 
     return bint.c[0] == 1;
+}
+
+void randomBytes(unsigned char* buf,size_t len)
+{
+    int fd = open("/dev/urandom",O_RDONLY);
+    read(fd,buf,len);
+    close(fd);
 }

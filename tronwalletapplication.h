@@ -1,14 +1,12 @@
 #ifndef TRONWALLETAPPLICATION_H
 #define TRONWALLETAPPLICATION_H
 
-#if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
-#endif
 #include <assert.h>
 #include <memory>
 #include <optional>
 
 #include <QApplication>
+#include "tron/myaccount.h"
 
 class MainWindow;
 class OptionsModel;
@@ -63,6 +61,7 @@ private:
     MainWindow *window;
     QTimer *pollShutdownTimer;
     int returnValue;
+    MyAccount* account;
 };
 
 int GuiMain(int argc, char* argv[]);

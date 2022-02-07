@@ -28,7 +28,8 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
-    void newFile();
+    void newWallet();
+    void openWallet();
     void options();
     void aboutQt();
     void openOptionsDialogWithTab(OptionsDialog::Tab tab);
@@ -44,7 +45,6 @@ private:
     QActionGroup *alignmentGroup;
     QAction *newAct;
     QAction *openAct;
-    QAction *saveAct;
     QAction *exitAct;
     QAction *optionsQtAct;
     QAction *aboutAct;
