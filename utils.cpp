@@ -8,12 +8,12 @@ constexpr char hexmap[] = {'0', '1', '2', '3', '4', '5', '6', '7',
 
 std::string bytes2hex(unsigned char *data, int len)
 {
-  std::string s(len * 2, ' ');
-  for (int i = 0; i < len; ++i) {
-    s[2 * i]     = hexmap[(data[i] & 0xF0) >> 4];
-    s[2 * i + 1] = hexmap[data[i] & 0x0F];
-  }
-  return s;
+    std::string s(len * 2, ' ');
+    for (int i = 0; i < len; ++i) {
+        s[2 * i]     = hexmap[(data[i] & 0xF0) >> 4];
+        s[2 * i + 1] = hexmap[data[i] & 0x0F];
+    }
+    return s;
 }
 
 void hex2bytes(unsigned char bytearray[],std::string hex){
@@ -55,4 +55,10 @@ void randomBytes(unsigned char* buf,size_t len)
     int fd = open("/dev/urandom",O_RDONLY);
     read(fd,buf,len);
     close(fd);
+}
+
+std::string dumpMessage(const google::protobuf::Message& msg){
+    std::string json;
+    google::protobuf::util::MessageToJsonString(msg,&json);
+    return json;
 }

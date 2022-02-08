@@ -166,22 +166,22 @@ int GuiMain(int argc, char* argv[])
     /// 1. Init custom type
     initTypes();
 
-    /// 1. Application identification
+    /// 2. Application identification
     // must be set before OptionsModel is initialized or translations are loaded,
     // as it is used to locate QSettings
     QApplication::setOrganizationName(QAPP_ORG_NAME);
     QApplication::setOrganizationDomain(QAPP_ORG_DOMAIN);
     QApplication::setApplicationName(QAPP_APP_NAME_DEFAULT);
 
-    /// 2. Initialization of translations, so that intro dialog is in user's language
+    /// 3. Initialization of translations, so that intro dialog is in user's language
     // Now that QSettings are accessible, initialize translations
     QTranslator qtTranslatorBase, qtTranslator, translatorBase, translator;
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
-    /// 3. Initialization of gRPC Client
+    /// 4. Initialization of gRPC Client
     app.initClient();
 
-    /// 4. Main GUI initialization
+    /// 5. Main GUI initialization
     // Load GUI settings from QSettings
     app.createOptionsModel(false);
 

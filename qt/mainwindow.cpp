@@ -110,12 +110,20 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
         ui->centralwidget->show();
 
     }
+    ui->labelBalance->setText(tr("Balance %1 TRX").arg(((double)act.balance)/1e6));
+    ui->pbEnergy->setMaximum(act.energy_limit);
+    ui->pbEnergy->setValue(act.energy_limit-act.energy_used);
+    ui->pbEnergy->setFormat("%v/%m");
+    ui->pbBandwidth->setMaximum(act.bandwidth_limit);
+    ui->pbBandwidth->setValue(act.bandwidth_limit-act.bandwidth_used);
+    ui->pbBandwidth->setFormat("%v/%m");
     //emit stopAccountInfoWorker();
-    firstLoad=false;
+
 }
 
 void MainWindow::loadWallet(MyAccount* account)
 {
+    emit stopAccountInfoWorker();
     firstLoad=true;
     ((TronWalletApplication*)QApplication::instance())->getTronClient()->loadWallet(account);
 
