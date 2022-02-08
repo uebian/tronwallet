@@ -10,9 +10,8 @@ public:
     Account(std::string address);
     static bool convertAndValidateAddress(std::string address,unsigned char* data);
     static std::string calculateAddress(const unsigned char* data);
-    std::string getAddress();
-    const unsigned char* getAddressInBytes();
-    void refreshInformation();
+    std::string getAddress() const;
+    const unsigned char* getAddressInBytes() const;
 
 protected:
     void setAddress(std::string address);

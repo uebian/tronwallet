@@ -31,22 +31,9 @@ void Account::setAddress(std::string address)
     }
 }
 
-std::string Account::getAddress()
+std::string Account::getAddress() const
 {
     return Account::calculateAddress(address);
-}
-
-void Account::refreshInformation()
-{
-    std::shared_ptr<grpc::Channel> channel=grpc::CreateChannel("grpc.shasta.trongrid.io:50051", grpc::InsecureChannelCredentials());
-    auto stub=protocol::Wallet::NewStub(channel);
-    protocol::Account account,account1;
-
-    account.set_address(address,21);
-    grpc::ClientContext ctx;
-    grpc::Status status= stub->GetAccount(&ctx,account,&account1);
-    std::cout<<status.error_message()<<std::endl;
-    std::cout<<account1.balance()<<std::endl;
 }
 
 std::string Account::calculateAddress(const unsigned char* address)
@@ -82,7 +69,7 @@ bool Account::convertAndValidateAddress(std::string address,unsigned char* data)
     }
 }
 
-const unsigned char* Account::getAddressInBytes()
+const unsigned char* Account::getAddressInBytes() const
 {
     return address;
 }

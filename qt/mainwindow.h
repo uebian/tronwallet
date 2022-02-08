@@ -5,9 +5,12 @@
 #include <QActionGroup>
 #include <QLabel>
 #include <QMessageBox>
+#include <QThread>
 #include "qt/optionsdialog.h"
 #include "qt/guiutil.h"
 #include "tron/myaccount.h"
+#include "qt/worker/accountinfoworker.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,11 +38,13 @@ private slots:
     void options();
     void aboutQt();
     void openOptionsDialogWithTab(OptionsDialog::Tab tab);
+    void refreshAccuontInfo(const AccountInfo act);
 
 
 private:
     OptionsModel* optionsModel = nullptr;
     Ui::MainWindow *ui;
+    QMessageBox* loadingDlg;
     QMenu *fileMenu;
     QMenu *toolsMenu;
     QMenu *formatMenu;
@@ -53,8 +58,13 @@ private:
     QAction *aboutQtAct;
     QLabel *infoLabel;
     QLabel* addressBar;
+    AccountInfoWorker* accountInfoWorker;
+    QThread* accountInfoWorkerThread;
+    bool firstLoad=true;
 Q_SIGNALS:
     void quitRequested();
+    void startAccountInfoWorker();
+    void stopAccountInfoWorker();
 
 };
 #endif // MAINWINDOW_H

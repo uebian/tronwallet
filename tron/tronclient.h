@@ -5,15 +5,18 @@
 #include <grpcpp/grpcpp.h>
 #include <string>
 #include "tron/block.h"
+#include "tron/accountinfo.h"
 #include "myaccount.h"
 
 class TronClient
 {
 public:
     TronClient(const std::string& target);
-    Block GetNowBlock();
+    ~TronClient();
+    Block GetNowBlock() const;
     void loadWallet(MyAccount* account);
-    void getAccount();
+    const Account* getAccount();
+    const AccountInfo fetchAccountInfo(const Account* act);
 private:
     std::shared_ptr<grpc::Channel> channel;
     MyAccount* account;

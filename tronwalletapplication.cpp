@@ -29,6 +29,7 @@
 #include "qt/optionsmodel.h"
 #include "utils.h"
 #include "tron/myaccount.h"
+#include "tron/accountinfo.h"
 #include "tron/transfercontracttransaction.h"
 
 static QString GetLangTerritory()
@@ -151,11 +152,19 @@ void runTestCode()
     std::cout<<bytes2hex(t,transaction.getRawDataLength())<<std::endl;*/
 }
 
+void initTypes()
+{
+    qRegisterMetaType<AccountInfo>("AccountInfo");
+}
+
 int GuiMain(int argc, char* argv[])
 {
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     TronWalletApplication app;
+
+    /// 1. Init custom type
+    initTypes();
 
     /// 1. Application identification
     // must be set before OptionsModel is initialized or translations are loaded,

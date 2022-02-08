@@ -25,6 +25,7 @@ SOURCES += \
     qt/optionsdialog.cpp \
     qt/qvaluecombobox.cpp \
     qt/tronaddressentryvalidator.cpp \
+    qt/worker/accountinfoworker.cpp \
     tron/account.cpp \
     tron/block.cpp \
     tron/myaccount.cpp \
@@ -66,7 +67,9 @@ HEADERS += \
     qt/optionsdialog.h \
     qt/qvaluecombobox.h \
     qt/tronaddressentryvalidator.h \
+    qt/worker/accountinfoworker.h \
     tron/account.h \
+    tron/accountinfo.h \
     tron/block.h \
     tron/myaccount.h \
     tron/transaction.h \

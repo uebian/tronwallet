@@ -18,11 +18,11 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tabInfo">
        <attribute name="title">
-        <string>Tab 1</string>
+        <string>Wallet Infomation</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -34,15 +34,29 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tabPay">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>Pay</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QPushButton" name="pushButton">
           <property name="text">
            <string>Tab2</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabGetPaid">
+       <attribute name="title">
+        <string>Get paid</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Tab3</string>
           </property>
          </widget>
         </item>
