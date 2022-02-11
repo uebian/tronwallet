@@ -28,6 +28,7 @@ public:
 private:
     void createActions();
     void createMenus();
+    void initGetPaid();
     void loadWallet(MyAccount* account);
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -39,6 +40,7 @@ private slots:
     void aboutQt();
     void openOptionsDialogWithTab(OptionsDialog::Tab tab);
     void refreshAccuontInfo(const AccountInfo act);
+    void copyAddress();
 
 
 private:

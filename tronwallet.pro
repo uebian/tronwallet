@@ -93,7 +93,7 @@ TRANSLATIONS += \
     qt/translations/tronwallet_zh_CN.ts
 CONFIG += lrelease
 CONFIG+=link_pkgconfig
-PKGCONFIG+=grpc++ protobuf libsecp256k1
+PKGCONFIG+=grpc++ protobuf libsecp256k1 libqrencode
 #CONFIG += embed_translations
 
 # Default rules for deployment.

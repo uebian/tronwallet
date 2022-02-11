@@ -3,11 +3,14 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QTimer>
+#include <QImage>
 #include <QProgressDialog>
+#include <QClipboard>
 #include <functional>
 #include "tron/myaccount.h"
 #include "tronwalletapplication.h"
 #include "utils.h"
+#include <qrencode.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -29,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(accountInfoWorker, &AccountInfoWorker::resultReady, this, &MainWindow::refreshAccuontInfo);
     connect(this, &MainWindow::startAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::startWorker);
     connect(this, &MainWindow::stopAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::stopWorker);
+
+    connect(ui->btnGetPaidCopyAddr, SIGNAL(clicked()), this, SLOT(copyAddress()));
     accountInfoWorkerThread->start();
     loadingDlg=new QMessageBox();
     loadingDlg->setWindowModality(Qt::WindowModal);
@@ -41,6 +46,34 @@ MainWindow::~MainWindow()
     delete ui;
     delete addressBar;
     delete accountInfoWorker;
+}
+
+void MainWindow::copyAddress(){
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    clipboard->setText(((TronWalletApplication*)QApplication::instance())->getTronClient()->getAccount()->getAddress().c_str());
+}
+
+void MainWindow::initGetPaid()
+{
+    std::string address=((TronWalletApplication*)QApplication::instance())->getTronClient()->getAccount()->getAddress();
+    ui->labelGetPaidAddress->setText(tr("Send coins to %1").arg(address.c_str()));
+    QRcode *qr = QRcode_encodeString(address.c_str(), 1, QR_ECLEVEL_L, QR_MODE_8, 0);
+    QImage QrCode_Image=QImage(qr->width,qr->width,QImage::Format_RGB888);
+
+    for (int y = 0; y < qr->width; y++) {
+        const int yy=y*qr->width;
+        for (int x = 0; x < qr->width; x++) {
+            const int xx=yy+x;
+            if(qr->data[xx]&0x01)
+                QrCode_Image.setPixel(x,y,qRgb(0,0,0));
+            else
+                QrCode_Image.setPixel(x,y,qRgb(255,255,255));
+        }
+    }
+
+    QrCode_Image=QrCode_Image.scaled(ui->imgGetPaid->width(),ui->imgGetPaid->height(),
+                    Qt::KeepAspectRatio);
+    ui->imgGetPaid->setPixmap(QPixmap::fromImage(QrCode_Image));
 }
 
 void MainWindow::createActions()
@@ -133,6 +166,7 @@ void MainWindow::loadWallet(MyAccount* account)
     loadingDlg->show();
 
     emit startAccountInfoWorker();
+    initGetPaid();
 }
 
 void MainWindow::newWallet()
