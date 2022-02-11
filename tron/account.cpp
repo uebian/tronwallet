@@ -18,12 +18,12 @@ Account::Account(unsigned char* address)
     memcpy(this->address,address,21);
 }
 
-Account::Account(std::string address)
+Account::Account(const std::string& address)
 {
     setAddress(address);
 }
 
-void Account::setAddress(std::string address)
+void Account::setAddress(const std::string& address)
 {
     if(!Account::convertAndValidateAddress(address,this->address))
     {
@@ -52,7 +52,7 @@ std::string Account::calculateAddress(const unsigned char* address)
     return addressRet;
 }
 
-bool Account::convertAndValidateAddress(std::string address,unsigned char* data)
+bool Account::convertAndValidateAddress(const std::string& address,unsigned char* data)
 {
     unsigned char buf[25];
     unsigned char hash0[32];

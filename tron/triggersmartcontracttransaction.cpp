@@ -1,6 +1,6 @@
-#include "triggersmarttransfercontracttransaction.h" 
+#include "triggersmartcontracttransaction.h"
 
-TriggerSmartTransferContractTransaction::TriggerSmartTransferContractTransaction(Account owner,Account to,long long amount)
+TriggerSmartContractTransaction::TriggerSmartContractTransaction(Account owner,Account to,long long amount)
 {
     tc.set_owner_address(owner.getAddressInBytes(),21);
     tc.set_to_address(to.getAddressInBytes(),21);
@@ -12,6 +12,6 @@ TriggerSmartTransferContractTransaction::TriggerSmartTransferContractTransaction
     otc->set_allocated_parameter(any);
 }
 
-TriggerSmartTransferContractTransaction::~TriggerSmartTransferContractTransaction()
+TriggerSmartContractTransaction::~TriggerSmartContractTransaction()
 {
 }

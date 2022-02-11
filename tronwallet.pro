@@ -27,9 +27,13 @@ SOURCES += \
     qt/tronaddressentryvalidator.cpp \
     qt/worker/accountinfoworker.cpp \
     tron/account.cpp \
+    tron/asset.cpp \
+    tron/trc10asset.cpp \
+    tron/trc20asset.cpp \
     tron/block.cpp \
     tron/myaccount.cpp \
     tron/transaction.cpp \
+    tron/triggersmartcontracttransaction.cpp \
     tron/transfercontracttransaction.cpp \
     tron/tronclient.cpp \
     tronwalletapplication.cpp \

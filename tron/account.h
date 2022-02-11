@@ -7,14 +7,14 @@ class Account
 {
 public:
     Account(unsigned char* address);
-    Account(std::string address);
-    static bool convertAndValidateAddress(std::string address,unsigned char* data);
+    Account(const std::string& address);
+    static bool convertAndValidateAddress(const std::string& address,unsigned char* data);
     static std::string calculateAddress(const unsigned char* data);
     std::string getAddress() const;
     const unsigned char* getAddressInBytes() const;
 
 protected:
-    void setAddress(std::string address);
+    void setAddress(const std::string& address);
 private:
     unsigned char address[21];
 };

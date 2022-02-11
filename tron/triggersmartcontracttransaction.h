@@ -7,14 +7,14 @@
 
 #include "account.h"
 
-class TriggerSmartTransferContractTransaction : public Transaction
+class TriggerSmartContractTransaction : public Transaction
 {
 	private:
 		protocol::TransferContract tc;
 
 	public:
-		TriggerSmartTransferContractTransaction(Account owner, Account to, long long amount);
-		~TriggerSmartTransferContractTransaction();
+        TriggerSmartContractTransaction(Account owner, Account to, long long amount);
+        ~TriggerSmartContractTransaction();
 };
 
 #endif
