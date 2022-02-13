@@ -31,7 +31,7 @@ Block TronClient::GetNowBlock() const
     return ret;
 }
 
-const Account* TronClient::getAccount()
+const MyAccount* TronClient::getAccount() const
 {
     return this->account;
 }

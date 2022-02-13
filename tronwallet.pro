@@ -28,6 +28,9 @@ SOURCES += \
     qt/worker/accountinfoworker.cpp \
     tron/account.cpp \
     tron/asset.cpp \
+    tron/smartcontractcallbuilder.cpp \
+    tron/smartcontracttype.cpp \
+    tron/smartcontractvalue.cpp \
     tron/trc10asset.cpp \
     tron/trc20asset.cpp \
     tron/block.cpp \
@@ -76,6 +79,9 @@ HEADERS += \
     tron/accountinfo.h \
     tron/block.h \
     tron/myaccount.h \
+    tron/smartcontractcallbuilder.h \
+    tron/smartcontracttype.h \
+    tron/smartcontractvalue.h \
     tron/transaction.h \
     tron/transfercontracttransaction.h \
     tron/tronclient.h \

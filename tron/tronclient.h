@@ -15,7 +15,7 @@ public:
     ~TronClient();
     Block GetNowBlock() const;
     void loadWallet(MyAccount* account);
-    const Account* getAccount();
+    const MyAccount* getAccount() const;
     const AccountInfo fetchAccountInfo(const Account* act);
 private:
     std::shared_ptr<grpc::Channel> channel;

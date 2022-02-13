@@ -8,6 +8,7 @@
 #include <QClipboard>
 #include <functional>
 #include "tron/myaccount.h"
+#include "tron/smartcontractcallbuilder.h"
 #include "tronwalletapplication.h"
 #include "utils.h"
 #include <qrencode.h>
@@ -154,6 +155,24 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
 
 }
 
+void runTestCode(){
+    const MyAccount* account=((TronWalletApplication*)QApplication::instance())->getTronClient()->getAccount();
+    Account to("TEERVrdYihJbeqY7KZUskh8qbp3WwfmQvC");
+    /*TransferContractTransaction transaction(account,to,1000);
+    transaction.setBlockInfo(tronClient->GetNowBlock());
+    account.signTransaction(transaction);
+    unsigned char* t=new unsigned char[transaction.getRawDataLength()];
+    transaction.getRawData(t);
+    std::cout<<bytes2hex(t,transaction.getRawDataLength())<<std::endl;*/
+
+    SmartContractCallBuilder builder;
+    builder.setFuncSign("baz(uint32,bool)");
+    unsigned char* t=new unsigned char[builder.getLength()];
+    builder.build(t);
+    std::cout<<bytes2hex(t,builder.getLength())<<std::endl;
+
+}
+
 void MainWindow::loadWallet(MyAccount* account)
 {
     emit stopAccountInfoWorker();
@@ -167,6 +186,7 @@ void MainWindow::loadWallet(MyAccount* account)
 
     emit startAccountInfoWorker();
     initGetPaid();
+    runTestCode();
 }
 
 void MainWindow::newWallet()

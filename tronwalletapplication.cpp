@@ -138,20 +138,6 @@ TronClient* TronWalletApplication::getTronClient(){
     return this->tronClient;
 }
 
-void runTestCode()
-{
-    /*unsigned char priKey[64];
-    hex2bytes(priKey,"PRIVATEKEY");
-    MyAccount account(priKey);
-    Account to("TEERVrdYihJbeqY7KZUskh8qbp3WwfmQvC");
-    TransferContractTransaction transaction(account,to,1000);
-    transaction.setBlockInfo(tronClient->GetNowBlock());
-    account.signTransaction(transaction);
-    unsigned char* t=new unsigned char[transaction.getRawDataLength()];
-    transaction.getRawData(t);
-    std::cout<<bytes2hex(t,transaction.getRawDataLength())<<std::endl;*/
-}
-
 void initTypes()
 {
     qRegisterMetaType<AccountInfo>("AccountInfo");
@@ -184,8 +170,6 @@ int GuiMain(int argc, char* argv[])
     /// 5. Main GUI initialization
     // Load GUI settings from QSettings
     app.createOptionsModel(false);
-
-    runTestCode();
 
     app.createWindow();
     qInfo() << __func__ << ": Application started.";
