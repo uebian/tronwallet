@@ -19,7 +19,7 @@ TronClient::~TronClient()
 Block TronClient::GetNowBlock() const
 {
     protocol::BlockExtention block;
-    auto stub=protocol::WalletSolidity::NewStub(channel);
+    auto stub=protocol::Wallet::NewStub(channel);
     protocol::EmptyMessage msg;
     grpc::ClientContext ctx;
     auto status=stub->GetNowBlock2(&ctx,msg,&block);
@@ -78,4 +78,15 @@ void TronClient::loadWallet(MyAccount* account)
     qDebug()<<__FILE__<<"Wallet"<<account->getAddress().c_str()<<"is loaded";
     //Debug
     //this->getAccount();
+}
+
+TransactionResult TronClient::broadcastTransaction(const Transaction* transaction) const{
+    auto stub=protocol::Wallet::NewStub(channel);
+    grpc::ClientContext ctx;
+    protocol::Return ret;
+    stub->BroadcastTransaction(&ctx,*transaction->getPbTransaction(),&ret);
+    TransactionResult res;
+    res.code=ret.code();
+    res.message=ret.message();
+    return res;
 }

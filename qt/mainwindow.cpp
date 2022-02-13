@@ -7,8 +7,8 @@
 #include <QProgressDialog>
 #include <QClipboard>
 #include <functional>
-#include "tron/myaccount.h"
 #include "tron/smartcontractcallbuilder.h"
+#include "tron/transfercontracttransaction.h"
 #include "tronwalletapplication.h"
 #include "qt/tronaddressvalidator.h"
 #include "utils.h"
@@ -27,16 +27,22 @@ MainWindow::MainWindow(QWidget *parent)
     statusBar()->addWidget(addressBar);
     //timer=new QTimer(this);
     accountInfoWorker=new AccountInfoWorker(((TronWalletApplication*)QApplication::instance())->getTronClient());
+    transactionBroadcastWorker=new TransactionBroadcastWorker(((TronWalletApplication*)QApplication::instance())->getTronClient());
     accountInfoWorkerThread=new QThread();
+    transactionBroadcastWorkerThread=new QThread();
     accountInfoWorker->moveToThread(accountInfoWorkerThread);
     //connect(timer, SIGNAL(timeout()), this, SLOT(accountInfoWorker->fetchInfomation()));
 
     connect(accountInfoWorker, &AccountInfoWorker::resultReady, this, &MainWindow::refreshAccuontInfo);
+    connect(transactionBroadcastWorker, &TransactionBroadcastWorker::transactionResult, this, &MainWindow::transactionResult);
     connect(this, &MainWindow::startAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::startWorker);
     connect(this, &MainWindow::stopAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::stopWorker);
+    connect(this, &MainWindow::startBroadcastTransaction, transactionBroadcastWorker, &TransactionBroadcastWorker::broadcastTransaction);
 
     connect(ui->btnGetPaidCopyAddr, SIGNAL(clicked()), this, SLOT(copyAddress()));
+    connect(ui->btnPay, SIGNAL(clicked()), this, SLOT(pay()));
     accountInfoWorkerThread->start();
+    transactionBroadcastWorkerThread->start();
     loadingDlg=new QMessageBox();
     loadingDlg->setWindowModality(Qt::WindowModal);
     loadingDlg->setText(tr("Loading..."));
@@ -55,6 +61,15 @@ MainWindow::~MainWindow()
 void MainWindow::copyAddress(){
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(((TronWalletApplication*)QApplication::instance())->getTronClient()->getAccount()->getAddress().c_str());
+}
+
+void MainWindow::pay(){
+    const TronClient* tronClient=((TronWalletApplication*)QApplication::instance())->getTronClient();
+    const MyAccount* account=tronClient->getAccount();
+    TransferContractTransaction transaction(account->getAddress(),ui->editPayAddress->text().toStdString(),1000);
+    transaction.setBlockInfo(tronClient->GetNowBlock());
+    account->signTransaction(transaction);
+    broadcastTransaction(&transaction);
 }
 
 void MainWindow::initGetPaid()
@@ -126,6 +141,20 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutQtAct);
 }
 
+void MainWindow::transactionResult(const TransactionResult act)
+{
+    loadingDlg->done(0);
+    QMessageBox msgBox;
+    if(act.code==0)
+    {
+        msgBox.setText(tr("Transaction sent successfully."));
+    }else{
+        msgBox.setText(tr("Transaction failed, error code: %1, error message: %2").arg(act.code).arg(act.message.c_str()));
+    }
+    msgBox.exec();
+}
+
+
 void MainWindow::refreshAccuontInfo(const AccountInfo act)
 {
     qDebug()<<"Account information loaded.";
@@ -146,6 +175,11 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
         msgBox.exec();
         ui->centralwidget->show();
 
+    }
+    if(act.activate)
+    {
+        ui->tabWidget->setTabEnabled(0,true);
+        ui->tabWidget->setTabEnabled(1,true);
     }
     ui->labelBalance->setText(tr("Balance %1 TRX").arg(((double)act.balance)/1e6));
     ui->pbEnergy->setMaximum(act.energy_limit);
@@ -257,3 +291,9 @@ void MainWindow::setOptionsModel(OptionsModel *optionsModel)
     this->optionsModel = optionsModel;
 }
 
+void MainWindow::broadcastTransaction(const Transaction* transaction)
+{
+    loadingDlg->show();
+    emit startBroadcastTransaction(transaction);
+
+}

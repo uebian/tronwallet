@@ -33,7 +33,7 @@ size_t Transaction::getRawDataLength() const
     return pb_transaction->ByteSizeLong();
 }
 
-void Transaction::sign(unsigned char* priKey)
+void Transaction::sign(const unsigned char* priKey)
 {
     size_t raw_data_length=pb_transaction->raw_data().ByteSizeLong();
     unsigned char* rawData=new unsigned char[raw_data_length];
@@ -56,4 +56,16 @@ void Transaction::setBlockInfo(const Block& block)
     this->raw->set_ref_block_num(blockHeight);
     this->raw->set_ref_block_bytes(blockID+6,2);
     this->raw->set_expiration(currentTimeMillis()+60*60*1000);
+}
+
+const protocol::Transaction* Transaction::getPbTransaction() const
+{
+    return pb_transaction;
+}
+
+Transaction::Transaction(const Transaction& transaction)
+{
+    this->pb_transaction=new protocol::Transaction(*transaction.getPbTransaction());
+    this->raw=new protocol::Transaction_raw(*transaction.raw);
+    pb_transaction->set_allocated_raw_data(raw);
 }

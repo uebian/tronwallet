@@ -8,6 +8,11 @@
 #include "tron/accountinfo.h"
 #include "myaccount.h"
 
+struct TransactionResult{
+    int code;
+    std::string message;
+};
+
 class TronClient
 {
 public:
@@ -17,6 +22,7 @@ public:
     void loadWallet(MyAccount* account);
     const MyAccount* getAccount() const;
     const AccountInfo fetchAccountInfo(const Account* act);
+    TransactionResult broadcastTransaction(const Transaction* transaction) const;
 private:
     std::shared_ptr<grpc::Channel> channel;
     MyAccount* account;

@@ -32,7 +32,7 @@ MyAccount::MyAccount(const unsigned char* priKey):Account(calAddressFromPrivateK
     memcpy(this->priKey,priKey,32);
 }
 
-bool MyAccount::saveToJson(const std::string& path)
+bool MyAccount::saveToJson(const std::string& path) const
 {
     QJsonDocument document;
     QJsonObject  object;
@@ -79,7 +79,7 @@ MyAccount* MyAccount::readFromJson(const std::string& path)
     }
 }
 
-void MyAccount::signTransaction(Transaction& transaction)
+void MyAccount::signTransaction(Transaction& transaction) const
 {
     transaction.sign(this->priKey);
 }

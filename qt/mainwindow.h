@@ -10,6 +10,7 @@
 #include "qt/guiutil.h"
 #include "tron/myaccount.h"
 #include "qt/worker/accountinfoworker.h"
+#include "qt/worker/transactionbroadcastworker.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -30,6 +31,7 @@ private:
     void createMenus();
     void initGetPaid();
     void loadWallet(MyAccount* account);
+    void broadcastTransaction(const Transaction* transaction);
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -40,7 +42,9 @@ private slots:
     void aboutQt();
     void openOptionsDialogWithTab(OptionsDialog::Tab tab);
     void refreshAccuontInfo(const AccountInfo act);
+    void transactionResult(const TransactionResult ret);
     void copyAddress();
+    void pay();
 
 
 private:
@@ -61,12 +65,15 @@ private:
     QLabel *infoLabel;
     QLabel* addressBar;
     AccountInfoWorker* accountInfoWorker;
+    TransactionBroadcastWorker* transactionBroadcastWorker;
     QThread* accountInfoWorkerThread;
+    QThread* transactionBroadcastWorkerThread;
     bool firstLoad=true;
 Q_SIGNALS:
     void quitRequested();
     void startAccountInfoWorker();
     void stopAccountInfoWorker();
+    void startBroadcastTransaction(const Transaction* transaction);
 
 };
 #endif // MAINWINDOW_H

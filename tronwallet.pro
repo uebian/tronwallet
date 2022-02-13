@@ -26,6 +26,7 @@ SOURCES += \
     qt/qvaluecombobox.cpp \
     qt/tronaddressvalidator.cpp \
     qt/worker/accountinfoworker.cpp \
+    qt/worker/transactionbroadcastworker.cpp \
     tron/account.cpp \
     tron/asset.cpp \
     tron/smartcontractcallbuilder.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     qt/qvaluecombobox.h \
     qt/tronaddressvalidator.h \
     qt/worker/accountinfoworker.h \
+    qt/worker/transactionbroadcastworker.h \
     tron/account.h \
     tron/accountinfo.h \
     tron/block.h \

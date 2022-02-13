@@ -13,11 +13,13 @@ protected:
 public:
     Transaction();
     ~Transaction();
+    Transaction(const Transaction& transaction);
     void getRawData(unsigned char* rawData) const;
     size_t getRawDataLength() const;
     void setBlockInfo(const Block& block);
     void setData(const unsigned char* data,int length);
-    void sign(unsigned char* priKey);
+    void sign(const unsigned char* priKey);
+    const protocol::Transaction* getPbTransaction() const;
 };
 
 #endif // TRANSACTION_H
