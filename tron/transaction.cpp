@@ -24,6 +24,9 @@ void Transaction::getRawData(unsigned char* rawData) const
     pb_transaction->SerializeToArray(rawData,size);
 }
 
+void Transaction::setData(const unsigned char *data,int length){
+    this->raw->set_data(data,length);
+}
 
 size_t Transaction::getRawDataLength() const
 {

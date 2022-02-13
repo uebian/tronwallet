@@ -16,6 +16,7 @@ public:
     void getRawData(unsigned char* rawData) const;
     size_t getRawDataLength() const;
     void setBlockInfo(const Block& block);
+    void setData(const unsigned char* data,int length);
     void sign(unsigned char* priKey);
 };
 

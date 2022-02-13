@@ -10,6 +10,7 @@
 #include "tron/myaccount.h"
 #include "tron/smartcontractcallbuilder.h"
 #include "tronwalletapplication.h"
+#include "qt/tronaddressvalidator.h"
 #include "utils.h"
 #include <qrencode.h>
 
@@ -40,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
     loadingDlg->setWindowModality(Qt::WindowModal);
     loadingDlg->setText(tr("Loading..."));
     loadingDlg->setStandardButtons(0);
+
+    ui->editPayAddress->setCheckValidator(new TronAddressValidator(parent));
 }
 
 MainWindow::~MainWindow()
