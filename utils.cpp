@@ -62,3 +62,16 @@ std::string dumpMessage(const google::protobuf::Message& msg){
     google::protobuf::util::MessageToJsonString(msg,&json);
     return json;
 }
+
+boost::multiprecision::uint256_t getUint256FromBuffer(const unsigned char* buf)
+{
+    unsigned char tBuf[32];
+    memcpy(tBuf,buf,32);
+    if(!is_big_endian())
+    {
+        std::reverse(tBuf, tBuf+32);
+    }
+    boost::multiprecision::uint256_t retU = -1;
+    memcpy(&retU, tBuf, 32);
+    return retU;
+}

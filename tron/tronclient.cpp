@@ -80,6 +80,28 @@ void TronClient::loadWallet(MyAccount* account)
     //this->getAccount();
 }
 
+std::vector<std::string> TronClient::callConstantContract(const Account *owner, const Account *contract_address, const unsigned char *data, int dataLength) const{
+    auto stub=protocol::Wallet::NewStub(channel);
+    grpc::ClientContext ctx;
+    protocol::TriggerSmartContract tsc;
+    protocol::TransactionExtention retT;
+    tsc.set_owner_address(owner->getAddressInBytes(),21);
+    tsc.set_contract_address(contract_address->getAddressInBytes(),21);
+    tsc.set_data(data,dataLength);
+    auto status=stub->TriggerConstantContract(&ctx,tsc,&retT);
+    if(!status.ok())
+    {
+        throw std::runtime_error(status.error_message());
+    }
+    int len=retT.constant_result_size();
+    std::vector<std::string> ret(len);
+    for(int i=0;i<len;i++)
+    {
+        ret[i]=retT.constant_result(i);
+    }
+    return ret;
+}
+
 TransactionResult TronClient::broadcastTransaction(const Transaction* transaction) const{
     auto stub=protocol::Wallet::NewStub(channel);
     grpc::ClientContext ctx;

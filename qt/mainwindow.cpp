@@ -9,6 +9,7 @@
 #include <functional>
 #include "tron/smartcontractcallbuilder.h"
 #include "tron/transfercontracttransaction.h"
+#include "tron/trc20asset.h"
 #include "tronwalletapplication.h"
 #include "qt/tronaddressvalidator.h"
 #include "utils.h"
@@ -193,7 +194,8 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
 }
 
 void runTestCode(){
-    const MyAccount* account=((TronWalletApplication*)QApplication::instance())->getTronClient()->getAccount();
+    const TronClient* client=((TronWalletApplication*)QApplication::instance())->getTronClient();
+    const MyAccount* account=client->getAccount();
     Account to("TEERVrdYihJbeqY7KZUskh8qbp3WwfmQvC");
     /*TransferContractTransaction transaction(account,to,1000);
     transaction.setBlockInfo(tronClient->GetNowBlock());
@@ -201,13 +203,9 @@ void runTestCode(){
     unsigned char* t=new unsigned char[transaction.getRawDataLength()];
     transaction.getRawData(t);
     std::cout<<bytes2hex(t,transaction.getRawDataLength())<<std::endl;*/
-
-    SmartContractCallBuilder builder;
-    builder.setFuncSign("baz(uint32,bool)");
-    unsigned char* t=new unsigned char[builder.getLength()];
-    builder.build(t);
-    std::cout<<bytes2hex(t,builder.getLength())<<std::endl;
-
+    Account contract("TQKucgWL1cbAtW8vxKbwRgThw3FPmrok2t");
+    Trc20Asset asset=Trc20Asset::loadTrc20Contract(contract,client);
+    std::cout<<"Asset Name:"<<asset.getName()<<std::endl;
 }
 
 void MainWindow::loadWallet(MyAccount* account)

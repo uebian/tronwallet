@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <string>
 #include <google/protobuf/util/json_util.h>
+#include <boost/multiprecision/cpp_int.hpp>
+
 
 
 #ifndef UTILS_H
@@ -14,5 +16,7 @@ long currentTimeMillis();
 bool is_big_endian();
 void randomBytes(unsigned char* buf,size_t len);
 std::string dumpMessage(const google::protobuf::Message& msg);
+boost::multiprecision::uint256_t getUint256FromBuffer(const unsigned char* buf);
+
 
 #endif // UTILS_H

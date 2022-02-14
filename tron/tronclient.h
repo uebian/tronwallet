@@ -23,6 +23,7 @@ public:
     const MyAccount* getAccount() const;
     const AccountInfo fetchAccountInfo(const Account* act);
     TransactionResult broadcastTransaction(const Transaction* transaction) const;
+    std::vector<std::string> callConstantContract(const Account* owner,const Account* contract_address,const unsigned char* data,int dataLength) const;
 private:
     std::shared_ptr<grpc::Channel> channel;
     MyAccount* account;

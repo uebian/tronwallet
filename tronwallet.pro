@@ -28,10 +28,10 @@ SOURCES += \
     qt/worker/accountinfoworker.cpp \
     qt/worker/transactionbroadcastworker.cpp \
     tron/account.cpp \
-    tron/asset.cpp \
     tron/smartcontractcallbuilder.cpp \
     tron/smartcontracttype.cpp \
     tron/smartcontractvalue.cpp \
+    tron/asset.cpp \
     tron/trc10asset.cpp \
     tron/trc20asset.cpp \
     tron/block.cpp \

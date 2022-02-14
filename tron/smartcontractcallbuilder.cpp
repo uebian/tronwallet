@@ -4,7 +4,6 @@
 
 SmartContractCallBuilder::SmartContractCallBuilder()
 {
-
 }
 
 void SmartContractCallBuilder::setFuncSign(const std::string& funcSign)

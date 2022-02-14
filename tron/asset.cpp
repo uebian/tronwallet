@@ -13,3 +13,7 @@ Asset::Asset(const std::string & asset_name, const std::string & asset_abbreviat
 Asset::~Asset()
 {
 }
+
+const std::string& Asset::getName() const{
+    return this->asset_name;
+}

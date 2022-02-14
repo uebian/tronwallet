@@ -13,7 +13,7 @@ class Asset
 		long long asset_precision;
 	public:
 		Asset(const std::string & asset_name, const std::string & asset_abbreviation, long long asset_amount, long long asset_precision);
-		Asset();
+        const std::string& getName() const;
 		~Asset();
 };
 
