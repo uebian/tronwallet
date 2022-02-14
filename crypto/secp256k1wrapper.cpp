@@ -2,7 +2,6 @@
 #include <stdexcept>
 #include <cstring>
 #include "sha256.h"
-#include "sm3.h"
 #include <iostream>
 #include "utils.h"
 

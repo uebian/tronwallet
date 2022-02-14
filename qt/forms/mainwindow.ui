@@ -71,6 +71,13 @@
         <item>
          <widget class="QListView" name="listView"/>
         </item>
+        <item>
+         <widget class="QPushButton" name="btnAddCurrency">
+          <property name="text">
+           <string>Add Currency</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tabPay">
@@ -95,6 +102,20 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
+           <widget class="QLabel" name="labelAmount">
+            <property name="text">
+             <string>Amount:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_2"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
            <widget class="QLabel" name="labelNote">
             <property name="text">
              <string>Note:</string>
@@ -103,6 +124,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="lineEdit_2"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboPayCurrency"/>
           </item>
          </layout>
         </item>

@@ -19,6 +19,7 @@ public:
     void setBlockInfo(const Block& block);
     void setData(const unsigned char* data,int length);
     void sign(const unsigned char* priKey);
+    void getTxHash(unsigned char* hash) const;
     const protocol::Transaction* getPbTransaction() const;
 };
 

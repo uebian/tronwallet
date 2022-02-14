@@ -3,6 +3,8 @@
 #include "crypto/secp256k1wrapper.h"
 #include "crypto/sm3.h"
 #include <google/protobuf/util/json_util.h>
+#include "crypto/sha3.h"
+#include "crypto/sha256.h"
 
 Transaction::Transaction()
 {
@@ -38,8 +40,6 @@ void Transaction::sign(const unsigned char* priKey)
     size_t raw_data_length=pb_transaction->raw_data().ByteSizeLong();
     unsigned char* rawData=new unsigned char[raw_data_length];
     pb_transaction->raw_data().SerializeToArray(rawData,raw_data_length);
-    unsigned char hash[64];
-    SM3::Hash(rawData,raw_data_length,hash);
     //sign
     unsigned char signature[65];
     Secp256k1 ctx;
@@ -68,4 +68,12 @@ Transaction::Transaction(const Transaction& transaction)
     this->pb_transaction=new protocol::Transaction(*transaction.getPbTransaction());
     this->raw=new protocol::Transaction_raw(*transaction.raw);
     pb_transaction->set_allocated_raw_data(raw);
+}
+
+
+void Transaction::getTxHash(unsigned char *hash) const{
+    size_t raw_data_length=pb_transaction->raw_data().ByteSizeLong();
+    unsigned char* rawData=new unsigned char[raw_data_length];
+    pb_transaction->raw_data().SerializeToArray(rawData,raw_data_length);
+    sha256(rawData,raw_data_length,hash);
 }
