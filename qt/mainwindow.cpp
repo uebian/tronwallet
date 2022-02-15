@@ -195,17 +195,9 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
 
 void runTestCode(){
     const TronClient* client=((TronWalletApplication*)QApplication::instance())->getTronClient();
-    const MyAccount* account=client->getAccount();
-    Account to("TEERVrdYihJbeqY7KZUskh8qbp3WwfmQvC");
-    /*TransferContractTransaction transaction(account,to,1000);
-    transaction.setBlockInfo(tronClient->GetNowBlock());
-    account.signTransaction(transaction);
-    unsigned char* t=new unsigned char[transaction.getRawDataLength()];
-    transaction.getRawData(t);
-    std::cout<<bytes2hex(t,transaction.getRawDataLength())<<std::endl;*/
     Account contract("TQKucgWL1cbAtW8vxKbwRgThw3FPmrok2t");
     Trc20Asset asset=Trc20Asset::loadTrc20Contract(contract,client);
-    std::cout<<"Asset Name:"<<asset.getName()<<std::endl;
+    std::cout<<"Asset Name:"<<asset.getName()<<",Asset symbol:"<<asset.getSymbol()<<",Asset decimals:"<<asset.getDecimals()<<std::endl;
 }
 
 void MainWindow::loadWallet(MyAccount* account)

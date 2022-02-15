@@ -9,7 +9,7 @@ class Trc10Asset : public Asset
 {
 	private:
 	public:
-		Trc10Asset(const std::string & asset_name, const std::string & asset_abbreviation, long long asset_amount, long long asset_precision);
+        Trc10Asset(const std::string & asset_name, const std::string & asset_abbreviation, long long asset_precision);
 		~Trc10Asset();
 };
 
