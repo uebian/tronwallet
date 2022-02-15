@@ -76,9 +76,9 @@ boost::multiprecision::uint256_t getUint256FromBuffer(const unsigned char* buf)
     return retU;
 }
 
-const std::string parseStringRet(const unsigned char* buf)
+const std::string parseStringRet(const unsigned char* buf,unsigned long long argOffset)
 {
-    boost::multiprecision::uint256_t offset=getUint256FromBuffer(buf);
+    boost::multiprecision::uint256_t offset=getUint256FromBuffer(buf+argOffset);
     boost::multiprecision::uint256_t nameLength=getUint256FromBuffer(buf+(unsigned long long)offset);
     char* nameBytes=new char[(unsigned long long)nameLength+1];
     memcpy(nameBytes,buf+(unsigned long long)offset+32,(unsigned long long)nameLength);
