@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     loadingDlg->setStandardButtons(0);
 
     ui->editPayAddress->setCheckValidator(new TronAddressValidator(parent));
+    ui->comboPayCurrency->addItem("TRX",-1);
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +68,7 @@ void MainWindow::copyAddress(){
 void MainWindow::pay(){
     const TronClient* tronClient=((TronWalletApplication*)QApplication::instance())->getTronClient();
     const MyAccount* account=tronClient->getAccount();
-    TransferContractTransaction transaction(account->getAddress(),ui->editPayAddress->text().toStdString(),1000);
+    TransferContractTransaction transaction(account->getAddress(),ui->editPayAddress->text().toStdString(),(int)ui->editPayAmount->text().toFloat()*1e6);
     transaction.setBlockInfo(tronClient->GetNowBlock());
     account->signTransaction(transaction);
     broadcastTransaction(&transaction);
@@ -214,6 +215,11 @@ void MainWindow::loadWallet(MyAccount* account)
     emit startAccountInfoWorker();
     initGetPaid();
     runTestCode();
+}
+
+void MainWindow::addCurrency(const Asset &asset){
+    ui->comboPayCurrency->addItem(asset.getSymbol().c_str(),(int)loadedAssets.size());
+    loadedAssets.push_back(asset);
 }
 
 void MainWindow::newWallet()

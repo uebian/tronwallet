@@ -109,7 +109,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_2"/>
+           <widget class="QLineEdit" name="editPayAmount"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboPayCurrency"/>
           </item>
          </layout>
         </item>
@@ -124,9 +127,6 @@
           </item>
           <item>
            <widget class="QLineEdit" name="lineEdit_2"/>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboPayCurrency"/>
           </item>
          </layout>
         </item>

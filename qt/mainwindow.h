@@ -11,6 +11,7 @@
 #include "tron/myaccount.h"
 #include "qt/worker/accountinfoworker.h"
 #include "qt/worker/transactionbroadcastworker.h"
+#include "tron/asset.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -31,6 +32,7 @@ private:
     void createMenus();
     void initGetPaid();
     void loadWallet(MyAccount* account);
+    void addCurrency(const Asset& asset);
     void broadcastTransaction(const Transaction* transaction);
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -69,6 +71,7 @@ private:
     QThread* accountInfoWorkerThread;
     QThread* transactionBroadcastWorkerThread;
     bool firstLoad=true;
+    std::vector<Asset> loadedAssets;
 Q_SIGNALS:
     void quitRequested();
     void startAccountInfoWorker();
