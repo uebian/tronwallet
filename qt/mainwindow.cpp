@@ -12,6 +12,7 @@
 #include "tron/trc20asset.h"
 #include "tronwalletapplication.h"
 #include "qt/tronaddressvalidator.h"
+#include "qt/addcurrencydialog.h"
 #include "utils.h"
 #include <qrencode.h>
 
@@ -42,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->btnGetPaidCopyAddr, SIGNAL(clicked()), this, SLOT(copyAddress()));
     connect(ui->btnPay, SIGNAL(clicked()), this, SLOT(pay()));
+    connect(ui->btnAddCurrency, SIGNAL(clicked()), this, SLOT(onAddCurrency()));
     accountInfoWorkerThread->start();
     transactionBroadcastWorkerThread->start();
     loadingDlg=new QMessageBox();
@@ -58,6 +60,12 @@ MainWindow::~MainWindow()
     delete ui;
     delete addressBar;
     delete accountInfoWorker;
+}
+
+void MainWindow::onAddCurrency()
+{
+    AddCurrencyDialog dialog;
+    dialog.exec();
 }
 
 void MainWindow::copyAddress(){
@@ -226,6 +234,10 @@ void MainWindow::newWallet()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save Wallet"),"", tr("Wallet Files (*.json)"));
+    if(fileName.isNull())
+    {
+        return;
+    }
     unsigned char priKey[32];
     randomBytes(priKey,32);
     MyAccount* account=new MyAccount(priKey);
@@ -244,6 +256,10 @@ void MainWindow::openWallet()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Wallet"),"", tr("Wallet Files (*.json)"));
+    if(fileName.isNull())
+    {
+        return;
+    }
     MyAccount* account=MyAccount::readFromJson(fileName.toStdString());
     if(account==nullptr)
     {

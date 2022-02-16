@@ -18,6 +18,7 @@ SOURCES += \
     crypto/sha3.cpp \
     crypto/sm3.cpp \
     main.cpp \
+    qt/addcurrencydialog.cpp \
     qt/guiutil.cpp \
     qt/optionsmodel.cpp \
     qt/qvalidatedlineedit.cpp \
@@ -67,6 +68,7 @@ HEADERS += \
     crypto/sha256.h \
     crypto/sha3.h \
     crypto/sm3.h \
+    qt/addcurrencydialog.h \
     qt/guiconstants.h \
     qt/guiutil.h \
     qt/optionsmodel.h \
@@ -92,6 +94,7 @@ HEADERS += \
 
 
 FORMS += \
+    qt/addcurrencydialog.ui \
     qt/forms/mainwindow.ui \
     qt/forms/optionsdialog.ui
 

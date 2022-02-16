@@ -46,6 +46,7 @@ private slots:
     void refreshAccuontInfo(const AccountInfo act);
     void transactionResult(const TransactionResult ret);
     void copyAddress();
+    void onAddCurrency();
     void pay();
 
 
