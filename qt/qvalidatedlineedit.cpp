@@ -13,6 +13,7 @@ QValidatedLineEdit::QValidatedLineEdit(QWidget *parent) :
     checkValidator(nullptr)
 {
     connect(this, &QValidatedLineEdit::textChanged, this, &QValidatedLineEdit::markValid);
+    checkValidity();
 }
 
 void QValidatedLineEdit::setValid(bool _valid)
@@ -36,7 +37,8 @@ void QValidatedLineEdit::setValid(bool _valid)
 void QValidatedLineEdit::focusInEvent(QFocusEvent *evt)
 {
     // Clear invalid flag on focus
-    setValid(true);
+    //setValid(true);
+    checkValidity();
 
     QLineEdit::focusInEvent(evt);
 }
@@ -51,7 +53,8 @@ void QValidatedLineEdit::focusOutEvent(QFocusEvent *evt)
 void QValidatedLineEdit::markValid()
 {
     // As long as a user is typing ensure we display state as valid
-    setValid(true);
+    // setValid(true);
+    checkValidity();
 }
 
 void QValidatedLineEdit::clear()

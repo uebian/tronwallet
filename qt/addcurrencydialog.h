@@ -7,6 +7,12 @@ namespace Ui {
 class AddCurrencyDialog;
 }
 
+enum AssetType{
+    TRC10,
+    TRC20,
+    Unknown
+};
+
 class AddCurrencyDialog : public QDialog
 {
     Q_OBJECT
@@ -14,6 +20,8 @@ class AddCurrencyDialog : public QDialog
 public:
     explicit AddCurrencyDialog(QWidget *parent = nullptr);
     ~AddCurrencyDialog();
+    AssetType getAssetType();
+    std::string getTrc20Address();
 
 private:
     Ui::AddCurrencyDialog *ui;

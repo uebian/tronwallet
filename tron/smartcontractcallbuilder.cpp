@@ -26,3 +26,7 @@ void SmartContractCallBuilder::build(unsigned char* data) const{
 int SmartContractCallBuilder::getLength() const{
     return 4;
 }
+
+void SmartContractCallBuilder::addStaticArgs(const SmartContractValue& value){
+
+}

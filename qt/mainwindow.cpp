@@ -66,6 +66,28 @@ void MainWindow::onAddCurrency()
 {
     AddCurrencyDialog dialog;
     dialog.exec();
+    switch(dialog.getAssetType())
+    {
+    case AssetType::TRC10:
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Trc10 is not supported"));
+        msgBox.exec();
+        break;
+    }
+    case AssetType::TRC20:{
+        qDebug()<<"Adding currency"<<dialog.getTrc20Address().c_str();
+        break;
+    }
+    case AssetType::Unknown:{
+        QMessageBox msgBox;
+        msgBox.setText(tr("Unknown error"));
+        msgBox.exec();
+        break;
+    }
+    }
+
+
 }
 
 void MainWindow::copyAddress(){

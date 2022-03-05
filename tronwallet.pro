@@ -94,7 +94,7 @@ HEADERS += \
 
 
 FORMS += \
-    qt/addcurrencydialog.ui \
+    qt/forms/addcurrencydialog.ui \
     qt/forms/mainwindow.ui \
     qt/forms/optionsdialog.ui
 

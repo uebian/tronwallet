@@ -12,7 +12,7 @@ public:
     int getLength() const;
     void build(unsigned char* data) const;
     void setFuncSign(const std::string& funcSign);
-    void addStaticArgs(const SmartContractValue value);
+    void addStaticArgs(const SmartContractValue& value);
 private:
     std::string funcSign;
     std::vector<SmartContractValue> staticArgs;
