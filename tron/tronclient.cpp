@@ -102,12 +102,12 @@ std::vector<std::string> TronClient::callConstantContract(const Account *owner, 
     return ret;
 }
 
-TransactionResult TronClient::broadcastTransaction(const Transaction* transaction) const{
+Result TronClient::broadcastTransaction(const Transaction* transaction) const{
     auto stub=protocol::Wallet::NewStub(channel);
     grpc::ClientContext ctx;
     protocol::Return ret;
     stub->BroadcastTransaction(&ctx,*transaction->getPbTransaction(),&ret);
-    TransactionResult res;
+    Result res;
     res.code=ret.code();
     res.message=ret.message();
     return res;

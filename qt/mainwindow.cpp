@@ -28,23 +28,31 @@ MainWindow::MainWindow(QWidget *parent)
     addressBar=new QLabel();
     statusBar()->addWidget(addressBar);
     //timer=new QTimer(this);
-    accountInfoWorker=new AccountInfoWorker(((TronWalletApplication*)QApplication::instance())->getTronClient());
-    transactionBroadcastWorker=new TransactionBroadcastWorker(((TronWalletApplication*)QApplication::instance())->getTronClient());
+    TronClient* client=((TronWalletApplication*)QApplication::instance())->getTronClient();
+    accountInfoWorker=new AccountInfoWorker(client);
+    addCurrencyWorker=new AddCurrencyWorker(client);
+    transactionBroadcastWorker=new TransactionBroadcastWorker(client);
     accountInfoWorkerThread=new QThread();
+    addCurrencyWorkerThread=new QThread();
     transactionBroadcastWorkerThread=new QThread();
     accountInfoWorker->moveToThread(accountInfoWorkerThread);
+    addCurrencyWorker->moveToThread(addCurrencyWorkerThread);
+    transactionBroadcastWorker->moveToThread(transactionBroadcastWorkerThread);
     //connect(timer, SIGNAL(timeout()), this, SLOT(accountInfoWorker->fetchInfomation()));
 
     connect(accountInfoWorker, &AccountInfoWorker::resultReady, this, &MainWindow::refreshAccuontInfo);
     connect(transactionBroadcastWorker, &TransactionBroadcastWorker::transactionResult, this, &MainWindow::transactionResult);
+    connect(addCurrencyWorker, &AddCurrencyWorker::addCurrencyResult, this, &MainWindow::addCurrencyResult);
     connect(this, &MainWindow::startAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::startWorker);
     connect(this, &MainWindow::stopAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::stopWorker);
+    connect(this,&MainWindow::addTrc20Asset,addCurrencyWorker,&AddCurrencyWorker::addTrc20Asset);
     connect(this, &MainWindow::startBroadcastTransaction, transactionBroadcastWorker, &TransactionBroadcastWorker::broadcastTransaction);
 
     connect(ui->btnGetPaidCopyAddr, SIGNAL(clicked()), this, SLOT(copyAddress()));
     connect(ui->btnPay, SIGNAL(clicked()), this, SLOT(pay()));
     connect(ui->btnAddCurrency, SIGNAL(clicked()), this, SLOT(onAddCurrency()));
     accountInfoWorkerThread->start();
+    addCurrencyWorkerThread->start();
     transactionBroadcastWorkerThread->start();
     loadingDlg=new QMessageBox();
     loadingDlg->setWindowModality(Qt::WindowModal);
@@ -77,6 +85,9 @@ void MainWindow::onAddCurrency()
     }
     case AssetType::TRC20:{
         qDebug()<<"Adding currency"<<dialog.getTrc20Address().c_str();
+        loadingDlg->show();
+        Account* contract=new Account(dialog.getTrc20Address());
+        emit addTrc20Asset(contract);
         break;
     }
     case AssetType::Unknown:{
@@ -173,7 +184,7 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutQtAct);
 }
 
-void MainWindow::transactionResult(const TransactionResult act)
+void MainWindow::transactionResult(const Result act)
 {
     loadingDlg->done(0);
     QMessageBox msgBox;
@@ -182,6 +193,21 @@ void MainWindow::transactionResult(const TransactionResult act)
         msgBox.setText(tr("Transaction sent successfully."));
     }else{
         msgBox.setText(tr("Transaction failed, error code: %1, error message: %2").arg(act.code).arg(act.message.c_str()));
+    }
+    msgBox.exec();
+}
+
+void MainWindow::addCurrencyResult(const Result act,const Asset* asset)
+{
+    loadingDlg->done(0);
+    QMessageBox msgBox;
+    if(act.code==0)
+    {
+        msgBox.setText(tr("TRC20 token %1(%2) added successfully.").arg(asset->getName().c_str()).arg(asset->getSymbol().c_str()));
+        addCurrency(*asset);
+        delete asset;
+    }else{
+        msgBox.setText(tr("Add currency failed, error code: %1, error message: %2").arg(act.code).arg(act.message.c_str()));
     }
     msgBox.exec();
 }
@@ -225,10 +251,10 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
 }
 
 void runTestCode(){
-    const TronClient* client=((TronWalletApplication*)QApplication::instance())->getTronClient();
+    /*const TronClient* client=((TronWalletApplication*)QApplication::instance())->getTronClient();
     Account contract("TQKucgWL1cbAtW8vxKbwRgThw3FPmrok2t");
     Trc20Asset asset=Trc20Asset::loadTrc20Contract(contract,client);
-    std::cout<<"Asset Name:"<<asset.getName()<<",Asset symbol:"<<asset.getSymbol()<<",Asset decimals:"<<asset.getDecimals()<<std::endl;
+    std::cout<<"Asset Name:"<<asset.getName()<<",Asset symbol:"<<asset.getSymbol()<<",Asset decimals:"<<asset.getDecimals()<<std::endl;*/
 }
 
 void MainWindow::loadWallet(MyAccount* account)

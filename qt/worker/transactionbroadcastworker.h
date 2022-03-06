@@ -10,7 +10,7 @@ class TransactionBroadcastWorker : public QObject
 public:
     explicit TransactionBroadcastWorker(TronClient* client,QObject *parent = nullptr);
 signals:
-    void transactionResult(const TransactionResult result);
+    void transactionResult(const Result result);
 public slots:
     void broadcastTransaction(const Transaction* transaction);
 private:

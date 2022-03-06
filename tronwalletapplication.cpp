@@ -141,6 +141,9 @@ TronClient* TronWalletApplication::getTronClient(){
 void initTypes()
 {
     qRegisterMetaType<AccountInfo>("AccountInfo");
+    qRegisterMetaType<Result>("Result");
+    qRegisterMetaType<Account*>("Account*");
+    qRegisterMetaType<Asset*>("Asset*");
 }
 
 int GuiMain(int argc, char* argv[])

@@ -12,7 +12,7 @@ void TransactionBroadcastWorker::broadcastTransaction(const Transaction* transac
     transaction->getRawData(t);
     qDebug()<<"Sending transaction:"<<bytes2hex(t,transaction->getRawDataLength()).c_str();
     delete[] t;
-    TransactionResult ret=client->broadcastTransaction(transaction);
+    Result ret=client->broadcastTransaction(transaction);
     unsigned char* hash=new unsigned char[32];
     transaction->getTxHash(hash);
     qDebug()<<"Transaction sent:"<<bytes2hex(hash,32).c_str();

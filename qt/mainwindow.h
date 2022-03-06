@@ -10,6 +10,7 @@
 #include "qt/guiutil.h"
 #include "tron/myaccount.h"
 #include "qt/worker/accountinfoworker.h"
+#include "qt/worker/addcurrencyworker.h"
 #include "qt/worker/transactionbroadcastworker.h"
 #include "tron/asset.h"
 
@@ -44,7 +45,8 @@ private slots:
     void aboutQt();
     void openOptionsDialogWithTab(OptionsDialog::Tab tab);
     void refreshAccuontInfo(const AccountInfo act);
-    void transactionResult(const TransactionResult ret);
+    void transactionResult(const Result ret);
+    void addCurrencyResult(const Result ret,const Asset* asset);
     void copyAddress();
     void onAddCurrency();
     void pay();
@@ -68,8 +70,10 @@ private:
     QLabel *infoLabel;
     QLabel* addressBar;
     AccountInfoWorker* accountInfoWorker;
+    AddCurrencyWorker* addCurrencyWorker;
     TransactionBroadcastWorker* transactionBroadcastWorker;
     QThread* accountInfoWorkerThread;
+    QThread* addCurrencyWorkerThread;
     QThread* transactionBroadcastWorkerThread;
     bool firstLoad=true;
     std::vector<Asset> loadedAssets;
@@ -77,6 +81,7 @@ Q_SIGNALS:
     void quitRequested();
     void startAccountInfoWorker();
     void stopAccountInfoWorker();
+    void addTrc20Asset(const Account* contract);
     void startBroadcastTransaction(const Transaction* transaction);
 
 };

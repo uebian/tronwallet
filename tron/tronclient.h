@@ -8,7 +8,7 @@
 #include "tron/accountinfo.h"
 #include "myaccount.h"
 
-struct TransactionResult{
+struct Result{
     int code;
     std::string message;
 };
@@ -22,7 +22,7 @@ public:
     void loadWallet(MyAccount* account);
     const MyAccount* getAccount() const;
     const AccountInfo fetchAccountInfo(const Account* act);
-    TransactionResult broadcastTransaction(const Transaction* transaction) const;
+    Result broadcastTransaction(const Transaction* transaction) const;
     std::vector<std::string> callConstantContract(const Account* owner,const Account* contract_address,const unsigned char* data,int dataLength) const;
 private:
     std::shared_ptr<grpc::Channel> channel;
