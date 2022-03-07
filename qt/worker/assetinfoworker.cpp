@@ -32,6 +32,7 @@ void AssetInfoWorker::fetchInfomation()
 void AssetInfoWorker::startWorker()
 {
     qDebug()<<"Start to fetch info";
+    this->fetchInfomation();
     timer->start(5000);
 }
 

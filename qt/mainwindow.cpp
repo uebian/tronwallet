@@ -87,26 +87,27 @@ MainWindow::~MainWindow()
 void MainWindow::onAddCurrency()
 {
     AddCurrencyDialog dialog;
-    dialog.exec();
-    switch(dialog.getAssetType())
+    if(dialog.exec()==QDialog::Accepted)
     {
-    case AssetType::TRC10:
-    {
-        QMessageBox msgBox;
-        msgBox.setText(tr("Trc10 is not supported"));
-        msgBox.exec();
-        break;
+        emit stopAssetInfoWorker();
+        switch(dialog.getAssetType())
+        {
+        case AssetType::TRC10:
+        {
+            QMessageBox msgBox;
+            msgBox.setText(tr("Trc10 is not supported"));
+            msgBox.exec();
+            break;
+        }
+        case AssetType::TRC20:{
+            qDebug()<<"Adding currency"<<dialog.getTrc20Address().c_str();
+            loadingDlg->show();
+            Account* contract=new Account(dialog.getTrc20Address());
+            emit addTrc20Asset(contract);
+            break;
+        }
+        }
     }
-    case AssetType::TRC20:{
-        qDebug()<<"Adding currency"<<dialog.getTrc20Address().c_str();
-        loadingDlg->show();
-        Account* contract=new Account(dialog.getTrc20Address());
-        emit addTrc20Asset(contract);
-        break;
-    }
-    }
-
-
 }
 
 void MainWindow::copyAddress(){
@@ -213,6 +214,7 @@ void MainWindow::addCurrencyResult(const Result act,const Asset* asset)
     {
         msgBox.setText(tr("TRC20 token %1(%2) added successfully.").arg(asset->getName().c_str()).arg(asset->getSymbol().c_str()));
         addCurrency(asset);
+        emit startAssetInfoWorker();
     }else{
         msgBox.setText(tr("Add currency failed, error code: %1, error message: %2").arg(act.code).arg(act.message.c_str()));
     }
@@ -298,7 +300,6 @@ void MainWindow::refreshAccuontInfo(const AccountInfo act)
     ui->pbBandwidth->setMaximum(act.bandwidth_limit);
     ui->pbBandwidth->setValue(act.bandwidth_limit-act.bandwidth_used);
     ui->pbBandwidth->setFormat("%v/%m");
-    //emit stopAccountInfoWorker();
 
 }
 
@@ -312,6 +313,7 @@ void runTestCode(){
 void MainWindow::loadWallet(MyAccount* account)
 {
     emit stopAccountInfoWorker();
+    emit stopAssetInfoWorker();
     firstLoad=true;
     ((TronWalletApplication*)QApplication::instance())->getTronClient()->loadWallet(account);
 
