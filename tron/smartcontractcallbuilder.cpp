@@ -22,9 +22,9 @@ void SmartContractCallBuilder::build(unsigned char* data) const{
     unsigned char* hash = (unsigned char*)sha3_Finalize(&c);
     memcpy(data,hash,4);
     int pointer=4;
-    for(SmartContractValue value:staticArgs)
+    for(const SmartContractValue* value:staticArgs)
     {
-        value.getData(data+pointer);
+        value->getData(data+pointer);
         pointer+=32;
     }
 }
@@ -33,6 +33,6 @@ int SmartContractCallBuilder::getLength() const{
     return 4+32*staticArgs.size();
 }
 
-void SmartContractCallBuilder::addStaticArgs(const SmartContractValue& value){
+void SmartContractCallBuilder::addStaticArgs(const SmartContractValue* value){
     staticArgs.push_back(value);
 }

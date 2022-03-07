@@ -261,7 +261,7 @@ void MainWindow::refreshAssetInfo(std::map<const Asset*,unsigned long long> bala
         ui->listBalance->item(i,0)->setText(assetTypeStr.c_str());
         ui->listBalance->item(i,1)->setText(it->first->getName().c_str());
         ui->listBalance->item(i,2)->setText(it->first->getSymbol().c_str());
-        ui->listBalance->item(i,3)->setText(QString::number(it->second));
+        ui->listBalance->item(i,3)->setText(QString::number(it->second/(double)pow(10,it->first->getDecimals())));
         i++;
     }
 }

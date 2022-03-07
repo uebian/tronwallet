@@ -4,6 +4,7 @@
 #include<cstring>
 #include"trc20asset.h"
 #include "tron/smartcontractcallbuilder.h"
+#include "tron/scvalue/scvalueaccount.h"
 #include "utils.h"
 
 Trc20Asset::Trc20Asset(const std::string & asset_name, const std::string & asset_abbreviation, unsigned long long asset_precision, const Account& contract_address) : Asset(asset_name, asset_abbreviation, asset_precision), contract_address(contract_address)
@@ -20,7 +21,21 @@ AssetType Trc20Asset::getType() const{
 }
 
 int Trc20Asset::fetchBalance(const Account& owner, const TronClient *client) const{
-    return 0;
+    SmartContractCallBuilder builder;
+    builder.setFuncSign("balanceOf(address)");
+    builder.addStaticArgs(new SCValueAccount(owner));
+    unsigned char* t=new unsigned char[builder.getLength()];
+    builder.build(t);
+    std::vector<std::string> ret=client->callConstantContract(&owner,&contract_address,t,builder.getLength());
+    delete[] t;
+    unsigned char balanceBuf[32];
+    memcpy(balanceBuf,ret[0].c_str(),32);
+    if(ret.size()==0)
+    {
+        return -1;
+    }else{
+        return (unsigned long long)getUint256FromBuffer(balanceBuf);
+    }
 }
 
 Trc20Asset Trc20Asset::loadTrc20Contract(const Account &contract_address, const TronClient *client){

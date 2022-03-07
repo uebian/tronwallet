@@ -6,9 +6,8 @@
 class SmartContractValue
 {
 public:
-    SmartContractValue();
     int getLength() const;
-    void getData(unsigned char* data) const;
+    virtual void getData(unsigned char* data) const=0;
 private:
     SmartContractType type;
 };

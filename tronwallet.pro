@@ -31,9 +31,10 @@ SOURCES += \
     qt/worker/addcurrencyworker.cpp \
     qt/worker/transactionbroadcastworker.cpp \
     tron/account.cpp \
+    tron/scvalue/scvalueaccount.cpp \
     tron/smartcontractcallbuilder.cpp \
     tron/smartcontracttype.cpp \
-    tron/smartcontractvalue.cpp \
+    tron/scvalue/smartcontractvalue.cpp \
     tron/asset.cpp \
     tron/trc10asset.cpp \
     tron/trc20asset.cpp \
@@ -87,9 +88,10 @@ HEADERS += \
     tron/accountinfo.h \
     tron/block.h \
     tron/myaccount.h \
+    tron/scvalue/scvalueaccount.h \
     tron/smartcontractcallbuilder.h \
     tron/smartcontracttype.h \
-    tron/smartcontractvalue.h \
+    tron/scvalue/smartcontractvalue.h \
     tron/transaction.h \
     tron/transfercontracttransaction.h \
     tron/tronclient.h \
