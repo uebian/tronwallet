@@ -2,16 +2,11 @@
 #define ADDCURRENCYDIALOG_H
 
 #include <QDialog>
+#include "tron/asset.h"
 
 namespace Ui {
 class AddCurrencyDialog;
 }
-
-enum AssetType{
-    TRC10,
-    TRC20,
-    Unknown
-};
 
 class AddCurrencyDialog : public QDialog
 {

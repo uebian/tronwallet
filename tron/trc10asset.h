@@ -11,6 +11,7 @@ class Trc10Asset : public Asset
 	public:
         Trc10Asset(const std::string & asset_name, const std::string & asset_abbreviation, long long asset_precision);
 		~Trc10Asset();
+        AssetType getType() const;
 };
 
 #endif

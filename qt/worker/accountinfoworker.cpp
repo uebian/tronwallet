@@ -16,7 +16,6 @@ void AccountInfoWorker::moveToThread(QThread *thread){
 
 void AccountInfoWorker::fetchInfomation()
 {
-    qDebug() << "Fetching account information...";
     AccountInfo act=client->fetchAccountInfo(client->getAccount());
     emit resultReady(act);
 }

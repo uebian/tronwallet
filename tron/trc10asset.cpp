@@ -9,3 +9,7 @@ Trc10Asset::Trc10Asset(const std::string & asset_name, const std::string & asset
 Trc10Asset::~Trc10Asset()
 {
 }
+
+AssetType Trc10Asset::getType() const{
+    return AssetType::TRC10;
+}

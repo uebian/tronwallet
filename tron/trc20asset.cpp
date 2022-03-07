@@ -15,6 +15,13 @@ Trc20Asset::~Trc20Asset()
 {
 }
 
+AssetType Trc20Asset::getType() const{
+    return AssetType::TRC20;
+}
+
+int Trc20Asset::fetchBalance(const Account& owner, const TronClient *client) const{
+    return 0;
+}
 
 Trc20Asset Trc20Asset::loadTrc20Contract(const Account &contract_address, const TronClient *client){
     const MyAccount* account=client->getAccount();
@@ -24,23 +31,30 @@ Trc20Asset Trc20Asset::loadTrc20Contract(const Account &contract_address, const 
     builder.build(t);
     std::vector<std::string> ret=client->callConstantContract(account,&contract_address,t,builder.getLength());
     delete[] t;
-    if(ret.size()!=0)
+    if(ret.size()==0)
     {
-        std::string name=parseStringRet((unsigned char*)ret[0].c_str());
-        builder.setFuncSign("symbol()");
-        t=new unsigned char[builder.getLength()];
-        builder.build(t);
-        ret=client->callConstantContract(account,&contract_address,t,builder.getLength());
-        delete[] t;
-        std::string symbol=parseStringRet((unsigned char*)ret[0].c_str());
-        builder.setFuncSign("decimals()");
-        t=new unsigned char[builder.getLength()];
-        builder.build(t);
-        ret=client->callConstantContract(account,&contract_address,t,builder.getLength());
-        delete[] t;
-        boost::multiprecision::uint256_t decimals=getUint256FromBuffer((unsigned char*)ret[0].c_str());
-        return Trc20Asset(name,symbol,(unsigned long long)decimals,contract_address);
-    }else{
         return Trc20Asset("","",0,contract_address);
     }
+    std::string name=parseStringRet((unsigned char*)ret[0].c_str());
+    builder.setFuncSign("symbol()");
+    t=new unsigned char[builder.getLength()];
+    builder.build(t);
+    ret=client->callConstantContract(account,&contract_address,t,builder.getLength());
+    delete[] t;
+    if(ret.size()==0)
+    {
+        return Trc20Asset("","",0,contract_address);
+    }
+    std::string symbol=parseStringRet((unsigned char*)ret[0].c_str());
+    builder.setFuncSign("decimals()");
+    t=new unsigned char[builder.getLength()];
+    builder.build(t);
+    ret=client->callConstantContract(account,&contract_address,t,builder.getLength());
+    delete[] t;
+    if(ret.size()==0)
+    {
+        return Trc20Asset("","",0,contract_address);
+    }
+    boost::multiprecision::uint256_t decimals=getUint256FromBuffer((unsigned char*)ret[0].c_str());
+    return Trc20Asset(name,symbol,(unsigned long long)decimals,contract_address);
 }

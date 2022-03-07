@@ -6,6 +6,7 @@
 #include <QImage>
 #include <QProgressDialog>
 #include <QClipboard>
+#include <QStringList>
 #include <functional>
 #include "tron/smartcontractcallbuilder.h"
 #include "tron/transfercontracttransaction.h"
@@ -30,19 +31,25 @@ MainWindow::MainWindow(QWidget *parent)
     //timer=new QTimer(this);
     TronClient* client=((TronWalletApplication*)QApplication::instance())->getTronClient();
     accountInfoWorker=new AccountInfoWorker(client);
+    assetInfoWorker=new AssetInfoWorker(client,&this->loadedAssets);
     addCurrencyWorker=new AddCurrencyWorker(client);
     transactionBroadcastWorker=new TransactionBroadcastWorker(client);
     accountInfoWorkerThread=new QThread();
+    assetInfoWorkerThread=new QThread();
     addCurrencyWorkerThread=new QThread();
     transactionBroadcastWorkerThread=new QThread();
     accountInfoWorker->moveToThread(accountInfoWorkerThread);
+    assetInfoWorker->moveToThread(assetInfoWorkerThread);
     addCurrencyWorker->moveToThread(addCurrencyWorkerThread);
     transactionBroadcastWorker->moveToThread(transactionBroadcastWorkerThread);
     //connect(timer, SIGNAL(timeout()), this, SLOT(accountInfoWorker->fetchInfomation()));
 
     connect(accountInfoWorker, &AccountInfoWorker::resultReady, this, &MainWindow::refreshAccuontInfo);
+    connect(assetInfoWorker, &AssetInfoWorker::resultReady, this, &MainWindow::refreshAssetInfo);
     connect(transactionBroadcastWorker, &TransactionBroadcastWorker::transactionResult, this, &MainWindow::transactionResult);
     connect(addCurrencyWorker, &AddCurrencyWorker::addCurrencyResult, this, &MainWindow::addCurrencyResult);
+    connect(this, &MainWindow::startAssetInfoWorker, assetInfoWorker, &AssetInfoWorker::startWorker);
+    connect(this, &MainWindow::stopAssetInfoWorker, assetInfoWorker, &AssetInfoWorker::stopWorker);
     connect(this, &MainWindow::startAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::startWorker);
     connect(this, &MainWindow::stopAccountInfoWorker, accountInfoWorker, &AccountInfoWorker::stopWorker);
     connect(this,&MainWindow::addTrc20Asset,addCurrencyWorker,&AddCurrencyWorker::addTrc20Asset);
@@ -52,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnPay, SIGNAL(clicked()), this, SLOT(pay()));
     connect(ui->btnAddCurrency, SIGNAL(clicked()), this, SLOT(onAddCurrency()));
     accountInfoWorkerThread->start();
+    assetInfoWorkerThread->start();
     addCurrencyWorkerThread->start();
     transactionBroadcastWorkerThread->start();
     loadingDlg=new QMessageBox();
@@ -61,6 +69,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->editPayAddress->setCheckValidator(new TronAddressValidator(parent));
     ui->comboPayCurrency->addItem("TRX",-1);
+    ui->listBalance->insertColumn(0);
+    ui->listBalance->insertColumn(1);
+    ui->listBalance->insertColumn(2);
+    ui->listBalance->insertColumn(3);
+    QStringList balanceTableViewHeaders={tr("Asset Type"),tr("Asset Name"),tr("Asset Symbol"),tr("Balance")};
+    ui->listBalance->setHorizontalHeaderLabels(balanceTableViewHeaders);
 }
 
 MainWindow::~MainWindow()
@@ -88,12 +102,6 @@ void MainWindow::onAddCurrency()
         loadingDlg->show();
         Account* contract=new Account(dialog.getTrc20Address());
         emit addTrc20Asset(contract);
-        break;
-    }
-    case AssetType::Unknown:{
-        QMessageBox msgBox;
-        msgBox.setText(tr("Unknown error"));
-        msgBox.exec();
         break;
     }
     }
@@ -204,18 +212,62 @@ void MainWindow::addCurrencyResult(const Result act,const Asset* asset)
     if(act.code==0)
     {
         msgBox.setText(tr("TRC20 token %1(%2) added successfully.").arg(asset->getName().c_str()).arg(asset->getSymbol().c_str()));
-        addCurrency(*asset);
-        delete asset;
+        addCurrency(asset);
     }else{
         msgBox.setText(tr("Add currency failed, error code: %1, error message: %2").arg(act.code).arg(act.message.c_str()));
     }
     msgBox.exec();
 }
 
+void MainWindow::refreshAssetInfo(std::map<const Asset*,unsigned long long> balance){
+    int ccnt=ui->listBalance->rowCount();
+    for(int i=balance.size();i<ccnt;i++)
+    {
+        for(int j=0;j<4;j++)
+        {
+            delete ui->listBalance->item(i,j);
+        }
+    }
+    ui->listBalance->setRowCount(balance.size());
+    for(unsigned long i=ccnt;i<balance.size();i++)
+    {
+        for(int j=0;j<4;j++)
+        {
+            ui->listBalance->setItem(i,j,new QTableWidgetItem());
+        }
+
+    }
+    int i=0;
+    /*qDebug()<<"=========";
+    for(auto it=balance.begin();it!=balance.end();it++){
+        qDebug()<<it->first->getName().c_str();
+    }
+    qDebug()<<"=========";*/
+    for(auto it=balance.begin();it!=balance.end();it++)
+    {
+        std::string assetTypeStr;
+        switch(it->first->getType())
+        {
+        case AssetType::TRC10:
+            assetTypeStr="TRC10";
+            break;
+        case AssetType::TRC20:
+            assetTypeStr="TRC20";
+            break;
+        default:
+            assetTypeStr="Unknown";
+            break;
+        }
+        ui->listBalance->item(i,0)->setText(assetTypeStr.c_str());
+        ui->listBalance->item(i,1)->setText(it->first->getName().c_str());
+        ui->listBalance->item(i,2)->setText(it->first->getSymbol().c_str());
+        ui->listBalance->item(i,3)->setText(QString::number(it->second));
+        i++;
+    }
+}
 
 void MainWindow::refreshAccuontInfo(const AccountInfo act)
 {
-    qDebug()<<"Account information loaded.";
     if(firstLoad)
     {
         firstLoad=false;
@@ -269,12 +321,13 @@ void MainWindow::loadWallet(MyAccount* account)
     loadingDlg->show();
 
     emit startAccountInfoWorker();
+    emit startAssetInfoWorker();
     initGetPaid();
     runTestCode();
 }
 
-void MainWindow::addCurrency(const Asset &asset){
-    ui->comboPayCurrency->addItem(asset.getSymbol().c_str(),(int)loadedAssets.size());
+void MainWindow::addCurrency(const Asset* asset){
+    ui->comboPayCurrency->addItem(asset->getSymbol().c_str(),(int)loadedAssets.size());
     loadedAssets.push_back(asset);
 }
 
@@ -341,7 +394,7 @@ void MainWindow::options()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     emit stopAccountInfoWorker();
-    accountInfoWorker->stopWorker();
+    emit stopAssetInfoWorker();
     Q_EMIT quitRequested();
     QMainWindow::closeEvent(event);
 }

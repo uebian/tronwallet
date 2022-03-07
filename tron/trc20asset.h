@@ -16,6 +16,8 @@ class Trc20Asset : public Asset
         Trc20Asset(const std::string & asset_name, const std::string& asset_abbreviation, unsigned long long asset_precision, const Account& contract_address);
         ~Trc20Asset();
         static Trc20Asset loadTrc20Contract(const Account& contract_address,const TronClient* client);
+        int fetchBalance(const Account &owner, const TronClient *client) const;
+        AssetType getType() const;
 };
 
 #endif

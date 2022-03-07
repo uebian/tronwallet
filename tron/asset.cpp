@@ -13,6 +13,11 @@ Asset::~Asset()
 {
 }
 
+AssetType Asset::getType() const
+{
+    return AssetType::Unknown;
+}
+
 const std::string& Asset::getName() const{
     return this->asset_name;
 }
@@ -25,3 +30,20 @@ long long Asset::getDecimals() const{
     return this->asset_precision;
 }
 
+bool Asset::operator<(const Asset & a) const{
+    if(this->getType()!=a.getType())
+    {
+        return this->getType()<a.getType();
+    }else if(this->getName()!=a.getName()){
+        return this->getName()<a.getName();
+    }else{
+        if(this->getType()==AssetType::TRC10)
+        {
+            //todo
+            return true;
+        }else{
+            //todo
+            return false;
+        }
+    }
+}

@@ -15,8 +15,6 @@ AssetType AddCurrencyDialog::getAssetType(){
         return AssetType::TRC10;
     case 1:
         return AssetType::TRC20;
-    default:
-        return AssetType::Unknown;
     }
 }
 

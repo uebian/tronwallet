@@ -4,6 +4,12 @@
 #include<iostream>
 #include<string>
 
+enum AssetType{
+    TRC10,
+    TRC20,
+    Unknown
+};
+
 class Asset
 {
 	private:
@@ -15,7 +21,9 @@ class Asset
         const std::string& getName() const;
         const std::string& getSymbol() const;
         long long getDecimals() const;
-		~Asset();
+        bool operator < (const Asset&) const;
+        virtual AssetType getType() const;
+        virtual ~Asset();
 };
 
 #endif

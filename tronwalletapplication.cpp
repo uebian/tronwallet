@@ -143,7 +143,8 @@ void initTypes()
     qRegisterMetaType<AccountInfo>("AccountInfo");
     qRegisterMetaType<Result>("Result");
     qRegisterMetaType<Account*>("Account*");
-    qRegisterMetaType<Asset*>("Asset*");
+    //qRegisterMetaType<Asset*>("Asset*");
+    qRegisterMetaType<std::map<const Asset*,unsigned long long>>("std::map<const Asset*,unsigned long long>");
 }
 
 int GuiMain(int argc, char* argv[])
