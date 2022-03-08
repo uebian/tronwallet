@@ -20,7 +20,7 @@ AssetType Trc20Asset::getType() const{
     return AssetType::TRC20;
 }
 
-int Trc20Asset::fetchBalance(const Account& owner, const TronClient *client) const{
+unsigned long long Trc20Asset::fetchBalance(const Account& owner, const TronClient *client) const{
     SmartContractCallBuilder builder;
     builder.setFuncSign("balanceOf(address)");
     builder.addStaticArgs(new SCValueAccount(owner));
@@ -34,7 +34,8 @@ int Trc20Asset::fetchBalance(const Account& owner, const TronClient *client) con
     {
         return -1;
     }else{
-        return (unsigned long long)getUint256FromBuffer(balanceBuf);
+        unsigned long long balance=(unsigned long long)getUint256FromBuffer(balanceBuf);
+        return balance;
     }
 }
 

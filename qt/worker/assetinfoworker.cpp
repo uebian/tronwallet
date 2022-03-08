@@ -23,7 +23,8 @@ void AssetInfoWorker::fetchInfomation()
     {
         if(const Trc20Asset* v = dynamic_cast<const Trc20Asset*>(asset))
         {
-            ret.insert(std::pair<const Asset*,unsigned long long>(asset,v->fetchBalance(*this->client->getAccount(),this->client)));
+            unsigned long long balance=v->fetchBalance(*this->client->getAccount(),this->client);
+            ret.insert(std::pair<const Asset*,unsigned long long>(asset,balance));
         }
     }
     emit resultReady(ret);

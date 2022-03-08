@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listBalance->insertColumn(3);
     QStringList balanceTableViewHeaders={tr("Asset Type"),tr("Asset Name"),tr("Asset Symbol"),tr("Balance")};
     ui->listBalance->setHorizontalHeaderLabels(balanceTableViewHeaders);
+    ui->listBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 MainWindow::~MainWindow()
@@ -118,10 +119,10 @@ void MainWindow::copyAddress(){
 void MainWindow::pay(){
     const TronClient* tronClient=((TronWalletApplication*)QApplication::instance())->getTronClient();
     const MyAccount* account=tronClient->getAccount();
-    TransferContractTransaction transaction(account->getAddress(),ui->editPayAddress->text().toStdString(),(int)ui->editPayAmount->text().toFloat()*1e6);
-    transaction.setBlockInfo(tronClient->GetNowBlock());
-    account->signTransaction(transaction);
-    broadcastTransaction(&transaction);
+    TransferContractTransaction* transaction=new TransferContractTransaction(account->getAddress(),ui->editPayAddress->text().toStdString(),(int)ui->editPayAmount->text().toFloat()*1e6);
+    transaction->setBlockInfo(tronClient->GetNowBlock());
+    account->signTransaction(*transaction);
+    broadcastTransaction(transaction);
 }
 
 void MainWindow::initGetPaid()
@@ -235,7 +236,9 @@ void MainWindow::refreshAssetInfo(std::map<const Asset*,unsigned long long> bala
     {
         for(int j=0;j<4;j++)
         {
-            ui->listBalance->setItem(i,j,new QTableWidgetItem());
+            QTableWidgetItem* item=new QTableWidgetItem();
+            ui->listBalance->setItem(i,j,item);
+            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
         }
 
     }
