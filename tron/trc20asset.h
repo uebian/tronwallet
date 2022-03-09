@@ -18,6 +18,7 @@ class Trc20Asset : public Asset
         static Trc20Asset loadTrc20Contract(const Account& contract_address,const TronClient* client);
         unsigned long long fetchBalance(const Account &owner, const TronClient *client) const;
         AssetType getType() const;
+        Account getContract() const;
 };
 
 #endif

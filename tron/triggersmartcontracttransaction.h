@@ -12,8 +12,9 @@ class TriggerSmartContractTransaction : public Transaction
         protocol::TriggerSmartContract tsc;
 
 	public:
-        TriggerSmartContractTransaction(Account owner, unsigned char* data, int len);
+        TriggerSmartContractTransaction(Account owner,Account contract);
         ~TriggerSmartContractTransaction();
+        void setContractData(unsigned char* data,int len);
 };
 
 #endif

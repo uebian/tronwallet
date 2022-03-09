@@ -10,6 +10,7 @@
 #include <functional>
 #include "tron/smartcontractcallbuilder.h"
 #include "tron/transfercontracttransaction.h"
+#include "tron/transfertrc20transaction.h"
 #include "tron/trc20asset.h"
 #include "tronwalletapplication.h"
 #include "qt/tronaddressvalidator.h"
@@ -119,10 +120,27 @@ void MainWindow::copyAddress(){
 void MainWindow::pay(){
     const TronClient* tronClient=((TronWalletApplication*)QApplication::instance())->getTronClient();
     const MyAccount* account=tronClient->getAccount();
-    TransferContractTransaction* transaction=new TransferContractTransaction(account->getAddress(),ui->editPayAddress->text().toStdString(),(int)ui->editPayAmount->text().toFloat()*1e6);
-    transaction->setBlockInfo(tronClient->GetNowBlock());
-    account->signTransaction(*transaction);
-    broadcastTransaction(transaction);
+    int cid=this->ui->comboPayCurrency->currentIndex()-1;
+    if(cid==-1)
+    {
+        //TRX
+        unsigned long long amount=ui->editPayAmount->text().toFloat()*1e6;
+        TransferContractTransaction* transaction=new TransferContractTransaction(*account,Account(ui->editPayAddress->text().toStdString()),amount);
+        transaction->setBlockInfo(tronClient->GetNowBlock());
+        account->signTransaction(*transaction);
+        broadcastTransaction(transaction);
+    }else{
+        //Asset
+        const Asset* asset=this->loadedAssets[cid];
+        if(const Trc20Asset* v = dynamic_cast<const Trc20Asset*>(asset))
+        {
+            unsigned long long amount=ui->editPayAmount->text().toFloat()*pow(10,asset->getDecimals());
+            TransferTRC20Transaction* transaction=new TransferTRC20Transaction(*account,Account(ui->editPayAddress->text().toStdString()),*v,amount);
+            transaction->setBlockInfo(tronClient->GetNowBlock());
+            account->signTransaction(*transaction);
+            broadcastTransaction(transaction);
+        }
+    }
 }
 
 void MainWindow::initGetPaid()

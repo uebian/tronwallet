@@ -74,3 +74,7 @@ Trc20Asset Trc20Asset::loadTrc20Contract(const Account &contract_address, const 
     boost::multiprecision::uint256_t decimals=getUint256FromBuffer((unsigned char*)ret[0].c_str());
     return Trc20Asset(name,symbol,(unsigned long long)decimals,contract_address);
 }
+
+Account Trc20Asset::getContract() const{
+    return this->contract_address;
+}
