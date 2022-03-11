@@ -147,7 +147,7 @@ void MainWindow::initGetPaid()
 {
     std::string address=((TronWalletApplication*)QApplication::instance())->getTronClient()->getAccount()->getAddress();
     ui->labelGetPaidAddress->setText(tr("Send coins to %1").arg(address.c_str()));
-    QRcode *qr = QRcode_encodeString(address.c_str(), 1, QR_ECLEVEL_L, QR_MODE_8, 0);
+    QRcode *qr = QRcode_encodeString(address.c_str(), 1, QR_ECLEVEL_L, QR_MODE_8, 1);
     QImage QrCode_Image=QImage(qr->width,qr->width,QImage::Format_RGB888);
 
     for (int y = 0; y < qr->width; y++) {
